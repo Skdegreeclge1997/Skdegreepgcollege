@@ -43,6 +43,22 @@ export default function AdmissionsForm() {
   const onSubmit = async (data: InquiryFormValues) => {
     setIsSubmitting(true);
     try {
+      // 1. Check for duplicates (same email or phone)
+      const { data: existing, error: checkError } = await supabase
+        .from('inquiries')
+        .select('id')
+        .or(`email.eq.${data.email},phone.eq.${data.phone}`)
+        .maybeSingle();
+
+      if (checkError) throw checkError;
+
+      if (existing) {
+        alert('An application with this email or phone number already exists. Our team will contact you shortly!');
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 2. Insert new inquiry
       const { error } = await supabase.from('inquiries').insert([
         { 
           name: data.name, 
