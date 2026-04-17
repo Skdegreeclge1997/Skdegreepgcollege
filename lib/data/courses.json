@@ -1,90 +1,90 @@
 [
   {
     "id": "1",
-    "slug": "b-sc-computer-science",
-    "title": "B.Sc. Computer Science",
+    "slug": "bsc-computer-science",
+    "title": "B.Sc. Honours in Computer Science",
     "department": "Science",
     "degree": "UG",
     "duration": "3 Years",
-    "description": "Comprehensive program covering software development, algorithms, and database management.",
-    "eligibility": "10+2 with Mathematics and Science from a recognized board.",
-    "careerProspects": "Software Developer, Data Analyst, Web Architect, Systems Admin."
+    "description": "A comprehensive study of computer hardware, software, and systems, preparing students for the dynamic tech industry.",
+    "eligibility": "Intermediate (10+2) with MPC (Maths, Physics, Chemistry) or equivalent.",
+    "careerProspects": "Software Developer, IT Consultant, Systems Analyst, Data Engineer."
   },
   {
     "id": "2",
-    "slug": "b-sc-physics",
-    "title": "B.Sc. Physics",
+    "slug": "bsc-physics",
+    "title": "B.Sc. Honours in Physics",
     "department": "Science",
     "degree": "UG",
     "duration": "3 Years",
-    "description": "In-depth study of matter, energy, and the fundamental laws of nature.",
-    "eligibility": "10+2 with Physics and Mathematics.",
-    "careerProspects": "Research Assistant, Lab Technician, Academician, Technical Specialist."
+    "description": "Deep dive into the fundamental laws of nature, from quantum mechanics to astrophysics.",
+    "eligibility": "Intermediate (10+2) with Physics and Maths.",
+    "careerProspects": "Research Scientist, Lab Technician, Academician, Technical Writer."
   },
   {
     "id": "3",
-    "slug": "b-com-honours",
-    "title": "B.Com. (Honours)",
-    "department": "Commerce",
+    "slug": "bsc-chemistry",
+    "title": "B.Sc. Honours in Chemistry",
+    "department": "Science",
     "degree": "UG",
     "duration": "3 Years",
-    "description": "Advanced accounting, finance, and business law for future corporate leaders.",
-    "eligibility": "10+2 in any stream (Commerce preferred).",
-    "careerProspects": "Accountant, Financial Analyst, Auditor, Business Consultant."
+    "description": "Exploration of matter and its changes, focusing on organic, inorganic, and physical chemistry.",
+    "eligibility": "Intermediate (10+2) with Chemistry.",
+    "careerProspects": "Chemical Engineer, Pharmacist, Forensic Scientist, Research Associate."
   },
   {
     "id": "4",
-    "slug": "bba",
-    "title": "Bachelor of Business Administration (BBA)",
-    "department": "Commerce",
+    "slug": "bsc-botany",
+    "title": "B.Sc. Honours in Botany",
+    "department": "Science",
     "degree": "UG",
     "duration": "3 Years",
-    "description": "Foundation in management principles, marketing, and entrepreneurship.",
-    "eligibility": "10+2 with minimum 50% marks.",
-    "careerProspects": "HR Manager, Marketing Executive, Entrepreneur, Operations Manager."
+    "description": "The study of plant life, ecology, and biology, crucial for environmental science and agriculture.",
+    "eligibility": "Intermediate (10+2) with Bi.P.C (Biology, Physics, Chemistry).",
+    "careerProspects": "Botanist, Environmental Consultant, Plant Breeder, Ecologist."
   },
   {
     "id": "5",
-    "slug": "ba-english-literature",
-    "title": "B.A. English Literature",
-    "department": "Arts",
+    "slug": "bsc-zoology",
+    "title": "B.Sc. Honours in Zoology",
+    "department": "Science",
     "degree": "UG",
     "duration": "3 Years",
-    "description": "Critical study of global literatures, linguistics, and creative writing.",
-    "eligibility": "10+2 in any stream.",
-    "careerProspects": "Journalist, Content Writer, Editor, Public Relations Officer."
+    "description": "Understanding animal biology, physiology, and evolution.",
+    "eligibility": "Intermediate (10+2) with Bi.P.C (Biology, Physics, Chemistry).",
+    "careerProspects": "Zoologist, Wildlife Biologist, Veterinarian, Marine Biologist."
   },
   {
     "id": "6",
-    "slug": "ba-political-science",
-    "title": "B.A. Political Science",
-    "department": "Arts",
+    "slug": "bcom-computer-applications",
+    "title": "B.Com. Honours in Computer Applications",
+    "department": "Commerce",
     "degree": "UG",
     "duration": "3 Years",
-    "description": "Analysis of political systems, international relations, and public policy.",
-    "eligibility": "10+2 in any stream.",
-    "careerProspects": "Policy Analyst, Civil Servant, Political Consultant, Researcher."
+    "description": "Blending traditional commerce and accounting with modern computer software applications.",
+    "eligibility": "Intermediate (10+2) in any stream.",
+    "careerProspects": "Accountant, Business Analyst, E-commerce Specialist, Finance Manager."
   },
   {
     "id": "7",
-    "slug": "m-sc-mathematics",
-    "title": "M.Sc. Mathematics",
-    "department": "Science",
-    "degree": "PG",
-    "duration": "2 Years",
-    "description": "Advanced mathematical theory and its applications in modern research.",
-    "eligibility": "Graduation in B.Sc. Mathematics with minimum 55% marks.",
-    "careerProspects": "Statistician, Research Scientist, Actuary, Lecturer."
+    "slug": "ba-political-science",
+    "title": "B.A. Honours in Political Science",
+    "department": "Arts",
+    "degree": "UG",
+    "duration": "3 Years",
+    "description": "Analytical study of political systems, theory, and international relations.",
+    "eligibility": "Intermediate (10+2) in any stream.",
+    "careerProspects": "Policy Analyst, Civil Servant, Public Relations Officer, Journalist."
   },
   {
     "id": "8",
-    "slug": "m-com",
-    "title": "M.Com.",
-    "department": "Commerce",
-    "degree": "PG",
-    "duration": "2 Years",
-    "description": "Mastering financial management and advanced corporate accounting.",
-    "eligibility": "B.Com. or equivalent graduation.",
-    "careerProspects": "Investment Banker, Tax Consultant, Senior Accountant, Researcher."
+    "slug": "ba-telugu",
+    "title": "B.A. Honours in Telugu",
+    "department": "Arts",
+    "degree": "UG",
+    "duration": "3 Years",
+    "description": "Comprehensive study of Telugu literature, language, and culture.",
+    "eligibility": "Intermediate (10+2) in any stream.",
+    "careerProspects": "Telugu Translator, Content Writer, Academician, Radio Jockey."
   }
 ]

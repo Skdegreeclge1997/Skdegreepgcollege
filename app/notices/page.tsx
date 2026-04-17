@@ -7,8 +7,8 @@ import { Notice } from '@/lib/types';
 const notices = noticesData as Notice[];
 
 export const metadata = {
-  title: 'Notice Board | SK Degree College',
-  description: 'Stay updated with the latest news, events, and academic announcements from SK Degree College.',
+  title: 'Notice Board | SK Degree & P.G. College',
+  description: 'Stay updated with the latest news, events, and academic announcements from SK Degree & P.G. College.',
 };
 
 export default function NoticeBoardPage() {

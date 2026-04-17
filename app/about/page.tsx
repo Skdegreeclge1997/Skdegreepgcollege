@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { Target, Eye, History, Award, Users, BookOpen } from 'lucide-react';
 
 export const metadata = {
-  title: 'About Us | SK Degree College',
-  description: 'Learn about our history, mission, and the excellence we strive for at SK Degree College.',
+  title: 'About Us | SK Degree & P.G. College',
+  description: 'Learn about our history, mission, and the legacy of MSN Institutions at SK Degree & P.G. College.',
 };
 
 export default function AboutPage() {
@@ -27,6 +27,11 @@ export default function AboutPage() {
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance">
             Excellence Since <span className="text-academic-gold italic">1995</span>
           </h1>
+          <div className="flex justify-center mb-6">
+            <span className="px-4 py-2 bg-academic-gold text-academic-navy font-bold rounded-lg text-sm uppercase tracking-widest">
+              MSN Institutions
+            </span>
+          </div>
           <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
             Empowering minds and shaping futures through quality education 
             and ethical leadership for over three decades.
@@ -85,10 +90,10 @@ export default function AboutPage() {
 
         <div className="space-y-16 max-w-5xl mx-auto">
           {[
-            { year: '1995', title: 'Foundation', desc: 'SK Degree College was established with just two departments and 50 students.', icon: <Award size={28} /> },
-            { year: '2005', title: 'Science Wing Expansion', desc: 'Inaugurated state-of-the-art laboratories and introduced Computer Science programs.', icon: <BookOpen size={28} /> },
-            { year: '2015', title: 'Silver Jubilee & PG Programs', desc: 'Introduced Master\'s degrees and celebrated 20 years of educational service.', icon: <Users size={28} /> },
-            { year: '2023', title: 'Digital Campus Initiative', desc: 'Fully digitized library and smart classrooms implemented across all departments.', icon: <Target size={28} /> }
+            { year: '1995', title: 'Foundation', desc: 'S.K. Degree & P.G. College was founded by Sri M. Sanyasi Naidu under the MSN Society to provide quality education in Vizianagaram.', icon: <Award size={28} /> },
+            { year: '2005', title: 'Science Wing Expansion', desc: 'Inaugurated state-of-the-art laboratories for Physics, Chemistry, and Zoology departments.', icon: <BookOpen size={28} /> },
+            { year: '2015', title: 'NCC Excellence', desc: 'Established dedicated Army and Naval wings, producing defense leaders for the nation.', icon: <Users size={28} /> },
+            { year: '2023', title: 'Digital Campus', desc: 'Implemented high-speed computing labs and smart classroom infrastructure.', icon: <Target size={28} /> }
           ].map((item, i) => (
             <div key={i} className={`flex flex-col md:flex-row items-center gap-12 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
               <div className="flex-1 text-center md:text-left">

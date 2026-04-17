@@ -1,23 +1,83 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
+import SearchModal from './SearchModal';
+import { Search } from 'lucide-react';
+import { useAuth } from './AuthProvider';
+import Link from 'next/link';
 
 export default function Header() {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { user } = useAuth();
+
+  // Keyboard shortcut for search (Cmd+K or Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+      if (e.key === 'Escape') {
+        setIsSearchOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 w-full glass bg-academic-navy/90 border-b border-white/10">
+    <header className="fixed top-0 z-50 w-full bg-academic-navy/90 backdrop-blur-md border-b border-white/5">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <div className="flex items-center space-x-2">
-          {/* Logo Placeholder */}
-          <div className="w-10 h-10 bg-academic-gold rounded-full flex items-center justify-center text-academic-navy font-bold text-xl shadow-lg">
+        {/* Brand */}
+        <Link href="/" className="flex items-center space-x-2 group">
+          <div className="w-10 h-10 bg-academic-gold rounded-full flex items-center justify-center text-academic-navy font-bold text-xl shadow-lg transition-transform group-hover:scale-110">
             SK
           </div>
           <div className="flex flex-col">
-            <span className="text-xl font-bold tracking-tight text-white leading-none">SK DEGREE</span>
-            <span className="text-xs font-medium text-academic-gold tracking-[0.2em] uppercase">College</span>
+            <span className="text-xl font-black tracking-tight text-white leading-none">SK DEGREE</span>
+            <span className="text-[10px] font-bold text-academic-gold tracking-[0.2em] uppercase"> & P.G. COLLEGE</span>
+          </div>
+        </Link>
+        
+        {/* Navigation & Actions */}
+        <div className="flex items-center gap-8">
+          <Navbar />
+          
+          <div className="hidden lg:flex items-center gap-4 pl-8 border-l border-white/10">
+            <button 
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 text-white/70 hover:text-academic-gold transition-colors relative group"
+              aria-label="Search"
+            >
+              <Search size={20} />
+              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-white text-academic-navy text-[10px] font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl">
+                Search (⌘K)
+              </span>
+            </button>
+            
+            {user ? (
+              <Link 
+                href="/dashboard" 
+                className="px-6 py-2 bg-white/5 hover:bg-white/10 text-white text-sm font-bold rounded-full border border-white/10 transition-all flex items-center gap-2"
+              >
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                Portal
+              </Link>
+            ) : (
+              <Link 
+                href="/login" 
+                className="px-6 py-2 bg-academic-gold text-academic-navy text-sm font-bold rounded-full hover:shadow-xl hover:shadow-academic-gold/20 transition-all"
+              >
+                Student Login
+              </Link>
+            )}
           </div>
         </div>
-        
-        <Navbar />
       </div>
+
+      {/* Global Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 }

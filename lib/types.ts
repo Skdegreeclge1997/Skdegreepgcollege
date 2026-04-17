@@ -32,3 +32,10 @@ export interface Faculty {
   image: string;
   email: string;
 }
+
+export interface GalleryItem {
+  id: string;
+  url: string;
+  caption: string;
+  category: 'Campus' | 'Labs' | 'NCC' | 'Placements' | 'All';
+}

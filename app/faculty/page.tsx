@@ -7,8 +7,8 @@ import { Users, Filter, Sparkles } from 'lucide-react';
 const faculty = facultyData as Faculty[];
 
 export const metadata = {
-  title: 'Faculty Directory | SK Degree College',
-  description: 'Meet the experienced educators and researchers shaping the next generation at SK Degree College.',
+  title: 'Faculty Directory | SK Degree & P.G. College',
+  description: 'Meet the experienced educators and researchers shaping the next generation at SK Degree & P.G. College.',
 };
 
 export default function FacultyPage() {

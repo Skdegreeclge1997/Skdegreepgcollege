@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "name": "TCS",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg",
+    "industry": "IT Services"
+  },
+  {
+    "id": "2",
+    "name": "Cognizant",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg",
+    "industry": "IT Services"
+  },
+  {
+    "id": "3",
+    "name": "Wipro",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg",
+    "industry": "IT Services"
+  },
+  {
+    "id": "4",
+    "name": "Aurobindo Pharma",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Aurobindo_Pharma_Logo.svg/1200px-Aurobindo_Pharma_Logo.svg.png",
+    "industry": "Pharmaceuticals"
+  },
+  {
+    "id": "5",
+    "name": "Hetero Labs",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Hetero_Drugs_logo.svg/1200px-Hetero_Drugs_logo.svg.png",
+    "industry": "Pharmaceuticals"
+  },
+  {
+    "id": "6",
+    "name": "Laurus Labs",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/2/2c/Laurus_Labs_logo.png",
+    "industry": "Pharmaceuticals"
+  }
+]

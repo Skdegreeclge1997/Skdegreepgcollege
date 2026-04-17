@@ -13,10 +13,13 @@ export default function Footer() {
               <div className="w-8 h-8 bg-academic-gold rounded-full flex items-center justify-center text-academic-navy font-bold text-sm">
                 SK
               </div>
-              <span className="text-lg font-bold tracking-tight">SK DEGREE COLLEGE</span>
+              <span className="text-lg font-bold tracking-tight">SK DEGREE & P.G. COLLEGE</span>
             </div>
+            <p className="text-sm text-slate-400 leading-relaxed font-bold">
+              College Code: 17950
+            </p>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Empowering students through academic excellence and holistic development. Committed to shaping the leaders of tomorrow.
+              Part of MSN Institutions. Empowering students through academic excellence and holistic development.
             </p>
             <div className="flex space-x-4 pt-2">
               <MessageSquare aria-hidden="true" className="w-5 h-5 text-slate-400 hover:text-academic-gold cursor-pointer transition-colors" />
@@ -53,22 +56,22 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-slate-400">
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-academic-gold shrink-0" />
-                <span>123 College Ave, Main Campus, City, 560001</span>
+                <span>Ayyannapeta Jn., Vizianagaram.</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-academic-gold shrink-0" />
-                <span>+91 1234 567 890</span>
+                <span>+91 94412 53163, 94400 67143</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-academic-gold shrink-0" />
-                <span>info@skdegreecollege.edu</span>
+                <span>arunodayaes@yahoo.com</span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/5 text-center text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} SK Degree College. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} SK Degree & P.G. College (17950). All rights reserved.</p>
         </div>
       </div>
     </footer>
