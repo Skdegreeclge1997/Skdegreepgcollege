@@ -289,16 +289,28 @@ export default function LandingPage() {
                 View All <ArrowRight size={16} />
              </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            {recentNotices.map((notice) => (
-              <motion.div 
-                key={notice.id} 
-                whileHover={{ y: -10 }}
-                className="h-full"
-              >
-                <NoticeCard notice={notice} />
-              </motion.div>
-            ))}
+          <div className="relative overflow-hidden py-4 -mx-4 px-4">
+            <motion.div 
+              animate={{ 
+                x: [0, -1000],
+              }}
+              transition={{ 
+                duration: 25,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="flex gap-6 w-max"
+            >
+              {[...recentNotices, ...recentNotices, ...recentNotices].map((notice, i) => (
+                <div key={`${notice.id}-${i}`} className="w-[350px] shrink-0">
+                  <NoticeCard notice={notice} />
+                </div>
+              ))}
+            </motion.div>
+            
+            {/* Edge Gradients */}
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
           </div>
 
           <motion.div 
