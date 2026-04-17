@@ -2,36 +2,37 @@
 
 import React from "react";
 import { 
-  SiGoogle, 
   SiWipro, 
   SiInfosys, 
   SiAccenture, 
   SiCognizant, 
   SiTata,
-  SiZomato,
-  SiSwiggy,
-  SiPaytm,
-  SiRazorpay
+  SiRazorpay,
+  SiZoho,
+  SiPostman,
+  SiFlipkart,
+  SiVercel,
+  SiNotion,
+  SiFigma
 } from "react-icons/si";
-import { FaAmazon, FaMicrosoft } from "react-icons/fa";
 import { GiMedicinePills, GiDna2, GiMicroscope } from "react-icons/gi";
 
 const brands = [
-  { name: "Google", icon: SiGoogle, color: "#4285F4" },
-  { name: "Amazon", icon: FaAmazon, color: "#FF9900" },
   { name: "TCS", icon: SiTata, color: "#1B3E92" },
   { name: "Wipro", icon: SiWipro, color: "#000000" },
   { name: "Infosys", icon: SiInfosys, color: "#007CC3" },
   { name: "Cognizant", icon: SiCognizant, color: "#0033A0" },
   { name: "Accenture", icon: SiAccenture, color: "#A100FF" },
-  { name: "Microsoft", icon: FaMicrosoft, color: "#00A4EF" },
   { name: "Aurobindo", icon: GiMedicinePills, color: "#0066B3" },
   { name: "Hetero", icon: GiDna2, color: "#E31E24" },
   { name: "Laurus Labs", icon: GiMicroscope, color: "#009640" },
-  { name: "Zomato", icon: SiZomato, color: "#CB202D" },
-  { name: "Swiggy", icon: SiSwiggy, color: "#FC8019" },
-  { name: "Paytm", icon: SiPaytm, color: "#00BAF2" },
   { name: "Razorpay", icon: SiRazorpay, color: "#002D5E" },
+  { name: "Zoho", icon: SiZoho, color: "#E42A27" },
+  { name: "Postman", icon: SiPostman, color: "#FF6C37" },
+  { name: "Flipkart", icon: SiFlipkart, color: "#2874F0" },
+  { name: "Vercel", icon: SiVercel, color: "#000000" },
+  { name: "Notion", icon: SiNotion, color: "#000000" },
+  { name: "Figma", icon: SiFigma, color: "#F24E1E" },
 ];
 
 export const BrandScroller = () => {
