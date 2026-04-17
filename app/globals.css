@@ -84,7 +84,8 @@ h1, h2, h3, h4, h5, h6 {
     scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-top: 6rem; /* Ensures heading visibility below navbar */
     position: relative;
     overflow: hidden;
   }

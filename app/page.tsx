@@ -14,7 +14,7 @@ export default function LandingPage() {
   return (
     <main className="snap-container">
       {/* 1. Hero Section */}
-      <section className="snap-section mesh-gradient">
+      <section className="snap-section mesh-gradient items-center justify-center pt-0">
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=2000"
@@ -54,7 +54,7 @@ export default function LandingPage() {
       </section>
 
       {/* 2. Institutional Success (Trust + Stats + Placements) */}
-      <section className="snap-section bg-white">
+      <section className="snap-section bg-white justify-center pt-0">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center mb-10">
             <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] mb-1">Part of</p>
@@ -114,11 +114,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 4. News Section (Single Slide with Heading) */}
+      {/* 4. News Section */}
       <section className="snap-section bg-slate-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-             <p className="text-academic-gold font-black uppercase tracking-[0.4em] text-[10px] mb-4">Official Updates</p>
+        <div className="container mx-auto px-4 pt-10">
+          <div className="text-center mb-10">
+             <p className="text-academic-gold font-black uppercase tracking-[0.4em] text-[10px] mb-2">Official Updates</p>
              <h2 className="text-4xl font-black text-academic-navy tracking-tight">Latest News</h2>
           </div>
           <NewsSection />
@@ -127,14 +127,14 @@ export default function LandingPage() {
 
       {/* 5. Notice Board + CTA */}
       <section className="snap-section bg-white">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-10">
+        <div className="container mx-auto px-4 pt-10">
+          <div className="flex items-center justify-between mb-8">
              <h2 className="text-3xl font-black text-academic-navy">Notice Board</h2>
              <Link href="/notices" className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest">
                 View All <ArrowRight size={16} />
              </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             {recentNotices.map((notice, i) => (
               <div key={notice.id} className="animate-reveal" style={{ animationDelay: `${i * 150}ms` }}>
                 <NoticeCard notice={notice} />
@@ -142,9 +142,9 @@ export default function LandingPage() {
             ))}
           </div>
 
-          <div className="bg-academic-navy rounded-[3rem] p-12 text-center relative overflow-hidden">
+          <div className="bg-academic-navy rounded-[2.5rem] p-8 md:p-12 text-center relative overflow-hidden">
              <div className="relative z-10">
-                <h3 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter">Your Future Starts Now</h3>
+                <h3 className="text-2xl md:text-4xl font-black text-white mb-6 tracking-tighter">Your Future Starts Now</h3>
                 <Link href="/admissions" className="px-10 py-4 bg-academic-gold text-academic-navy font-bold rounded-full hover:scale-105 transition-all shadow-xl inline-block">
                    Apply Now 2026-27
                 </Link>
