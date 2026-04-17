@@ -1,14 +1,49 @@
-import React from 'react';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+"use client";
+
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-
-export const metadata = {
-  title: 'Contact Us | SK Degree & P.G. College',
-  description: 'Get in touch with SK Degree & P.G. College, Vizianagaram. Find campus location, contact numbers, and email addresses.',
-};
+import { supabase } from '@/lib/supabase';
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErrorMsg('');
+
+    // BOT PROTECTION: Only allow @gmail.com
+    if (!formData.email.toLowerCase().endsWith('@gmail.com')) {
+      setErrorMsg('For security purposes, only @gmail.com addresses are accepted.');
+      setStatus('error');
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from('inquiries').insert([
+        { 
+          name: formData.name, 
+          email: formData.email, 
+          message: formData.message,
+          course: 'Contact Inquiry' // Default for general contact
+        }
+      ]);
+
+      if (error) throw error;
+      
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (err: any) {
+      console.error(err);
+      setErrorMsg('Something went wrong. Please try again later.');
+      setStatus('error');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -96,26 +131,70 @@ export default function ContactPage() {
                   </div>
                </div>
 
-               <div className="bg-academic-navy p-10 rounded-3xl text-white shadow-2xl">
+               <div className="bg-academic-navy p-10 rounded-3xl text-white shadow-2xl relative overflow-hidden">
                   <h2 className="text-2xl font-bold mb-6">Quick Message</h2>
-                  <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Name</label>
-                        <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-academic-gold transition-all" />
-                     </div>
-                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Email</label>
-                        <input type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-academic-gold transition-all" />
-                     </div>
-                     <div className="col-span-full space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Message</label>
-                        <textarea rows={4} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-academic-gold transition-all" />
-                     </div>
-                     <button className="col-span-full py-4 bg-academic-gold text-academic-navy font-black rounded-xl hover:shadow-xl hover:shadow-academic-gold/20 transition-all flex items-center justify-center gap-2">
-                        <Send size={18} />
-                        Send Message
-                     </button>
-                  </form>
+                  
+                  {status === 'success' ? (
+                    <div className="bg-green-500/20 border border-green-500/30 p-8 rounded-2xl text-center animate-in zoom-in duration-300">
+                        <CheckCircle2 className="mx-auto mb-4 text-green-400" size={48} />
+                        <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
+                        <p className="text-sm text-slate-300">We have received your inquiry and will get back to you soon.</p>
+                        <button onClick={() => setStatus('idle')} className="mt-6 px-6 py-2 bg-white text-academic-navy font-bold rounded-lg text-sm">Send Another</button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Name</label>
+                          <input 
+                            required
+                            type="text" 
+                            value={formData.name}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-academic-gold transition-all" 
+                          />
+                      </div>
+                      <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Email (Gmail Only)</label>
+                          <input 
+                            required
+                            type="email" 
+                            value={formData.email}
+                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            placeholder="yourname@gmail.com"
+                            className={`w-full bg-white/5 border rounded-xl px-4 py-3 outline-none transition-all ${errorMsg ? 'border-red-500' : 'border-white/10 focus:border-academic-gold'}`}
+                          />
+                      </div>
+                      <div className="col-span-full space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Message</label>
+                          <textarea 
+                            required
+                            rows={4} 
+                            value={formData.message}
+                            onChange={(e) => setFormData({...formData, message: e.target.value})}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-academic-gold transition-all" 
+                          />
+                      </div>
+
+                      {errorMsg && (
+                        <div className="col-span-full flex items-center gap-2 text-red-400 text-xs font-bold animate-in slide-in-from-left-2">
+                           <AlertCircle size={14} />
+                           {errorMsg}
+                        </div>
+                      )}
+
+                      <button 
+                        disabled={status === 'loading'}
+                        className="col-span-full py-4 bg-academic-gold text-academic-navy font-black rounded-xl hover:shadow-xl hover:shadow-academic-gold/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                      >
+                          {status === 'loading' ? 'Sending...' : (
+                            <>
+                              <Send size={18} />
+                              Send Message
+                            </>
+                          )}
+                      </button>
+                    </form>
+                  )}
                </div>
             </div>
           </div>

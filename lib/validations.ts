@@ -2,7 +2,10 @@ import { z } from "zod";
 
 export const inquirySchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email address").refine(
+    (val) => val.toLowerCase().endsWith("@gmail.com"),
+    "Only @gmail.com addresses are allowed for security purposes."
+  ),
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
   gender: z.enum(["Male", "Female", "Other"]),
   intermediateGroup: z.string().min(2, "Please specify your intermediate group"),

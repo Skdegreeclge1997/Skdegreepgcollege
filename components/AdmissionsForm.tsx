@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckCircle, Send, Loader2 } from 'lucide-react';
 import { inquirySchema, InquiryFormValues } from '@/lib/validations';
+import { supabase } from '@/lib/supabase';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -41,12 +42,27 @@ export default function AdmissionsForm() {
 
   const onSubmit = async (data: InquiryFormValues) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log("Inquiry Submitted:", data);
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    reset();
+    try {
+      const { error } = await supabase.from('inquiries').insert([
+        { 
+          name: data.name, 
+          email: data.email, 
+          phone: data.phone,
+          course: data.courseInterest,
+          message: `Group: ${data.intermediateGroup} | Address: ${data.address}`
+        }
+      ]);
+
+      if (error) throw error;
+      
+      setIsSuccess(true);
+      reset();
+    } catch (err: any) {
+      console.error(err);
+      alert('Failed to submit inquiry. Please check your internet connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSuccess) {
