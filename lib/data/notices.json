@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "title": "Admissions Open for Academic Year 2026-27",
+    "date": "2026-04-15",
+    "category": "Admission",
+    "content": "Applications are invited for UG and PG programs. Visit the admission portal to apply online.",
+    "isPinned": true
+  },
+  {
+    "id": "2",
+    "title": "Semester Examination Schedule Published",
+    "date": "2026-04-10",
+    "category": "Exam",
+    "content": "The end-semester examinations for all departments will commence from May 15, 2026.",
+    "isPinned": true
+  },
+  {
+    "id": "3",
+    "title": "Annual Sports Meet 2026",
+    "date": "2026-04-16",
+    "category": "Event",
+    "content": "Join us for the annual sports meet on April 25th at the college grounds.",
+    "isPinned": false
+  },
+  {
+    "id": "4",
+    "title": "Summer Internship Workshop",
+    "date": "2026-04-12",
+    "category": "Event",
+    "content": "A special workshop on securing summer internships will be held in the auditorium.",
+    "isPinned": false
+  },
+  {
+    "id": "5",
+    "title": "Eid-ul-Fitr Holiday Notice",
+    "date": "2026-04-05",
+    "category": "Holiday",
+    "content": "The college will remain closed on the occasion of Eid-ul-Fitr.",
+    "isPinned": false
+  }
+]
