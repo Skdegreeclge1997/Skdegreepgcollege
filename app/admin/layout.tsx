@@ -68,7 +68,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  if (!user && pathname !== '/admin/login') return null;
+  // If on login page, just render the login form without the admin chrome
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
+
+  // If not on login page and no user, we've already redirected or are about to
+  if (!user) return null;
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
@@ -119,10 +125,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="p-4 border-t border-white/5">
             <div className="flex items-center gap-3 p-3 mb-4 rounded-xl bg-white/5 border border-white/10">
                <div className="w-8 h-8 rounded-full bg-academic-gold flex items-center justify-center text-academic-navy font-black text-xs">
-                  {user.email?.[0].toUpperCase()}
+                  {user?.email?.[0]?.toUpperCase() || 'A'}
                </div>
                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold truncate">{user.email}</p>
+                  <p className="text-xs font-bold truncate">{user?.email}</p>
                   <div className="flex items-center gap-1 text-[8px] font-black text-academic-gold uppercase tracking-tighter">
                      <ShieldCheck size={8} />
                      Master Admin
@@ -151,7 +157,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="flex items-center gap-4 ml-auto">
              <div className="hidden md:flex flex-col items-end mr-4">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Logged in as</span>
-                <span className="text-sm font-black text-academic-navy">{user.email}</span>
+                <span className="text-sm font-black text-academic-navy">{user?.email}</span>
              </div>
              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400">
                 <Bell size={20} />
