@@ -94,7 +94,7 @@ export default function AdmissionsAdmin() {
         </div>
       </div>
 
-      {/* Content Area (Table on Desktop, Cards on Mobile) */}
+      {/* Content Area */}
       <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden min-h-[400px]">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-40 gap-4">
@@ -102,118 +102,119 @@ export default function AdmissionsAdmin() {
             <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">Synchronizing Applications...</p>
           </div>
         ) : (
-          <>
+          <div className="w-full">
             {/* Desktop Table View */}
             <div className="hidden lg:block overflow-x-auto">
               <table className="w-full text-left">
-            <thead>
-              <tr className="bg-slate-50 border-b border-slate-100">
-                <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Student</th>
-                <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Applied Course</th>
-                <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Contact Info</th>
-                <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Date</th>
-                <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Status</th>
-                <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-50">
-              {filteredInquiries.map((inq) => (
-                <tr key={inq.id} className="hover:bg-slate-50/50 transition-colors group">
-                  <td className="px-6 py-6">
-                    <div className="flex items-center gap-3">
-                       <div className="w-10 h-10 rounded-full bg-academic-navy text-white flex items-center justify-center text-sm font-black">
-                          {inq.name[0]}
-                       </div>
-                       <div>
-                          <p className="font-black text-academic-navy leading-none mb-1">{inq.name}</p>
-                          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">ID: #INQ-{inq.id.padStart(4, '0')}</p>
-                       </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-6">
-                    <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-[10px] font-black uppercase">
-                      {inq.course}
-                    </span>
-                  </td>
-                  <td className="px-6 py-6 space-y-1">
-                    <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
-                       <Mail size={14} className="text-slate-300" />
-                       {inq.email}
-                    </div>
-                    <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
-                       <Phone size={14} className="text-slate-300" />
-                       {inq.phone}
-                    </div>
-                  </td>
-                  <td className="px-6 py-6">
-                    <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
-                       <Calendar size={14} className="text-slate-300" />
-                       {new Date(inq.created_at).toLocaleDateString()}
-                    </div>
-                  </td>
-                  <td className="px-6 py-6">
-                    <div className={`
-                       inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
-                       ${inq.status === 'New' ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-600'}
-                    `}>
-                       <div className={`w-1 h-1 rounded-full ${inq.status === 'New' ? 'bg-white' : 'bg-slate-400'}`} />
-                       {inq.status}
-                    </div>
-                  </td>
-                  <td className="px-6 py-6 text-right">
-                    <button className="px-4 py-2 bg-slate-50 text-academic-navy font-bold text-xs rounded-lg hover:bg-academic-navy hover:text-white transition-all shadow-sm">
-                      Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Mobile Card View */}
-        <div className="lg:hidden divide-y divide-slate-100">
-          {filteredInquiries.map((inq) => (
-            <div key={inq.id} className="p-6 space-y-4 active:bg-slate-50 transition-colors">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-academic-navy text-white flex items-center justify-center text-sm font-black">
-                    {inq.name[0]}
-                  </div>
-                  <div>
-                    <p className="font-black text-academic-navy leading-none mb-1">{inq.name}</p>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">ID: #INQ-{inq.id.padStart(4, '0')}</p>
-                  </div>
-                </div>
-                <div className={`
-                  inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
-                  ${inq.status === 'New' ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-600'}
-                `}>
-                  {inq.status}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                 <div className="flex items-center gap-2 text-slate-600 font-bold text-sm bg-slate-50 p-2 rounded-lg">
-                    <GraduationCap size={16} className="text-academic-gold" />
-                    {inq.course}
-                 </div>
-                 <div className="grid grid-cols-2 gap-2 mt-4">
-                    <a href={`tel:${inq.phone}`} className="flex items-center justify-center gap-2 p-3 bg-white border border-slate-200 rounded-xl text-slate-600 font-bold text-xs">
-                       <Phone size={14} /> Call
-                    </a>
-                    <a href={`mailto:${inq.email}`} className="flex items-center justify-center gap-2 p-3 bg-white border border-slate-200 rounded-xl text-slate-600 font-bold text-xs">
-                       <Mail size={14} /> Email
-                    </a>
-                 </div>
-              </div>
-              
-              <button className="w-full py-3 bg-slate-50 text-academic-navy font-bold text-xs rounded-xl border border-slate-100">
-                View Application Details
-              </button>
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-100">
+                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Student</th>
+                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Applied Course</th>
+                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Contact Info</th>
+                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Date</th>
+                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Status</th>
+                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {filteredInquiries.map((inq) => (
+                    <tr key={inq.id} className="hover:bg-slate-50/50 transition-colors group">
+                      <td className="px-6 py-6">
+                        <div className="flex items-center gap-3">
+                           <div className="w-10 h-10 rounded-full bg-academic-navy text-white flex items-center justify-center text-sm font-black">
+                              {inq.name[0]}
+                           </div>
+                           <div>
+                              <p className="font-black text-academic-navy leading-none mb-1">{inq.name}</p>
+                              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">ID: #INQ-{inq.id.slice(0, 4)}</p>
+                           </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-6">
+                        <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-[10px] font-black uppercase">
+                          {inq.course}
+                        </span>
+                      </td>
+                      <td className="px-6 py-6 space-y-1">
+                        <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
+                           <Mail size={14} className="text-slate-300" />
+                           {inq.email}
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
+                           <Phone size={14} className="text-slate-300" />
+                           {inq.phone}
+                        </div>
+                      </td>
+                      <td className="px-6 py-6">
+                        <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
+                           <Calendar size={14} className="text-slate-300" />
+                           {new Date(inq.created_at).toLocaleDateString()}
+                        </div>
+                      </td>
+                      <td className="px-6 py-6">
+                        <div className={`
+                           inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
+                           ${inq.status === 'New' || !inq.status ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-600'}
+                        `}>
+                           <div className={`w-1 h-1 rounded-full ${(inq.status === 'New' || !inq.status) ? 'bg-white' : 'bg-slate-400'}`} />
+                           {inq.status || 'New'}
+                        </div>
+                      </td>
+                      <td className="px-6 py-6 text-right">
+                        <button className="px-4 py-2 bg-slate-50 text-academic-navy font-bold text-xs rounded-lg hover:bg-academic-navy hover:text-white transition-all shadow-sm">
+                          Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ))}
-          </>
+
+            {/* Mobile Card View */}
+            <div className="lg:hidden divide-y divide-slate-100">
+              {filteredInquiries.map((inq) => (
+                <div key={inq.id} className="p-6 space-y-4 active:bg-slate-50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-academic-navy text-white flex items-center justify-center text-sm font-black">
+                        {inq.name[0]}
+                      </div>
+                      <div>
+                        <p className="font-black text-academic-navy leading-none mb-1">{inq.name}</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">ID: #INQ-{inq.id.slice(0, 4)}</p>
+                      </div>
+                    </div>
+                    <div className={`
+                      inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
+                      ${inq.status === 'New' || !inq.status ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-600'}
+                    `}>
+                      {inq.status || 'New'}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                     <div className="flex items-center gap-2 text-slate-600 font-bold text-sm bg-slate-50 p-2 rounded-lg">
+                        <GraduationCap size={16} className="text-academic-gold" />
+                        {inq.course}
+                     </div>
+                     <div className="grid grid-cols-2 gap-2 mt-4">
+                        <a href={`tel:${inq.phone}`} className="flex items-center justify-center gap-2 p-3 bg-white border border-slate-200 rounded-xl text-slate-600 font-bold text-xs">
+                           <Phone size={14} /> Call
+                        </a>
+                        <a href={`mailto:${inq.email}`} className="flex items-center justify-center gap-2 p-3 bg-white border border-slate-200 rounded-xl text-slate-600 font-bold text-xs">
+                           <Mail size={14} /> Email
+                        </a>
+                     </div>
+                  </div>
+                  
+                  <button className="w-full py-3 bg-slate-50 text-academic-navy font-bold text-xs rounded-xl border border-slate-100">
+                    View Application Details
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
         {!isLoading && filteredInquiries.length === 0 && (
