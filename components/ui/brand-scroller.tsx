@@ -3,8 +3,6 @@
 import React from "react";
 import { 
   SiGoogle, 
-  SiAmazon, 
-  SiWindows, 
   SiWipro, 
   SiInfosys, 
   SiAccenture, 
@@ -15,17 +13,18 @@ import {
   SiPaytm,
   SiRazorpay
 } from "react-icons/si";
+import { FaAmazon, FaMicrosoft } from "react-icons/fa";
 import { GiMedicinePills, GiDna2, GiMicroscope } from "react-icons/gi";
 
 const brands = [
   { name: "Google", icon: SiGoogle, color: "#4285F4" },
-  { name: "Amazon", icon: SiAmazon, color: "#FF9900" },
+  { name: "Amazon", icon: FaAmazon, color: "#FF9900" },
   { name: "TCS", icon: SiTata, color: "#1B3E92" },
   { name: "Wipro", icon: SiWipro, color: "#000000" },
   { name: "Infosys", icon: SiInfosys, color: "#007CC3" },
   { name: "Cognizant", icon: SiCognizant, color: "#0033A0" },
   { name: "Accenture", icon: SiAccenture, color: "#A100FF" },
-  { name: "Microsoft", icon: SiWindows, color: "#00A4EF" },
+  { name: "Microsoft", icon: FaMicrosoft, color: "#00A4EF" },
   { name: "Aurobindo", icon: GiMedicinePills, color: "#0066B3" },
   { name: "Hetero", icon: GiDna2, color: "#E31E24" },
   { name: "Laurus Labs", icon: GiMicroscope, color: "#009640" },
