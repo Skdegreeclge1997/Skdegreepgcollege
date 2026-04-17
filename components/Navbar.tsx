@@ -32,16 +32,9 @@ export default function Navbar() {
             {link.name}
           </Link>
         ))}
-        <div className="relative group">
-          <Search aria-hidden="true" className="w-5 h-5 text-white/70 group-hover:text-academic-gold cursor-pointer transition-colors" />
-        </div>
       </div>
 
-      {/* Mobile Menu Toggle */}
       <div className="md:hidden flex items-center space-x-4">
-        <button className="text-white p-1" aria-label="Search">
-          <Search aria-hidden="true" className="w-5 h-5" />
-        </button>
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-academic-gold rounded-md"

@@ -36,13 +36,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const checkUser = async () => {
-      // Bypass for local testing
-      if (typeof window !== 'undefined' && localStorage.getItem('isAdmin') === 'true') {
-        setUser({ email: 'admin@skcollege.com' });
-        setIsLoading(false);
-        return;
-      }
-
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         router.push('/admin/login');
@@ -55,7 +48,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [router]);
 
   const handleSignOut = async () => {
-    localStorage.removeItem('isAdmin');
     await supabase.auth.signOut();
     router.push('/admin/login');
   };

@@ -17,7 +17,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-slate-50 flex items-start justify-center p-4 pt-32">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
           {/* Header */}

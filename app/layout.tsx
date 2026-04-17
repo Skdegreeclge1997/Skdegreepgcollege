@@ -42,6 +42,8 @@ export const metadata: Metadata = {
   }
 };
 
+import LayoutWrapper from "@/components/LayoutWrapper";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -51,11 +53,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <AuthProvider>
-          <Header />
-          <main className="flex-grow">
+          <LayoutWrapper>
             {children}
-          </main>
-          <Footer />
+          </LayoutWrapper>
         </AuthProvider>
       </body>
     </html>

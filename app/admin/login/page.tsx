@@ -19,12 +19,6 @@ export default function AdminLoginPage() {
     setIsLoading(true);
     setError(null);
 
-    // Fallback for testing when Supabase is not yet connected
-    if (email === 'admin@skcollege.com' && password === 'admin123') {
-      localStorage.setItem('isAdmin', 'true');
-      router.push('/admin/dashboard');
-      return;
-    }
 
     const { error: authError } = await supabase.auth.signInWithPassword({
       email,
@@ -40,9 +34,9 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-slate-50 flex items-start justify-center p-4 pt-32">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-800">
+        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
           <div className="bg-academic-navy p-8 text-center text-white relative">
             <div className="relative w-16 h-16 bg-white rounded-full overflow-hidden border-4 border-academic-gold mx-auto mb-4 flex items-center justify-center shadow-xl">
                <Image 
