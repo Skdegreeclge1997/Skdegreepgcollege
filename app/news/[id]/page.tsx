@@ -91,8 +91,6 @@ export default function NewsDetail() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Header />
-      
       <main className="flex-grow pt-32 pb-24">
         {/* Breadcrumbs */}
         <div className="container mx-auto px-4 mb-8">
@@ -262,7 +260,6 @@ export default function NewsDetail() {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 }
