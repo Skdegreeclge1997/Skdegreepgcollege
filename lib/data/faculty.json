@@ -1,0 +1,68 @@
+[
+  {
+    "id": "1",
+    "name": "Dr. Rajesh Kumar",
+    "designation": "Principal & HOD",
+    "department": "Science",
+    "qualification": "Ph.D. in Physics",
+    "experience": "25 Years",
+    "specialization": "Quantum Mechanics, Astrophysics",
+    "image": "/faculty/rajesh_kumar.jpg",
+    "email": "principal@skdegreecollege.edu"
+  },
+  {
+    "id": "2",
+    "name": "Prof. Sunita Sharma",
+    "designation": "Head of Department",
+    "department": "Commerce",
+    "qualification": "M.Com, M.Phil, Ph.D.",
+    "experience": "18 Years",
+    "specialization": "Corporate Accounting, Taxation",
+    "image": "/faculty/sunita_sharma.jpg",
+    "email": "sunita.sharma@skdegreecollege.edu"
+  },
+  {
+    "id": "3",
+    "name": "Dr. Amit Verma",
+    "designation": "Assistant Professor",
+    "department": "Science",
+    "qualification": "M.Sc, Ph.D. (Computer Science)",
+    "experience": "12 Years",
+    "specialization": "Artificial Intelligence, Data Structures",
+    "image": "/faculty/amit_verma.jpg",
+    "email": "amit.verma@skdegreecollege.edu"
+  },
+  {
+    "id": "4",
+    "name": "Mrs. Priya Das",
+    "designation": "Head of Department",
+    "department": "Arts",
+    "qualification": "M.A. English, B.Ed.",
+    "experience": "15 Years",
+    "specialization": "Victorian Literature, Creative Writing",
+    "image": "/faculty/priya_das.jpg",
+    "email": "priya.das@skdegreecollege.edu"
+  },
+  {
+    "id": "5",
+    "name": "Mr. Vikram Singh",
+    "designation": "Assistant Professor",
+    "department": "Commerce",
+    "qualification": "MBA, UGC-NET",
+    "experience": "8 Years",
+    "specialization": "Marketing Management, Business Ethics",
+    "image": "/faculty/vikram_singh.jpg",
+    "email": "vikram.singh@skdegreecollege.edu"
+  },
+  {
+    "id": "6",
+    "name": "Ms. Anjali Gupta",
+    "designation": "Assistant Professor",
+    "department": "Arts",
+    "qualification": "M.A. Political Science, Ph.D.",
+    "experience": "10 Years",
+    "specialization": "International Relations, Public Policy",
+    "image": "/faculty/anjali_gupta.jpg",
+    "email": "anjali.gupta@skdegreecollege.edu"
+  }
+]
