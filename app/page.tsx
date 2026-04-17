@@ -16,7 +16,7 @@ const recentNotices = (noticesData as Notice[]).slice(0, 3);
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } }
 };
 
 export default function LandingPage() {
@@ -33,6 +33,7 @@ export default function LandingPage() {
         <ThreeBackground />
         <div className="absolute inset-0 z-0">
           <Image
+            src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=2000"
             alt="S.K. Degree and P.G. College Vizianagaram Campus View"
             fill
             className="object-cover opacity-20 mix-blend-overlay"
