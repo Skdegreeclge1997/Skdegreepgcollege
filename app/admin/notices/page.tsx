@@ -13,7 +13,10 @@ import {
   X, 
   Save, 
   Pin,
-  Megaphone
+  Megaphone,
+  Upload,
+  Image as ImageIcon,
+  ExternalLink
 } from 'lucide-react';
  
 interface Notice {
@@ -23,6 +26,8 @@ interface Notice {
   category: string;
   content: string;
   isPinned: boolean;
+  pdf_url?: string;
+  image_url?: string;
 }
  
 export default function NoticeManager() {
@@ -31,6 +36,27 @@ export default function NoticeManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingNotice, setEditingNotice] = useState<Partial<Notice> | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploading, setIsUploading] = useState<'pdf' | 'image' | null>(null);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'pdf' | 'image') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploading(type);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
+      const bucket = type === 'pdf' ? 'documents' : 'images';
+      const filePath = `notices/${fileName}`;
+      const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, file);
+      if (uploadError) throw uploadError;
+      const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(filePath);
+      setEditingNotice(prev => prev ? { ...prev, [type === 'pdf' ? 'pdf_url' : 'image_url']: publicUrl } : null);
+    } catch (error: any) {
+      alert(`Error uploading ${type}: ` + error.message);
+    } finally {
+      setIsUploading(null);
+    }
+  };
  
   useEffect(() => {
     fetchNotices();
@@ -236,16 +262,40 @@ export default function NoticeManager() {
                     />
                  </div>
  
-                 <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                    <input 
-                       type="checkbox" 
-                       id="isPinned"
-                       checked={editingNotice?.isPinned}
-                       onChange={e => setEditingNotice(p => ({...p!, isPinned: e.target.checked}))}
-                       className="w-5 h-5 rounded border-slate-300 text-academic-navy focus:ring-academic-navy cursor-pointer" 
-                    />
-                    <label htmlFor="isPinned" className="text-sm font-bold text-slate-600 cursor-pointer">Pin this notice to the top</label>
-                 </div>
+                 {/* File Uploads */}
+                  <div className="grid grid-cols-2 gap-4">
+                     <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center justify-center text-center gap-2">
+                        <ImageIcon className="text-slate-400" size={24} />
+                        <label className="cursor-pointer">
+                           <span className="text-[10px] font-black text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors">
+                              {isUploading === 'image' ? 'Uploading...' : editingNotice?.image_url ? 'Change Image' : 'Upload Image'}
+                           </span>
+                           <input type="file" className="hidden" accept="image/*" onChange={e => handleFileUpload(e, 'image')} disabled={!!isUploading} />
+                        </label>
+                        {editingNotice?.image_url && <span className="text-[8px] text-green-600 font-bold uppercase tracking-widest">Attached</span>}
+                     </div>
+                     <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center justify-center text-center gap-2">
+                        <FileText className="text-slate-400" size={24} />
+                        <label className="cursor-pointer">
+                           <span className="text-[10px] font-black text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors">
+                              {isUploading === 'pdf' ? 'Uploading...' : editingNotice?.pdf_url ? 'Change PDF' : 'Upload PDF'}
+                           </span>
+                           <input type="file" className="hidden" accept=".pdf" onChange={e => handleFileUpload(e, 'pdf')} disabled={!!isUploading} />
+                        </label>
+                        {editingNotice?.pdf_url && <span className="text-[8px] text-green-600 font-bold uppercase tracking-widest">Attached</span>}
+                     </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                     <input 
+                        type="checkbox" 
+                        id="isPinned"
+                        checked={editingNotice?.isPinned}
+                        onChange={e => setEditingNotice(p => ({...p!, isPinned: e.target.checked}))}
+                        className="w-5 h-5 rounded border-slate-300 text-academic-navy focus:ring-academic-navy cursor-pointer" 
+                     />
+                     <label htmlFor="isPinned" className="text-sm font-bold text-slate-600 cursor-pointer">Pin this notice to the top</label>
+                  </div>
               </div>
  
               <div className="p-8 bg-slate-50 flex gap-4">

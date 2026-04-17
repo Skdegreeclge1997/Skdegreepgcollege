@@ -268,28 +268,33 @@ export default function NewsManager() {
                  </div>
  
                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center justify-center text-center gap-2">
-                       <ImageIcon className="text-slate-400" size={24} />
-                       <label className="cursor-pointer">
-                          <span className="text-[10px] font-black text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors">
-                             {isUploading === 'image' ? 'Uploading...' : 'Upload Image'}
-                          </span>
-                          <input type="file" className="hidden" accept="image/*" onChange={e => handleFileUpload(e, 'image')} disabled={!!isUploading} />
-                       </label>
-                       {editingNews?.image_url && <span className="text-[8px] text-green-600 font-bold uppercase tracking-widest flex items-center gap-1"><Save size={8}/> Ready</span>}
-                    </div>
-                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center justify-center text-center gap-2">
-                       <FileText className="text-slate-400" size={24} />
-                       <label className="cursor-pointer">
-                          <span className="text-[10px] font-black text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors">
-                             {isUploading === 'pdf' ? 'Uploading...' : 'Upload PDF (Optional)'}
-                          </span>
-                          <input type="file" className="hidden" accept=".pdf" onChange={e => handleFileUpload(e, 'pdf')} disabled={!!isUploading} />
-                       </label>
-                       {editingNews?.pdf_url && <span className="text-[8px] text-green-600 font-bold uppercase tracking-widest flex items-center gap-1"><Save size={8}/> Attached</span>}
-                    </div>
-                 </div>
-              </div>
+                     <label className="cursor-pointer p-6 bg-blue-50 rounded-2xl border-2 border-dashed border-blue-200 hover:border-academic-gold hover:bg-academic-gold/5 flex flex-col items-center justify-center text-center gap-3 transition-all">
+                        {isUploading === 'image' ? (
+                           <Loader2 className="animate-spin text-academic-gold" size={32} />
+                        ) : (
+                           <ImageIcon className="text-blue-400" size={32} />
+                        )}
+                        <span className="text-sm font-black text-academic-navy uppercase tracking-wider">
+                           {isUploading === 'image' ? 'Uploading...' : editingNews?.image_url ? 'Change Image' : 'Upload Image'}
+                        </span>
+                        <span className="text-[10px] text-slate-400">JPG, PNG up to 5MB</span>
+                        <input type="file" className="hidden" accept="image/*" onChange={e => handleFileUpload(e, 'image')} disabled={!!isUploading} />
+                        {editingNews?.image_url && <span className="text-xs text-green-600 font-bold bg-green-50 px-3 py-1 rounded-full">Image Ready</span>}
+                     </label>
+                     <label className="cursor-pointer p-6 bg-red-50 rounded-2xl border-2 border-dashed border-red-200 hover:border-academic-gold hover:bg-academic-gold/5 flex flex-col items-center justify-center text-center gap-3 transition-all">
+                        {isUploading === 'pdf' ? (
+                           <Loader2 className="animate-spin text-academic-gold" size={32} />
+                        ) : (
+                           <FileText className="text-red-400" size={32} />
+                        )}
+                        <span className="text-sm font-black text-academic-navy uppercase tracking-wider">
+                           {isUploading === 'pdf' ? 'Uploading...' : editingNews?.pdf_url ? 'Change PDF' : 'Upload PDF'}
+                        </span>
+                        <span className="text-[10px] text-slate-400">PDF files (Optional)</span>
+                        <input type="file" className="hidden" accept=".pdf" onChange={e => handleFileUpload(e, 'pdf')} disabled={!!isUploading} />
+                        {editingNews?.pdf_url && <span className="text-xs text-green-600 font-bold bg-green-50 px-3 py-1 rounded-full">PDF Attached</span>}
+                     </label>
+                  </div></div>
  
               <div className="p-8 bg-slate-50 flex gap-4">
                  <button 
