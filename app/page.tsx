@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Award, Users, BookOpen, MapPin, CheckCircle2 } from 'lucide-react';
 import NoticeCard from '@/components/NoticeCard';
+import noticesData from '@/lib/data/notices.json';
 import { Notice } from '@/lib/types';
 import { BrandScroller } from '@/components/ui/brand-scroller';
 
