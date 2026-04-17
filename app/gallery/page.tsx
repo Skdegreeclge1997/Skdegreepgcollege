@@ -4,8 +4,8 @@ import galleryData from '@/lib/data/gallery.json';
 import { GalleryItem } from '@/lib/types';
 
 export const metadata = {
-  title: 'Campus Gallery | SK Degree & P.G. College',
-  description: 'Explore our state-of-the-art infrastructure, laboratories, and vibrant campus life at SK Degree & P.G. College.',
+  title: 'Campus Gallery | S.K. Degree & P.G. College',
+  description: 'Explore our state-of-the-art infrastructure, laboratories, and vibrant campus life at S.K. Degree & P.G. College.',
 };
 
 export default function GalleryPage() {

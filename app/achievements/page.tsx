@@ -4,7 +4,7 @@ import { Award, Briefcase, GraduationCap, Ship, ShieldCheck, Target } from 'luci
 import placementsData from '@/lib/data/placements.json';
 
 export const metadata = {
-  title: 'Placements & NCC Achievements | SK Degree & P.G. College',
+  title: 'Placements & NCC Achievements | S.K. Degree & P.G. College',
   description: 'Celebrating our student success stories in corporate placements and NCC defense training.',
 };
 
@@ -18,7 +18,7 @@ export default function AchievementsPage() {
             Legacy of <span className="text-academic-gold">Success</span>
           </h1>
           <p className="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            At SK Degree & P.G. College, we measure our success by the achievements 
+            At S.K. Degree & P.G. College, we measure our success by the achievements 
             of our students in the corporate world and their service to the nation.
           </p>
         </div>
@@ -142,7 +142,7 @@ export default function AchievementsPage() {
         <h2 className="text-3xl font-bold text-academic-navy mb-8">Ready to Start Your Success Story?</h2>
         <div className="flex justify-center gap-6">
           <a href="/admissions" className="px-10 py-4 bg-academic-gold text-academic-navy font-bold rounded-full hover:shadow-xl transition-all">
-            Join SK College
+            Join S.K. College
           </a>
           <a href="/faculty" className="px-10 py-4 bg-white text-academic-navy border border-slate-200 font-bold rounded-full hover:bg-slate-50 transition-all">
             Meet Mentors

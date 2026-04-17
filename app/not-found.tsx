@@ -49,7 +49,7 @@ export default function NotFound() {
         </div>
 
         <div className="mt-16 text-slate-400 text-sm font-medium">
-          SK Degree & P.G. College • Vizianagaram
+          S.K. Degree & P.G. College • Vizianagaram
         </div>
       </div>
     </main>

@@ -19,8 +19,7 @@ export default function AdminLoginPage() {
     setIsLoading(true);
     setError(null);
 
-
-    const { error: authError } = await supabase.auth.signInWithPassword({
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -28,14 +27,21 @@ export default function AdminLoginPage() {
     if (authError) {
       setError(authError.message);
       setIsLoading(false);
-    } else {
-      router.push('/admin/dashboard');
+    } else if (data.user) {
+      // Small delay to allow AuthProvider to catch up if needed
+      setTimeout(() => {
+        router.push('/admin/dashboard');
+      }, 500);
     }
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 flex items-start justify-center p-4 pt-32">
-      <div className="w-full max-w-md">
+    <main className="min-h-screen bg-academic-navy flex items-start justify-center p-4 pt-32 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-academic-gold/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full" />
+      
+      <div className="w-full max-w-md relative z-10">
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
           <div className="bg-academic-navy p-8 text-center text-white relative">
             <div className="relative w-16 h-16 bg-white rounded-full overflow-hidden border-4 border-academic-gold mx-auto mb-4 flex items-center justify-center shadow-xl">
@@ -109,7 +115,7 @@ export default function AdminLoginPage() {
         </div>
         
         <p className="mt-8 text-center text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">
-          SK Degree & P.G. College Management System
+          S.K. Degree & P.G. College Management System
         </p>
       </div>
     </main>

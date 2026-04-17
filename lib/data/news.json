@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "title": "College Achieves 100% Placement Record for Computer Science Batch",
+    "description": "The Department of Computer Science is proud to announce that all eligible students from the final year have been placed in leading MNCs and innovative startups during the recent campus recruitment drive.",
+    "date": "2024-03-15",
+    "image": "https://images.unsplash.com/photo-1523240715181-310f9d7a573f?auto=format&fit=crop&q=80&w=1000",
+    "category": "Placements"
+  },
+  {
+    "id": "2",
+    "title": "Annual Science Exhibition 'S.K. TechFest 2024' Inaugurated",
+    "description": "S.K. TechFest 2024 was inaugurated by the District Collector today. Over 200 innovative projects from various departments are being showcased, demonstrating our students' technical prowess.",
+    "date": "2024-03-10",
+    "image": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1000",
+    "category": "Events"
+  },
+  {
+    "id": "3",
+    "title": "S.K. College NCC Cadet Selected for Republic Day Parade 2025",
+    "description": "Our senior cadet has been selected to represent the Andhra Pradesh & Telangana Directorate at the prestigious Republic Day Parade in New Delhi, continuing our long-standing tradition of excellence.",
+    "date": "2024-02-28",
+    "image": "https://images.unsplash.com/photo-1544923246-77307dd654ca?auto=format&fit=crop&q=80&w=1000",
+    "category": "NCC"
+  }
+]

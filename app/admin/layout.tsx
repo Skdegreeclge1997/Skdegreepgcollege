@@ -14,7 +14,8 @@ import {
   GraduationCap,
   ChevronRight,
   ShieldCheck,
-  Loader2
+  Loader2,
+  Newspaper
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -23,6 +24,7 @@ const navItems = [
   { name: 'Overview', href: '/admin/dashboard', icon: LayoutDashboard },
   { name: 'Admissions', href: '/admin/admissions', icon: GraduationCap },
   { name: 'Notices', href: '/admin/notices', icon: Bell },
+  { name: 'News', href: '/admin/news', icon: Newspaper },
   { name: 'Faculty', href: '/admin/faculty', icon: Users },
   { name: 'Gallery', href: '/admin/gallery', icon: ImageIcon },
 ];
@@ -83,7 +85,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
             <div>
                <h2 className="font-black text-sm tracking-tight">ADMIN PANEL</h2>
-               <p className="text-[10px] text-academic-gold font-bold uppercase tracking-widest leading-none">SK Degree College</p>
+               <p className="text-[10px] text-academic-gold font-bold uppercase tracking-widest leading-none">S.K. Degree College</p>
             </div>
             <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden ml-auto">
                <X size={20} />

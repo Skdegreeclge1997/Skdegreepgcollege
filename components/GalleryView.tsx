@@ -39,11 +39,11 @@ export default function GalleryView({ items }: GalleryViewProps) {
       </div>
 
       {/* Masonry-style Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {filteredItems.map((item) => (
           <div 
             key={item.id}
-            className="group relative aspect-[4/5] rounded-2xl overflow-hidden bg-slate-100 cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
+            className="group relative aspect-square md:aspect-[4/5] rounded-2xl overflow-hidden bg-slate-100 cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
             onClick={() => setSelectedImage(item)}
           >
             <Image
@@ -52,13 +52,13 @@ export default function GalleryView({ items }: GalleryViewProps) {
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-academic-navy/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-              <Maximize2 className="absolute top-4 right-4 text-white/70" size={20} />
-              <p className="text-white font-bold leading-tight transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+            {/* Overlay - visible on hover for desktop, always visible subtley on mobile */}
+            <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
+              <Maximize2 className="hidden md:block absolute top-4 right-4 text-white/70" size={20} />
+              <p className="text-white text-xs md:text-base font-bold leading-tight transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
                 {item.caption}
               </p>
-              <span className="text-academic-gold text-xs font-bold uppercase tracking-widest mt-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
+              <span className="text-academic-gold text-[8px] md:text-xs font-bold uppercase tracking-widest mt-1 md:mt-2 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 delay-75">
                 {item.category}
               </span>
             </div>

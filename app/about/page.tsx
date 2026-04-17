@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { Target, Eye, History, Award, Users, BookOpen } from 'lucide-react';
 
 export const metadata = {
-  title: 'About Us | SK Degree & P.G. College',
-  description: 'Learn about our history, mission, and the legacy of MSN Institutions at SK Degree & P.G. College.',
+  title: 'About Us | S.K. Degree & P.G. College',
+  description: 'Learn about our history, mission, and the legacy of MSN Institutions at S.K. Degree & P.G. College.',
 };
 
 export default function AboutPage() {

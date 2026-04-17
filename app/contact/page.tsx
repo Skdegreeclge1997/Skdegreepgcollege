@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { supabase } from '@/lib/supabase';
 
 export default function ContactPage() {
@@ -48,9 +46,9 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white">
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center mb-16 space-y-4">
-            <h1 className="text-5xl font-black text-academic-navy tracking-tight">Contact Us</h1>
-            <p className="text-xl text-slate-500 font-medium">Have questions? We're here to help you build your future.</p>
+          <div className="max-w-4xl mx-auto text-center mb-12 md:mb-16 space-y-4">
+            <h1 className="text-4xl sm:text-5xl font-black text-academic-navy tracking-tight">Contact Us</h1>
+            <p className="text-lg md:text-xl text-slate-500 font-medium">Have questions? We're here to help you build your future.</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">

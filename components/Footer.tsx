@@ -14,14 +14,14 @@ export default function Footer() {
               <div className="relative w-12 h-12 bg-white rounded-full overflow-hidden border-2 border-academic-gold flex items-center justify-center">
                 <Image 
                   src="/images/logo.jpeg" 
-                  alt="SK Degree College Logo" 
+                  alt="S.K. Degree College Logo" 
                   width={40} 
                   height={40} 
                   className="object-contain"
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-black text-white leading-none">SK DEGREE</span>
+                <span className="text-xl font-black text-white leading-none">S.K. DEGREE</span>
                 <span className="text-[10px] text-academic-gold uppercase font-bold tracking-widest mt-1">& P.G. COLLEGE</span>
               </div>
             </div>
@@ -81,7 +81,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/5 text-center text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} SK Degree & P.G. College (17950). All rights reserved.</p>
+          <p>© {new Date().getFullYear()} S.K. Degree & P.G. College (17950). All rights reserved.</p>
         </div>
       </div>
     </footer>

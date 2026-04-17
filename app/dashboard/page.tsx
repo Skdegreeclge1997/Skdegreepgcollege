@@ -24,7 +24,7 @@ const resources = [
 ];
 
 export default function DashboardPage() {
-  const { user, logout, isLoading } = useAuth();
+  const { user, signOut, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function DashboardPage() {
               Settings
             </Link>
             <button 
-              onClick={logout}
+              onClick={signOut}
               className="flex items-center gap-4 p-4 w-full text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-xl transition-all"
             >
               <LogOut size={20} />
@@ -88,7 +88,7 @@ export default function DashboardPage() {
           {/* Welcome Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <h1 className="text-3xl font-black text-academic-navy mb-2">Welcome back, {user.name}!</h1>
+              <h1 className="text-3xl font-black text-academic-navy mb-2">Welcome back, {user.user_metadata?.name || 'Student'}!</h1>
               <p className="text-slate-500">Academic Year 2026-27 | Semester I</p>
             </div>
             <div className="flex items-center gap-4">
@@ -104,7 +104,7 @@ export default function DashboardPage() {
             <div className="xl:col-span-1 space-y-8">
               <DigitalID 
                 student={{
-                  name: user.name,
+                  name: user.user_metadata?.name || 'Student',
                   id: "SKD-2026-101",
                   course: "B.Sc. Honours (Comp. Science)",
                   batch: "2026-2029"

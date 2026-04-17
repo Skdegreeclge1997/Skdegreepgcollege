@@ -6,7 +6,7 @@ import { Course } from '@/lib/types';
 const courses = coursesData as Course[];
 
 export const metadata = {
-  title: 'Academics & Courses | SK Degree College',
+  title: 'Academics & Courses | S.K. Degree College',
   description: 'Explore our wide range of undergraduate and postgraduate programs designed for the modern world.',
 };
 
@@ -48,7 +48,7 @@ export default function AcademicsPage() {
           <div className="lg:col-span-4">
             <div className="sticky top-32 space-y-8">
               <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-                <h2 className="text-2xl font-bold text-academic-navy mb-4">Why SK Degree College?</h2>
+                <h2 className="text-2xl font-bold text-academic-navy mb-4">Why S.K. Degree College?</h2>
                 <ul className="space-y-4">
                   {[
                     'UGC Recognized Programs',

@@ -1,69 +1,83 @@
 "use client";
-
+ 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
+import { User as SupabaseUser } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: 'student' | 'admin';
-}
-
+ 
 interface AuthContextType {
-  user: User | null;
-  login: (email: string) => Promise<void>;
-  logout: () => void;
+  user: SupabaseUser | null;
   isLoading: boolean;
+  signIn: (email: string, password?: string) => Promise<{ error: any }>;
+  signOut: () => Promise<void>;
 }
-
+ 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
+ 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-
+ 
   useEffect(() => {
-    // Check if user is already "logged in" from local storage
-    const savedUser = localStorage.getItem('sk_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-    setIsLoading(false);
-  }, []);
-
-  const login = async (email: string) => {
-    setIsLoading(true);
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    const mockUser: User = {
-      id: "101",
-      name: "S. Janakiram",
-      email: email,
-      role: 'student'
+    // Check active session on mount
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+      setIsLoading(false);
     };
+ 
+    checkSession();
+ 
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
+      setUser(session?.user ?? null);
+      setIsLoading(false);
+    });
+ 
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+ 
+  const signIn = async (email: string, password?: string) => {
+    setIsLoading(true);
+    // If no password provided, it's a mock student login (for now)
+    if (!password) {
+      // Create a mock user object to satisfy the UI
+      const mockUser = { id: 'student-id', email, user_metadata: { name: email.split('@')[0] } } as any;
+      setUser(mockUser);
+      setIsLoading(false);
+      return { error: null };
+    }
+ 
+    // Real Supabase Auth for Admin
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+ 
+    if (!error) {
+      setUser(data.user);
+    }
     
-    setUser(mockUser);
-    localStorage.setItem('sk_user', JSON.stringify(mockUser));
     setIsLoading(false);
-    router.push('/dashboard');
+    return { error };
   };
-
-  const logout = () => {
+ 
+  const signOut = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    localStorage.removeItem('sk_user');
-    router.push('/login');
+    router.push('/');
   };
-
+ 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, isLoading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
+ 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

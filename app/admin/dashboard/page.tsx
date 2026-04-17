@@ -26,7 +26,7 @@ export default function AdminOverview() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-4xl font-black text-academic-navy tracking-tight">System Overview</h1>
-          <p className="text-slate-500 font-medium">Welcome back, Admin. Here's what's happening at SK College today.</p>
+          <p className="text-slate-500 font-medium">Welcome back, Admin. Here's what's happening at S.K. College today.</p>
         </div>
         <div className="flex items-center gap-4 bg-white p-2 rounded-2xl border border-slate-100 shadow-sm">
            <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-600">

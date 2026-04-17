@@ -6,6 +6,7 @@ import NoticeCard from '@/components/NoticeCard';
 import noticesData from '@/lib/data/notices.json';
 import { Notice } from '@/lib/types';
 import { BrandScroller } from '@/components/ui/brand-scroller';
+import NewsSection from '@/components/NewsSection';
 
 const recentNotices = (noticesData as Notice[]).slice(0, 3);
 
@@ -17,7 +18,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=2000" // Campus backdrop
-            alt="SK Degree College Campus"
+            alt="S.K. Degree College Campus"
             fill
             className="object-cover"
             priority
@@ -31,26 +32,26 @@ export default function LandingPage() {
             <span>College Code: 17950</span>
           </div>
           
-          <h1 className="text-5xl md:text-8xl font-black mb-6 leading-tight text-balance">
-            SK DEGREE & <br />
+          <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-6 leading-[1.1] text-balance">
+            S.K. DEGREE & <br />
             <span className="text-academic-gold">P.G. COLLEGE</span>
           </h1>
           
-          <div className="flex items-center justify-center gap-2 text-xl md:text-2xl text-slate-300 mb-12 font-medium">
-            <MapPin size={24} className="text-academic-gold" />
+          <div className="flex items-center justify-center gap-2 text-lg md:text-2xl text-slate-300 mb-10 md:mb-12 font-medium">
+            <MapPin size={20} className="text-academic-gold md:w-6 md:h-6" />
             <span>Ayyannapeta Jn., Vizianagaram</span>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full max-w-md mx-auto sm:max-w-none">
             <Link 
               href="/admissions" 
-              className="px-10 py-4 bg-academic-gold text-academic-navy font-bold rounded-full hover:bg-white transition-all duration-300 text-lg shadow-xl hover:shadow-academic-gold/20"
+              className="w-full sm:w-auto px-10 py-4 bg-academic-gold text-academic-navy font-bold rounded-full hover:bg-white transition-all duration-300 text-lg shadow-xl hover:shadow-academic-gold/20 active:scale-95"
             >
               Apply Online 2026-27
             </Link>
             <Link 
               href="/academics" 
-              className="px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all duration-300 text-lg"
+              className="w-full sm:w-auto px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all duration-300 text-lg active:scale-95"
             >
               Explore Programs
             </Link>
@@ -149,6 +150,9 @@ export default function LandingPage() {
         </div>
         <BrandScroller />
       </section>
+
+      {/* Latest News Section */}
+      <NewsSection />
 
       {/* Recent Notices */}
       <section className="py-24 container mx-auto px-4">

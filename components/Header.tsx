@@ -12,7 +12,7 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { user } = useAuth();
 
-  // Keyboard shortcut for search (Cmd+K or Ctrl+K)
+  // Keyboard shortcut for search (Cmd+K or Ctrl+K) & Custom Event
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -23,8 +23,16 @@ export default function Header() {
         setIsSearchOpen(false);
       }
     };
+
+    const handleOpenSearch = () => setIsSearchOpen(true);
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('open-search', handleOpenSearch);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-search', handleOpenSearch);
+    };
   }, []);
 
   return (
@@ -35,13 +43,13 @@ export default function Header() {
           <div className="relative w-12 h-12 overflow-hidden rounded-full bg-white border-2 border-academic-gold transition-transform group-hover:scale-110">
             <Image 
               src="/images/logo.jpeg" 
-              alt="SK Degree College Logo" 
+              alt="S.K. Degree College Logo" 
               fill
               className="object-contain p-1"
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-xl font-black tracking-tight text-white leading-none">SK DEGREE</span>
+            <span className="text-xl font-black tracking-tight text-white leading-none">S.K. DEGREE</span>
             <span className="text-[10px] font-bold text-academic-gold tracking-[0.2em] uppercase"> & P.G. COLLEGE</span>
           </div>
         </Link>

@@ -9,22 +9,22 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'SK Degree & P.G. College | Vizianagaram',
-    template: '%s | SK Degree College'
+    default: 'S.K. Degree & P.G. College | Vizianagaram',
+    template: '%s | S.K. Degree College'
   },
-  description: 'SK Degree & P.G. College (Code: 17950) - Part of MSN Institutions. Providing quality Honours programs in Computer Science, Commerce, and Arts in Vizianagaram.',
-  keywords: ['SK Degree College', 'Vizianagaram', 'Degree College AP', 'Honours Courses', 'MSN Institutions', 'Admissions 2024'],
+  description: 'S.K. Degree & P.G. College (Code: 17950) - Part of MSN Institutions. Providing quality Honours programs in Computer Science, Commerce, and Arts in Vizianagaram.',
+  keywords: ['S.K. Degree College', 'Vizianagaram', 'Degree College AP', 'Honours Courses', 'MSN Institutions', 'Admissions 2024'],
   openGraph: {
-    title: 'SK Degree & P.G. College | Vizianagaram',
+    title: 'S.K. Degree & P.G. College | Vizianagaram',
     description: 'Empowering students through academic excellence. Admissions open for Honours programs.',
     url: 'https://sk-degree-college.vercel.app',
-    siteName: 'SK Degree & P.G. College',
+    siteName: 'S.K. Degree & P.G. College',
     images: [
       {
         url: '/images/logo.jpeg',
         width: 1200,
         height: 630,
-        alt: 'SK Degree College Logo',
+        alt: 'S.K. Degree College Logo',
       },
     ],
     locale: 'en_IN',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SK Degree & P.G. College',
+    title: 'S.K. Degree & P.G. College',
     description: 'Top-rated degree college in Vizianagaram offering professional honours programs.',
     images: ['/images/logo.jpeg'],
   },

@@ -39,3 +39,13 @@ export interface GalleryItem {
   caption: string;
   category: 'Campus' | 'Labs' | 'NCC' | 'Placements' | 'All';
 }
+ 
+export interface News {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  image: string;
+  category: string;
+  pdf_url?: string;
+}

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: CoursePageProps) {
   if (!course) return { title: 'Course Not Found' };
 
   return {
-    title: `${course.title} | SK Degree College`,
+    title: `${course.title} | S.K. Degree College`,
     description: course.description,
   };
 }

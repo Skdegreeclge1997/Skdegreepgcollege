@@ -73,7 +73,7 @@ export default function AdmissionsForm() {
         </div>
         <h3 className="text-2xl font-bold text-academic-navy mb-4">Inquiry Received!</h3>
         <p className="text-slate-600 mb-8 max-w-md mx-auto">
-          Thank you for your interest in SK Degree & P.G. College. Our admissions 
+          Thank you for your interest in S.K. Degree & P.G. College. Our admissions 
           officer will contact you shortly on your provided mobile number.
         </p>
         <button 

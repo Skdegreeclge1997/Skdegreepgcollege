@@ -3,7 +3,7 @@ import { BookOpen, CheckCircle, Clock, FileText, HelpCircle, PhoneCall } from 'l
 import AdmissionsForm from '@/components/AdmissionsForm';
 
 export const metadata = {
-  title: 'Admissions 2026-27 | SK Degree & P.G. College',
+  title: 'Admissions 2026-27 | S.K. Degree & P.G. College',
   description: 'Apply online for the academic year 2026-27. Explore our admission process, eligibility criteria, and group options.',
 };
 

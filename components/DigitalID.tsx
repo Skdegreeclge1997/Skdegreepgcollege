@@ -24,7 +24,7 @@ export default function DigitalID({ student }: DigitalIDProps) {
         {/* Top Header */}
         <div className="bg-academic-navy p-6 flex items-center justify-between text-white relative overflow-hidden">
           <div className="z-10">
-            <h3 className="text-lg font-bold leading-tight">SK DEGREE & <br />P.G. COLLEGE</h3>
+            <h3 className="text-lg font-bold leading-tight">S.K. DEGREE & <br />P.G. COLLEGE</h3>
             <p className="text-[10px] uppercase tracking-widest text-academic-gold font-bold mt-1">Student Identity Card</p>
           </div>
           <div className="relative w-12 h-12 bg-white rounded-full overflow-hidden border border-white/20 z-10">
