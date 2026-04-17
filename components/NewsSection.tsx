@@ -18,13 +18,13 @@ export default function NewsSection() {
         .from('news')
         .select('*')
         .order('date', { ascending: false })
-        .limit(3);
+        .limit(10);
       
       if (!error && data && data.length > 0) {
         setNewsItems(data);
       } else {
         // Fallback to initial data if DB is empty or error
-        setNewsItems((initialNews as News[]).slice(0, 3));
+        setNewsItems((initialNews as News[]).slice(0, 10));
       }
       setLoading(false);
     };
