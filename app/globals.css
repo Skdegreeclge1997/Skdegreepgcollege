@@ -17,9 +17,9 @@
     @apply bg-slate-50 text-slate-900 font-sans;
   }
   
-  h1 { @apply text-4xl font-extrabold text-academic-navy text-wrap-balance; }
-  h2 { @apply text-3xl font-bold text-academic-navy text-wrap-balance; }
-  h3 { @apply text-2xl font-semibold text-academic-navy text-wrap-balance; }
+  h1 { @apply text-4xl font-extrabold text-academic-navy text-balance; }
+  h2 { @apply text-3xl font-bold text-academic-navy text-balance; }
+  h3 { @apply text-2xl font-semibold text-academic-navy text-balance; }
 }
 
 @layer utilities {

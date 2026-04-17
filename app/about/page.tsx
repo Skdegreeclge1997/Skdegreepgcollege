@@ -85,10 +85,10 @@ export default function AboutPage() {
 
         <div className="space-y-16 max-w-5xl mx-auto">
           {[
-            { year: '1995', title: 'Foundation', desc: 'SK Degree College was established with just two departments and 50 students.', icon: <Award /> },
-            { year: '2005', title: 'Science Wing Expansion', desc: 'Inaugurated state-of-the-art laboratories and introduced Computer Science programs.', icon: <BookOpen /> },
-            { year: '2015', title: 'Silver Jubilee & PG Programs', desc: 'Introduced Master\'s degrees and celebrated 20 years of educational service.', icon: <Users /> },
-            { year: '2023', title: 'Digital Campus Initiative', desc: 'Fully digitized library and smart classrooms implemented across all departments.', icon: <Target /> }
+            { year: '1995', title: 'Foundation', desc: 'SK Degree College was established with just two departments and 50 students.', icon: <Award size={28} /> },
+            { year: '2005', title: 'Science Wing Expansion', desc: 'Inaugurated state-of-the-art laboratories and introduced Computer Science programs.', icon: <BookOpen size={28} /> },
+            { year: '2015', title: 'Silver Jubilee & PG Programs', desc: 'Introduced Master\'s degrees and celebrated 20 years of educational service.', icon: <Users size={28} /> },
+            { year: '2023', title: 'Digital Campus Initiative', desc: 'Fully digitized library and smart classrooms implemented across all departments.', icon: <Target size={28} /> }
           ].map((item, i) => (
             <div key={i} className={`flex flex-col md:flex-row items-center gap-12 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
               <div className="flex-1 text-center md:text-left">
@@ -98,7 +98,7 @@ export default function AboutPage() {
               </div>
               
               <div className="w-20 h-20 rounded-full bg-white border-4 border-academic-gold flex items-center justify-center text-academic-navy shadow-lg relative z-10 shrink-0">
-                {React.cloneElement(item.icon as React.ReactElement, { size: 28 })}
+                {item.icon}
                 {i < 3 && <div className="absolute top-20 left-1/2 -translate-x-1/2 w-1 h-16 bg-slate-100 hidden md:block" aria-hidden="true" />}
               </div>
               
