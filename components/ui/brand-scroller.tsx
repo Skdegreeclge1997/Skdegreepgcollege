@@ -4,7 +4,7 @@ import React from "react";
 import { 
   SiGoogle, 
   SiAmazon, 
-  SiMicrosoft, 
+  SiWindows, 
   SiWipro, 
   SiInfosys, 
   SiAccenture, 
@@ -25,7 +25,7 @@ const brands = [
   { name: "Infosys", icon: SiInfosys, color: "#007CC3" },
   { name: "Cognizant", icon: SiCognizant, color: "#0033A0" },
   { name: "Accenture", icon: SiAccenture, color: "#A100FF" },
-  { name: "Microsoft", icon: SiMicrosoft, color: "#00A4EF" },
+  { name: "Microsoft", icon: SiWindows, color: "#00A4EF" },
   { name: "Aurobindo", icon: GiMedicinePills, color: "#0066B3" },
   { name: "Hetero", icon: GiDna2, color: "#E31E24" },
   { name: "Laurus Labs", icon: GiMicroscope, color: "#009640" },
