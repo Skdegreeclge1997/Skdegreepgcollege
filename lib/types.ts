@@ -46,6 +46,7 @@ export interface News {
   description: string;
   date: string;
   image: string;
+  image_url?: string;
   category: string;
   pdf_url?: string;
 }

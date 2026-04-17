@@ -15,7 +15,7 @@ export default function NewsCard({ news }: NewsCardProps) {
       {/* Image Container */}
       <div className="relative h-64 overflow-hidden">
         <Image
-          src={news.image}
+          src={news.image_url || news.image}
           alt={news.title}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-110"
