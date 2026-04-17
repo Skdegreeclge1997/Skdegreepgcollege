@@ -18,12 +18,12 @@ export default function FacultyCard({ member }: FacultyCardProps) {
         <div className="w-full h-full relative transition-all duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
           <div className="absolute inset-0 bg-academic-navy/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
           <Image
-            src={member.image}
+            src={member.image || (member as any).image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=003366&color=fff&size=512`}
             alt={member.name}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            // Since we don't have real images yet, we'll use a placeholder if it fails
+            unoptimized={true} // Helpful for external Supabase storage URLs
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(member.name) + '&background=003366&color=fff&size=512';
