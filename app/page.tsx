@@ -145,31 +145,88 @@ export default function LandingPage() {
                 Excellence in <br />
                 <span className="text-academic-gold">NCC Training</span>
               </h2>
-              <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-xl">
-                We take immense pride in our NCC wings (Army & Navy). Our cadets are consistently 
-                placed in the Indian Defense Forces.
-              </p>
+              
+              <div className="space-y-6 mb-8">
+                <p className="text-base text-slate-400 leading-relaxed max-w-xl">
+                  S.K. Degree College is a premier hub for National Cadet Corps (NCC) training, 
+                  fostering discipline, leadership, and a spirit of selfless service.
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { title: 'Army Wing (Boys)', desc: 'Rigorous ground training and tactical skills.' },
+                    { title: 'Naval Wing (Girls)', desc: 'Specialized naval operations and watermanship.' },
+                    { title: 'Defense Placements', desc: 'Direct pathway to the Indian Armed Forces.' },
+                    { title: 'Leadership Training', desc: 'Developing character and national spirit.' }
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-3">
+                      <div className="mt-1">
+                        <CheckCircle2 size={16} className="text-academic-gold" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-sm">{item.title}</h4>
+                        <p className="text-slate-500 text-xs">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <Link 
                 href="/ncc" 
                 aria-label="View NCC Achievements and Training Details"
                 className="inline-flex items-center gap-2 text-academic-gold font-bold hover:gap-4 transition-all uppercase text-xs tracking-widest"
               >
-                View Achievements <ArrowRight size={16} />
+                Explore NCC Program <ArrowRight size={16} />
               </Link>
             </div>
-            <div className="relative group">
+            <div className="relative h-[450px] grid grid-cols-2 grid-rows-2 gap-4">
               <motion.div 
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="aspect-video rounded-3xl overflow-hidden bg-white/5 border border-white/10 p-2 shadow-2xl"
+                whileHover={{ scale: 1.02, zIndex: 10 }}
+                className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden shadow-2xl border border-white/10"
               >
                  <Image 
                     src="/images/ncc-cadets.jpeg" 
-                    alt="S.K. Degree College NCC Cadets Training" 
+                    alt="S.K. Degree College NCC Group Photo" 
                     fill 
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover rounded-2xl" 
+                    className="object-cover" 
                  />
+                 <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/60 to-transparent" />
+                 <span className="absolute bottom-4 left-4 text-white text-[10px] font-bold uppercase tracking-widest bg-academic-gold/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">Combined Wings</span>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ scale: 1.05, zIndex: 10 }}
+                className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-xl border border-white/10"
+              >
+                 <Image 
+                    src="/images/ncc.jpeg" 
+                    alt="NCC Training Drill" 
+                    fill 
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover" 
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/40 to-transparent" />
+              </motion.div>
+
+              <motion.div 
+                whileHover={{ scale: 1.05, zIndex: 10 }}
+                className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-xl border border-white/10 bg-academic-gold/5 flex items-center justify-center group"
+              >
+                 <Image 
+                    src="https://images.unsplash.com/photo-1590216087343-6ad0fc24a29c?auto=format&fit=crop&q=80&w=800" 
+                    alt="Cadet Discipline" 
+                    fill 
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover opacity-60 group-hover:opacity-100 transition-opacity" 
+                 />
+                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                    <div className="w-10 h-10 rounded-full bg-academic-gold/20 border border-academic-gold/40 flex items-center justify-center mb-2">
+                       <Users size={20} className="text-academic-gold" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase text-white tracking-tighter">100+ Cadets Placed</span>
+                 </div>
               </motion.div>
             </div>
           </div>
@@ -184,11 +241,31 @@ export default function LandingPage() {
         variants={fadeIn}
         className="snap-section bg-slate-50"
       >
-        <div className="container mx-auto px-4 pt-10">
-          <div className="text-center mb-10">
-             <p className="text-academic-gold font-black uppercase tracking-[0.4em] text-xs mb-2">Official Updates</p>
-             <h2 className="text-4xl font-black text-academic-navy tracking-tight">Latest News</h2>
+        <div className="container mx-auto px-4 pt-12">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-8 gap-6">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-academic-gold/10 text-academic-gold rounded-full text-[10px] font-black uppercase tracking-widest mb-4 border border-academic-gold/20">
+                <Newspaper size={14} />
+                <span>Campus Buzz</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-black text-academic-navy leading-tight">
+                Latest News & <span className="text-academic-gold">Updates</span>
+              </h2>
+              <p className="mt-4 text-slate-500 font-medium text-sm md:text-base">
+                Stay informed with the latest happenings, achievements, and events from our vibrant campus community.
+              </p>
+            </div>
+            
+            <Link 
+              href="/news" 
+              aria-label="Explore News Archive"
+              className="group flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-bold rounded-xl hover:bg-academic-gold hover:text-academic-navy transition-all duration-300 shadow-lg text-sm"
+            >
+              Explore News Archive
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
+          
           <NewsSection />
         </div>
       </motion.section>
