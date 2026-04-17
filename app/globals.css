@@ -69,6 +69,26 @@ h1, h2, h3, h4, h5, h6 {
   .text-glow {
     text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
   }
+  /* Full-Page Snap Utilities */
+  .snap-container {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+  
+  .snap-section {
+    height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
   .animate-reveal {
     animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
