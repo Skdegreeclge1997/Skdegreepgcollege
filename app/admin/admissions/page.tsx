@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
-import { Download, Search, Filter, Mail, Phone, Calendar, User, GraduationCap } from 'lucide-react';
+import { Download, Search, Filter, Mail, Phone, Calendar, User, GraduationCap, Loader2 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
 interface Inquiry {
@@ -26,18 +26,20 @@ export default function AdmissionsAdmin() {
 
   const fetchInquiries = async () => {
     setIsLoading(true);
-    // In a real setup, we would fetch from Supabase
-    // const { data } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false });
-    
-    // Mock data for now until the user connects Supabase
-    const mockInquiries: Inquiry[] = [
-      { id: '1', name: 'Ravi Kumar', email: 'ravi@example.com', phone: '9876543210', course: 'B.Sc. Computer Science', status: 'New', created_at: new Date().toISOString() },
-      { id: '2', name: 'Lata Devi', email: 'lata@example.com', phone: '9988776655', course: 'B.Com. Computer Applications', status: 'Contacted', created_at: new Date().toISOString() },
-      { id: '3', name: 'Suresh Varma', email: 'suresh@example.com', phone: '8877665544', course: 'B.A. Political Science', status: 'Closed', created_at: new Date().toISOString() },
-    ];
-    
-    setInquiries(mockInquiries);
-    setIsLoading(false);
+    try {
+      const { data, error } = await supabase
+        .from('inquiries')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (!error && data) {
+        setInquiries(data);
+      }
+    } catch (err) {
+      console.error('Failed to fetch inquiries:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const exportToExcel = () => {
@@ -93,10 +95,17 @@ export default function AdmissionsAdmin() {
       </div>
 
       {/* Content Area (Table on Desktop, Cards on Mobile) */}
-      <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
-        {/* Desktop Table View */}
-        <div className="hidden lg:block overflow-x-auto">
-          <table className="w-full text-left">
+      <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden min-h-[400px]">
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-40 gap-4">
+            <Loader2 className="animate-spin text-academic-navy" size={48} />
+            <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">Synchronizing Applications...</p>
+          </div>
+        ) : (
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden lg:block overflow-x-auto">
+              <table className="w-full text-left">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100">
                 <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Student</th>
@@ -204,9 +213,10 @@ export default function AdmissionsAdmin() {
               </button>
             </div>
           ))}
-        </div>
-        
-        {filteredInquiries.length === 0 && (
+          </>
+        )}
+
+        {!isLoading && filteredInquiries.length === 0 && (
           <div className="p-12 text-center">
             <User className="mx-auto mb-4 text-slate-200" size={48} />
             <p className="text-slate-400 font-medium">No inquiries found matching your search.</p>
