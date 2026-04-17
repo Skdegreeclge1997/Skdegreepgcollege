@@ -1,15 +1,33 @@
-import React from 'react';
-import GalleryView from '@/components/GalleryView';
-import galleryData from '@/lib/data/gallery.json';
-import { GalleryItem } from '@/lib/types';
+"use client";
 
-export const metadata = {
-  title: 'Campus Gallery | S.K. Degree & P.G. College',
-  description: 'Explore our state-of-the-art infrastructure, laboratories, and vibrant campus life at S.K. Degree & P.G. College.',
-};
+import React, { useState, useEffect } from 'react';
+import GalleryView from '@/components/GalleryView';
+import initialGalleryData from '@/lib/data/gallery.json';
+import { GalleryItem } from '@/lib/types';
+import { supabase } from '@/lib/supabase';
+import { Loader2 } from 'lucide-react';
 
 export default function GalleryPage() {
-  const items = galleryData as GalleryItem[];
+  const [items, setItems] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      const { data, error } = await supabase
+        .from('gallery')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (!error && data && data.length > 0) {
+        setItems(data);
+      } else {
+        setItems(initialGalleryData as GalleryItem[]);
+      }
+      setLoading(false);
+    };
+
+    fetchGallery();
+  }, []);
 
   return (
     <main className="min-h-screen bg-white pb-24">
@@ -31,7 +49,14 @@ export default function GalleryPage() {
       {/* Gallery Content */}
       <section className="container mx-auto px-4 -mt-10 relative z-20">
         <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-100">
-          <GalleryView items={items} />
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+               <Loader2 className="animate-spin text-academic-navy" size={40} />
+               <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">Fetching Campus Visuals...</p>
+            </div>
+          ) : (
+            <GalleryView items={items} />
+          )}
         </div>
       </section>
 
