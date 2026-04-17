@@ -5,6 +5,18 @@
   --color-academic-gold: #D4AF37;
   
   --font-inter: "Inter", sans-serif;
+
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+  --animate-marquee-reverse: marquee-reverse var(--duration, 40s) linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap, 2rem))); }
+  }
+  @keyframes marquee-reverse {
+    from { transform: translateX(calc(-100% - var(--gap, 2rem))); }
+    to { transform: translateX(0); }
+  }
 }
 
 html {

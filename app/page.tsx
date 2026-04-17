@@ -3,8 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Award, Users, BookOpen, MapPin, CheckCircle2 } from 'lucide-react';
 import NoticeCard from '@/components/NoticeCard';
-import noticesData from '@/lib/data/notices.json';
 import { Notice } from '@/lib/types';
+import { BrandScroller } from '@/components/ui/brand-scroller';
 
 const recentNotices = (noticesData as Notice[]).slice(0, 3);
 
@@ -141,17 +141,12 @@ export default function LandingPage() {
       </section>
 
       {/* Placement Partners */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50 overflow-hidden">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-academic-navy mb-16">Our Students Placed At</h2>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-700">
-            {['TCS', 'Cognizant', 'Wipro', 'Aurobindo', 'Hetero', 'Laurus Labs'].map((partner) => (
-              <span key={partner} className="text-2xl md:text-3xl font-black text-slate-400 tracking-tighter">
-                {partner}
-              </span>
-            ))}
-          </div>
+          <h2 className="text-3xl font-bold text-academic-navy mb-4">Our Students Placed At</h2>
+          <p className="text-slate-500 font-medium mb-12">Leading Multinational Corporations & Fast-Growing Startups</p>
         </div>
+        <BrandScroller />
       </section>
 
       {/* Recent Notices */}
