@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Award, MapPin, Users, BookOpen, ArrowRight } from 'lucide-react';
+import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2, Newspaper } from 'lucide-react';
 import { motion } from 'framer-motion';
 import NoticeCard from '@/components/NoticeCard';
 import noticesData from '@/lib/data/notices.json';
