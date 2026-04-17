@@ -5,8 +5,6 @@ import { supabase } from '@/lib/supabase';
 import { News } from '@/lib/types';
 import NewsCard from '@/components/NewsCard';
 import { Newspaper, Loader2, Search, Calendar, Filter } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 export default function NewsArchive() {
   const [news, setNews] = useState<News[]>([]);
@@ -42,7 +40,6 @@ export default function NewsArchive() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Header />
       
       <main className="flex-grow pt-32 pb-24">
         {/* Hero Section */}
@@ -122,8 +119,6 @@ export default function NewsArchive() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
