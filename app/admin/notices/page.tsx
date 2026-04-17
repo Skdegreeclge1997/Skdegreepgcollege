@@ -10,7 +10,9 @@ interface Notice {
   title: string;
   date: string;
   category: string;
-  isNew: boolean;
+  content: string;
+  isPinned: boolean;
+  isNew?: boolean; // Optional for new items created in the session
 }
 
 export default function NoticeManager() {
@@ -31,7 +33,9 @@ export default function NoticeManager() {
       id: Date.now().toString(),
       title: newNotice.title,
       category: newNotice.category,
-      date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+      content: 'New notice added via admin panel.',
+      date: new Date().toISOString().split('T')[0],
+      isPinned: false,
       isNew: true
     };
     setNotices([notice, ...notices]);
@@ -112,7 +116,7 @@ export default function NoticeManager() {
       <div className="grid grid-cols-1 gap-4">
         {notices.map((notice) => (
           <div key={notice.id} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-6 group hover:shadow-md transition-all">
-             <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${notice.isNew ? 'bg-green-50 text-green-600' : 'bg-slate-50 text-slate-400'}`}>
+             <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${notice.isPinned || notice.isNew ? 'bg-academic-gold/10 text-academic-gold' : 'bg-slate-50 text-slate-400'}`}>
                 <Bell size={24} />
              </div>
              <div className="flex-1">
