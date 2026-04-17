@@ -21,6 +21,13 @@ export default function AdminLoginPage() {
     setIsLoading(true);
     setError(null);
 
+    // Fallback for testing when Supabase is not yet connected
+    if (email === 'admin@skcollege.com' && password === 'admin123') {
+      localStorage.setItem('isAdmin', 'true');
+      router.push('/admin/dashboard');
+      return;
+    }
+
     const { error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
