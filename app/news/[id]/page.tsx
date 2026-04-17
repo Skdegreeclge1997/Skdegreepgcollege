@@ -108,29 +108,29 @@ export default function NewsDetail() {
         </div>
 
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Main Content */}
-            <article className="lg:col-span-8 space-y-10">
+            <article className="lg:col-span-8 space-y-8">
               {/* Post Header */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex flex-wrap gap-4 items-center">
-                  <span className="px-4 py-1.5 bg-academic-gold text-academic-navy text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-academic-gold/20">
+                  <span className="px-3 py-1 bg-academic-gold/20 text-academic-navy text-[9px] font-black uppercase tracking-widest rounded-full border border-academic-gold/30">
                     {news.category}
                   </span>
-                  <div className="flex items-center gap-2 text-slate-400 text-xs font-bold">
-                    <Calendar size={14} className="text-academic-gold" />
+                  <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold">
+                    <Calendar size={12} className="text-academic-gold" />
                     {new Date(news.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                   </div>
                 </div>
                 
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-academic-navy leading-tight tracking-tight">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-academic-navy leading-tight tracking-tight">
                   {news.title}
                 </h1>
               </div>
 
               {/* Featured Image */}
-              <div className="relative aspect-[16/9] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-white">
+              <div className="relative aspect-video w-full max-w-3xl rounded-3xl overflow-hidden shadow-xl border border-white">
                 <Image 
                   src={news.image_url || news.image} 
                   alt={news.title}
@@ -181,42 +181,39 @@ export default function NewsDetail() {
               </div>
 
               {/* Story Content */}
-              <div className="prose prose-slate prose-xl max-w-none">
-                <p className="text-xl text-slate-600 leading-relaxed font-medium">
+              <div className="prose prose-slate prose-lg max-w-none">
+                <p className="text-lg text-slate-600 leading-relaxed font-medium">
                   {news.description}
                 </p>
                 
                 {/* Placeholder for long content if needed */}
-                <div className="mt-12 space-y-8 text-slate-600 leading-relaxed">
+                <div className="mt-8 space-y-6 text-slate-600 leading-relaxed text-base">
                   <p>
                     The management and faculty of S.K. Degree & P.G. College continue to prioritize student success and campus innovation. This latest update reflects our ongoing commitment to excellence in higher education and community engagement.
                   </p>
-                  <div className="bg-slate-100 p-8 rounded-3xl border-l-8 border-academic-gold">
-                    <p className="text-lg font-bold text-academic-navy italic">
+                  <div className="bg-slate-100 p-6 rounded-2xl border-l-4 border-academic-gold">
+                    <p className="text-base font-bold text-academic-navy italic">
                       "Excellence is not an act, but a habit. Our latest achievements are a testament to the collective effort of our dedicated students and staff."
                     </p>
-                    <p className="mt-4 text-xs font-black uppercase tracking-widest text-slate-500">— Principal's Office</p>
+                    <p className="mt-3 text-[10px] font-black uppercase tracking-widest text-slate-500">— Principal's Office</p>
                   </div>
-                  <p>
-                    Stay tuned to our official portal for more updates regarding academic schedules, placement drives, and cultural festivities. For detailed inquiries, please contact the administrative office.
-                  </p>
                 </div>
               </div>
             </article>
 
             {/* Sidebar */}
-            <aside className="lg:col-span-4 space-y-12">
+            <aside className="lg:col-span-4 space-y-8">
               {/* Recent Posts */}
-              <div className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100">
-                <h3 className="text-xl font-black text-academic-navy mb-8 flex items-center gap-3">
-                  <Tag className="text-academic-gold" size={24} />
+              <div className="bg-white p-6 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100">
+                <h3 className="text-lg font-black text-academic-navy mb-6 flex items-center gap-3">
+                  <Tag className="text-academic-gold" size={20} />
                   Recent Stories
                 </h3>
                 
-                <div className="space-y-8">
+                <div className="space-y-6">
                   {recentNews.map((item) => (
                     <Link key={item.id} href={`/news/${item.id}`} className="flex gap-4 group">
-                      <div className="relative w-24 h-24 shrink-0 rounded-2xl overflow-hidden">
+                      <div className="relative w-16 h-16 shrink-0 rounded-xl overflow-hidden">
                         <Image 
                           src={item.image_url || item.image} 
                           alt={item.title}
@@ -225,8 +222,8 @@ export default function NewsDetail() {
                         />
                       </div>
                       <div className="flex flex-col justify-center">
-                        <span className="text-[10px] font-black text-academic-gold uppercase tracking-widest mb-1">{item.category}</span>
-                        <h4 className="text-sm font-bold text-academic-navy leading-tight group-hover:text-academic-gold transition-colors line-clamp-2">
+                        <span className="text-[8px] font-black text-academic-gold uppercase tracking-widest mb-1">{item.category}</span>
+                        <h4 className="text-xs font-bold text-academic-navy leading-tight group-hover:text-academic-gold transition-colors line-clamp-2">
                           {item.title}
                         </h4>
                       </div>
