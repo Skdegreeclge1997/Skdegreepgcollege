@@ -7,13 +7,22 @@ export default function Footer() {
     <footer className="bg-academic-navy text-slate-50 pt-16 pb-8 border-t border-white/5">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {/* Brand Section */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-academic-gold rounded-full flex items-center justify-center text-academic-navy font-bold text-sm">
-                SK
+          {/* Brand & Info */}
+          <div className="md:col-span-1">
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="relative w-12 h-12 bg-white rounded-full overflow-hidden border-2 border-academic-gold flex items-center justify-center">
+                <Image 
+                  src="/images/logo.jpeg" 
+                  alt="SK Degree College Logo" 
+                  width={40} 
+                  height={40} 
+                  className="object-contain"
+                />
               </div>
-              <span className="text-lg font-bold tracking-tight">SK DEGREE & P.G. COLLEGE</span>
+              <div className="flex flex-col">
+                <span className="text-xl font-black text-white leading-none">SK DEGREE</span>
+                <span className="text-[10px] text-academic-gold uppercase font-bold tracking-widest mt-1">& P.G. COLLEGE</span>
+              </div>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed font-bold">
               College Code: 17950

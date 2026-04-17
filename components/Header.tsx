@@ -6,6 +6,7 @@ import SearchModal from './SearchModal';
 import { Search } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -31,8 +32,13 @@ export default function Header() {
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         {/* Brand */}
         <Link href="/" className="flex items-center space-x-2 group">
-          <div className="w-10 h-10 bg-academic-gold rounded-full flex items-center justify-center text-academic-navy font-bold text-xl shadow-lg transition-transform group-hover:scale-110">
-            SK
+          <div className="relative w-12 h-12 overflow-hidden rounded-full bg-white border-2 border-academic-gold transition-transform group-hover:scale-110">
+            <Image 
+              src="/images/logo.jpeg" 
+              alt="SK Degree College Logo" 
+              fill
+              className="object-contain p-1"
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-black tracking-tight text-white leading-none">SK DEGREE</span>

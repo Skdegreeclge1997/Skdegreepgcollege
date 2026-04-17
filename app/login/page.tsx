@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { Loader2, Lock, Mail } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -21,8 +22,14 @@ export default function LoginPage() {
         <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
           {/* Header */}
           <div className="bg-academic-navy p-8 text-center text-white">
-            <div className="w-16 h-16 bg-academic-gold rounded-full flex items-center justify-center text-academic-navy font-bold text-2xl mx-auto mb-4 shadow-lg">
-              SK
+            <div className="relative w-20 h-20 bg-white rounded-full overflow-hidden border-4 border-academic-gold mx-auto mb-4 shadow-lg flex items-center justify-center">
+              <Image 
+                src="/images/logo.jpeg" 
+                alt="SK College Logo" 
+                width={64} 
+                height={64} 
+                className="object-contain"
+              />
             </div>
             <h1 className="text-2xl font-bold">Student Portal</h1>
             <p className="text-slate-400 text-sm mt-2">Login to access your dashboard</p>

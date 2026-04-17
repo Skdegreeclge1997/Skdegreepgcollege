@@ -27,8 +27,13 @@ export default function DigitalID({ student }: DigitalIDProps) {
             <h3 className="text-lg font-bold leading-tight">SK DEGREE & <br />P.G. COLLEGE</h3>
             <p className="text-[10px] uppercase tracking-widest text-academic-gold font-bold mt-1">Student Identity Card</p>
           </div>
-          <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center font-bold z-10 border border-white/20">
-            SK
+          <div className="relative w-12 h-12 bg-white rounded-full overflow-hidden border border-white/20 z-10">
+            <Image 
+              src="/images/logo.jpeg" 
+              alt="Logo" 
+              fill
+              className="object-contain p-0.5"
+            />
           </div>
           {/* Decorative Circle */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/10 rounded-full -mr-16 -mt-16" />
