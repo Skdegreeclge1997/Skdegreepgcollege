@@ -4,7 +4,7 @@ import { Target, Eye, History, Award, Users, BookOpen } from 'lucide-react';
 
 export const metadata = {
   title: 'About Us | S.K. Degree & P.G. College',
-  description: 'Learn about our history, mission, and the legacy of MSN Institutions at S.K. Degree & P.G. College.',
+  description: 'Learn about our history, mission, and the legacy of Arunodaya Educational Society at S.K. Degree & P.G. College.',
 };
 
 export default function AboutPage() {
@@ -29,7 +29,7 @@ export default function AboutPage() {
           </h1>
           <div className="flex justify-center mb-6">
             <span className="px-4 py-2 bg-academic-gold text-academic-navy font-bold rounded-lg text-sm uppercase tracking-widest">
-              MSN Institutions
+              Arunodaya Educational Society
             </span>
           </div>
           <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
@@ -90,7 +90,7 @@ export default function AboutPage() {
 
         <div className="space-y-16 max-w-5xl mx-auto">
           {[
-            { year: '1995', title: 'Foundation', desc: 'S.K. Degree & P.G. College was founded by Sri M. Sanyasi Naidu under the MSN Society to provide quality education in Vizianagaram.', icon: <Award size={28} /> },
+            { year: '1995', title: 'Foundation', desc: 'S.K. Degree & P.G. College was founded by Sri M. Sanyasi Naidu under the Arunodaya Educational Society to provide quality education in Vizianagaram.', icon: <Award size={28} /> },
             { year: '2005', title: 'Science Wing Expansion', desc: 'Inaugurated state-of-the-art laboratories for Physics, Chemistry, and Zoology departments.', icon: <BookOpen size={28} /> },
             { year: '2015', title: 'NCC Excellence', desc: 'Established dedicated Army and Naval wings, producing defense leaders for the nation.', icon: <Users size={28} /> },
             { year: '2023', title: 'Digital Campus', desc: 'Implemented high-speed computing labs and smart classroom infrastructure.', icon: <Target size={28} /> }

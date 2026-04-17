@@ -29,7 +29,7 @@ export default function Footer() {
               College Code: 17950
             </p>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Part of MSN Institutions. Empowering students through academic excellence and holistic development.
+              Part of Arunodaya Educational Society. Empowering students through academic excellence and holistic development.
             </p>
             <div className="flex space-x-4 pt-2">
               <MessageSquare aria-hidden="true" className="w-5 h-5 text-slate-400 hover:text-academic-gold cursor-pointer transition-colors" />

@@ -12,8 +12,8 @@ export const metadata: Metadata = {
     default: 'S.K. Degree & P.G. College | Vizianagaram',
     template: '%s | S.K. Degree College'
   },
-  description: 'S.K. Degree & P.G. College (Code: 17950) - Part of MSN Institutions. Providing quality Honours programs in Computer Science, Commerce, and Arts in Vizianagaram.',
-  keywords: ['S.K. Degree College', 'Vizianagaram', 'Degree College AP', 'Honours Courses', 'MSN Institutions', 'Admissions 2024'],
+  description: 'S.K. Degree & P.G. College (Code: 17950) - Part of Arunodaya Educational Society. Providing quality Honours programs in Computer Science, Commerce, and Arts in Vizianagaram.',
+  keywords: ['S.K. Degree College', 'Vizianagaram', 'Degree College AP', 'Honours Courses', 'Arunodaya Educational Society', 'Admissions 2026'],
   openGraph: {
     title: 'S.K. Degree & P.G. College | Vizianagaram',
     description: 'Empowering students through academic excellence. Admissions open for Honours programs.',
