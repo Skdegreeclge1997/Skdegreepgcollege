@@ -66,33 +66,31 @@ export default function NewsSection() {
             <Loader2 className="animate-spin text-academic-navy" size={40} />
           </div>
         ) : (
-          <div className="relative group/scroller">
-            {/* Scroll Container */}
-            <div className="flex overflow-x-hidden py-10">
-              <div className="flex gap-10 animate-slow-scroll hover:[animation-play-state:paused]">
-                {/* Double the items for seamless loop */}
-                {[...newsItems, ...newsItems].map((news, index) => (
-                  <div key={`${news.id}-${index}`} className="w-[400px] shrink-0">
-                    <NewsCard news={news} />
-                  </div>
-                ))}
-              </div>
+          <div className="relative overflow-hidden py-10">
+            <div className="flex w-max gap-10 animate-marquee hover:[animation-play-state:paused]">
+              {/* Double the items for seamless loop */}
+              {[...newsItems, ...newsItems, ...newsItems].map((news, index) => (
+                <div key={`${news.id}-${index}`} className="w-[400px] shrink-0">
+                  <NewsCard news={news} />
+                </div>
+              ))}
             </div>
 
             {/* Gradient Overlays for smooth edges */}
-            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-20 pointer-events-none" />
           </div>
         )}
       </div>
 
-      <style jsx global>{`
-        @keyframes slow-scroll {
+      <style jsx>{`
+        .animate-marquee {
+          display: flex;
+          animation: marquee 60s linear infinite;
+        }
+        @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(calc(-440px * ${newsItems.length})); }
-        }
-        .animate-slow-scroll {
-          animation: slow-scroll ${newsItems.length * 10}s linear infinite;
         }
       `}</style>
     </section>

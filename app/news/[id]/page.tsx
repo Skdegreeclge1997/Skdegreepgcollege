@@ -124,13 +124,13 @@ export default function NewsDetail() {
                   </div>
                 </div>
                 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-academic-navy leading-tight tracking-tight">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-academic-navy leading-tight tracking-tight">
                   {news.title}
                 </h1>
               </div>
 
               {/* Featured Image */}
-              <div className="relative aspect-[16/9] w-full rounded-[3rem] overflow-hidden shadow-2xl border border-white">
+              <div className="relative aspect-[16/9] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-white">
                 <Image 
                   src={news.image_url || news.image} 
                   alt={news.title}
@@ -182,7 +182,7 @@ export default function NewsDetail() {
 
               {/* Story Content */}
               <div className="prose prose-slate prose-xl max-w-none">
-                <p className="text-xl text-slate-600 leading-relaxed font-medium first-letter:text-6xl first-letter:font-black first-letter:text-academic-gold first-letter:mr-3 first-letter:float-left">
+                <p className="text-xl text-slate-600 leading-relaxed font-medium">
                   {news.description}
                 </p>
                 
