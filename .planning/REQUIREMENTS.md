@@ -72,31 +72,31 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORE-01 | | Pending |
-| CORE-02 | | Pending |
-| CORE-03 | | Pending |
-| INFO-01 | | Pending |
-| INFO-02 | | Pending |
-| INFO-03 | | Pending |
-| INFO-04 | | Pending |
-| INFO-05 | | Pending |
-| NEWS-01 | | Pending |
-| NEWS-02 | | Pending |
-| NEWS-03 | | Pending |
-| NEWS-04 | | Pending |
-| ADMN-01 | | Pending |
-| ADMN-02 | | Pending |
-| ADMN-03 | | Pending |
-| PORT-01 | | Pending |
-| PORT-02 | | Pending |
-| PORT-03 | | Pending |
-| PORT-04 | | Pending |
+| CORE-01 | Phase 1 | Pending |
+| CORE-02 | Phase 1 | Pending |
+| CORE-03 | Phase 1 | Pending |
+| INFO-01 | Phase 2 | Pending |
+| INFO-02 | Phase 2 | Pending |
+| INFO-03 | Phase 2 | Pending |
+| INFO-04 | Phase 2 | Pending |
+| INFO-05 | Phase 3 | Pending |
+| NEWS-01 | Phase 3 | Pending |
+| NEWS-02 | Phase 3 | Pending |
+| NEWS-03 | Phase 3 | Pending |
+| NEWS-04 | Phase 3 | Pending |
+| ADMN-01 | Phase 4 | Pending |
+| ADMN-02 | Phase 4 | Pending |
+| ADMN-03 | Phase 4 | Pending |
+| PORT-01 | Phase 4 | Pending |
+| PORT-02 | Phase 4 | Pending |
+| PORT-03 | Phase 4 | Pending |
+| PORT-04 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 19 total
-- Mapped to phases: 0
-- Unmapped: 19 ⚠️
+- Mapped to phases: 19
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-17*
-*Last updated: 2026-04-17 after initial definition*
+*Last updated: 2026-04-17 after roadmap creation*
