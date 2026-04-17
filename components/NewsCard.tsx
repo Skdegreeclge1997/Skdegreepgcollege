@@ -2,6 +2,7 @@
  
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Calendar, ArrowRight, FileText } from 'lucide-react';
 import { News } from '@/lib/types';
  
@@ -43,10 +44,13 @@ export default function NewsCard({ news }: NewsCardProps) {
         </p>
  
         <div className="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
-          <button className="text-academic-navy font-black text-xs uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all group/btn">
+          <Link 
+            href={`/news/${news.id}`}
+            className="text-academic-navy font-black text-xs uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all group/btn"
+          >
             Read More
             <ArrowRight size={16} className="text-academic-gold group-hover/btn:translate-x-1 transition-transform" />
-          </button>
+          </Link>
           {news.pdf_url && (
             <a 
               href={news.pdf_url} 

@@ -99,43 +99,47 @@ export default function LandingPage() {
       </section>
 
       {/* Feature Sections (NCC & Labs) */}
-      <section className="py-24 bg-academic-navy text-white overflow-hidden relative">
+      <section className="py-20 bg-academic-navy text-white overflow-hidden relative">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-academic-gold/20 text-academic-gold rounded-full text-[10px] font-black uppercase tracking-widest mb-6 border border-academic-gold/30">
+                <Award size={14} />
+                <span>Premier Training Hub</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
                 Excellence in <br />
                 <span className="text-academic-gold">NCC Training</span>
               </h2>
-              <p className="text-xl text-slate-400 mb-10 leading-relaxed">
+              <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-xl">
                 We take immense pride in our NCC wings (Army & Navy). Our cadets are consistently 
                 placed in the Indian Defense Forces, securing top honors in RDC parades.
               </p>
-              <ul className="space-y-4 mb-12">
-                {['Army Wing for Boys', 'Naval Wing for Girls', 'Agniveer Selection Success', 'State-level Parade Champions'].map((item, i) => (
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+                {['Army Wing for Boys', 'Naval Wing for Girls', 'Agniveer Selection', 'Parade Champions'].map((item, i) => (
                   <li key={i} className="flex items-center gap-3">
-                    <CheckCircle2 size={24} className="text-academic-gold" />
-                    <span className="text-lg font-medium">{item}</span>
+                    <CheckCircle2 size={18} className="text-academic-gold" />
+                    <span className="text-sm font-bold text-slate-200">{item}</span>
                   </li>
                 ))}
               </ul>
-              <Link href="/ncc" className="inline-flex items-center gap-2 text-academic-gold font-bold hover:gap-4 transition-all">
-                View NCC Achievements <ArrowRight size={20} />
+              <Link href="/ncc" className="inline-flex items-center gap-2 text-academic-gold font-bold hover:gap-4 transition-all uppercase text-xs tracking-widest">
+                View NCC Achievements <ArrowRight size={16} />
               </Link>
             </div>
-            <div className="relative">
-              <div className="aspect-square rounded-3xl overflow-hidden bg-white/5 border border-white/10 p-4">
+            <div className="relative group">
+              <div className="aspect-video rounded-[2.5rem] overflow-hidden bg-white/5 border border-white/10 p-3 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
                  <Image
-                    src="https://images.unsplash.com/photo-1544923246-77307dd654ca?auto=format&fit=crop&q=80&w=1000" // NCC/Defense placeholder
+                    src="/images/ncc-cadets.jpeg"
                     alt="NCC Training"
                     fill
-                    className="object-cover rounded-2xl"
+                    className="object-cover rounded-3xl"
                  />
               </div>
               {/* Floating Badge */}
-              <div className="absolute -bottom-10 -left-10 bg-academic-gold p-8 rounded-2xl shadow-2xl text-academic-navy">
-                <p className="text-4xl font-black">#1</p>
-                <p className="text-sm font-bold uppercase">RDC Parade Winner</p>
+              <div className="absolute -bottom-6 -left-6 bg-academic-gold p-6 rounded-2xl shadow-2xl text-academic-navy animate-bounce-slow">
+                <p className="text-3xl font-black">#1</p>
+                <p className="text-[10px] font-black uppercase tracking-tighter">RDC Parade Winner</p>
               </div>
             </div>
           </div>

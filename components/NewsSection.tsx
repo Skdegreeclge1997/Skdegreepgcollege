@@ -60,19 +60,41 @@ export default function NewsSection() {
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
- 
+
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="animate-spin text-academic-navy" size={40} />
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {newsItems.map((news) => (
-              <NewsCard key={news.id} news={news} />
-            ))}
+          <div className="relative group/scroller">
+            {/* Scroll Container */}
+            <div className="flex overflow-x-hidden py-10">
+              <div className="flex gap-10 animate-slow-scroll hover:[animation-play-state:paused]">
+                {/* Double the items for seamless loop */}
+                {[...newsItems, ...newsItems].map((news, index) => (
+                  <div key={`${news.id}-${index}`} className="w-[400px] shrink-0">
+                    <NewsCard news={news} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Gradient Overlays for smooth edges */}
+            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none" />
           </div>
         )}
       </div>
+
+      <style jsx global>{`
+        @keyframes slow-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-440px * ${newsItems.length})); }
+        }
+        .animate-slow-scroll {
+          animation: slow-scroll ${newsItems.length * 10}s linear infinite;
+        }
+      `}</style>
     </section>
   );
 }

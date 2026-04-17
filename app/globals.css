@@ -8,6 +8,8 @@
 
   --animate-marquee: marquee var(--duration, 40s) linear infinite;
   --animate-marquee-reverse: marquee-reverse var(--duration, 40s) linear infinite;
+  --animate-bounce-slow: bounce-slow 4s infinite ease-in-out;
+  --animate-glow: glow 3s infinite alternate;
 
   @keyframes marquee {
     from { transform: translateX(0); }
@@ -16,6 +18,14 @@
   @keyframes marquee-reverse {
     from { transform: translateX(calc(-100% - var(--gap, 2rem))); }
     to { transform: translateX(0); }
+  }
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  @keyframes glow {
+    from { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+    to { box-shadow: 0 0 25px rgba(212, 175, 55, 0.5); }
   }
 }
 
