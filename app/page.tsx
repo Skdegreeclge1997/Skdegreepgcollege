@@ -49,43 +49,37 @@ export default function LandingPage() {
             >
               Apply Online 2026-27
             </Link>
-            <Link 
-              href="/academics" 
-              className="w-full sm:w-auto px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all duration-300 text-lg"
-            >
-              Explore Programs
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* 2. Overview Section (Trust + Stats Combined for Clean UI) */}
+      {/* 2. Institutional Success (Trust + Stats + Placements) */}
       <section className="snap-section bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-sm mb-2">Part of</p>
-            <h2 className="text-3xl md:text-4xl font-black text-academic-navy">Arunodaya Educational Society</h2>
-            <div className="flex flex-wrap justify-center gap-8 mt-4 opacity-60">
-               <span className="font-semibold text-slate-400">MSN Junior College</span>
-               <span className="font-semibold text-slate-400">Sri Gurudatta Degree</span>
-               <span className="font-semibold text-slate-400">Dr. PVG Rajah Saheb</span>
-            </div>
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center mb-10">
+            <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] mb-1">Part of</p>
+            <h2 className="text-2xl font-black text-academic-navy">Arunodaya Educational Society</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             {[
-              { label: 'Successful Placements', value: '123+', icon: <Users size={32} />, color: 'bg-blue-50 text-blue-600' },
-              { label: 'Experienced Faculty', value: '85+', icon: <Award size={32} />, color: 'bg-academic-gold/10 text-academic-gold' },
-              { label: 'Academic Programs', value: '12', icon: <BookOpen size={32} />, color: 'bg-green-50 text-green-600' }
+              { label: 'Placements', value: '123+', icon: <Users size={24} />, color: 'bg-blue-50 text-blue-600' },
+              { label: 'Faculty', value: '85+', icon: <Award size={24} />, color: 'bg-academic-gold/10 text-academic-gold' },
+              { label: 'Programs', value: '12', icon: <BookOpen size={24} />, color: 'bg-green-50 text-green-600' }
             ].map((stat, i) => (
-              <div key={i} className="p-10 rounded-3xl border border-slate-100 hover:border-academic-gold/30 hover:shadow-xl transition-all duration-500 text-center">
-                <div className={`w-16 h-16 rounded-2xl ${stat.color} flex items-center justify-center mb-6 mx-auto`}>
+              <div key={i} className="p-6 rounded-2xl border border-slate-100 text-center">
+                <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center mb-4 mx-auto`}>
                   {stat.icon}
                 </div>
-                <p className="text-4xl font-black text-academic-navy mb-2">{stat.value}</p>
-                <p className="text-slate-500 font-bold uppercase tracking-wider text-xs">{stat.label}</p>
+                <p className="text-2xl font-black text-academic-navy">{stat.value}</p>
+                <p className="text-slate-500 font-bold uppercase tracking-wider text-[10px]">{stat.label}</p>
               </div>
             ))}
+          </div>
+
+          <div className="text-center">
+             <h3 className="text-xl font-bold text-academic-navy mb-8">Our Students Placed At</h3>
+             <BrandScroller />
           </div>
         </div>
       </section>
@@ -93,8 +87,8 @@ export default function LandingPage() {
       {/* 3. NCC Section */}
       <section className="snap-section bg-academic-navy text-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="animate-reveal">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-academic-gold/20 text-academic-gold rounded-full text-[10px] font-black uppercase tracking-widest mb-6 border border-academic-gold/30">
                 <Award size={14} />
                 <span>Premier Training Hub</span>
@@ -105,106 +99,57 @@ export default function LandingPage() {
               </h2>
               <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-xl">
                 We take immense pride in our NCC wings (Army & Navy). Our cadets are consistently 
-                placed in the Indian Defense Forces, securing top honors in RDC parades.
+                placed in the Indian Defense Forces.
               </p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                {['Army Wing for Boys', 'Naval Wing for Girls', 'Agniveer Selection', 'Parade Champions'].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3">
-                    <CheckCircle2 size={18} className="text-academic-gold" />
-                    <span className="text-sm font-bold text-slate-200">{item}</span>
-                  </li>
-                ))}
-              </ul>
               <Link href="/ncc" className="inline-flex items-center gap-2 text-academic-gold font-bold hover:gap-4 transition-all uppercase text-xs tracking-widest">
-                View NCC Achievements <ArrowRight size={16} />
+                View Achievements <ArrowRight size={16} />
               </Link>
             </div>
             <div className="relative group">
-              <div className="aspect-video rounded-[2.5rem] overflow-hidden bg-white/5 border border-white/10 p-3 shadow-2xl">
-                 <Image
-                    src="/images/ncc-cadets.jpeg"
-                    alt="NCC Training"
-                    fill
-                    className="object-cover rounded-3xl"
-                 />
+              <div className="aspect-video rounded-3xl overflow-hidden bg-white/5 border border-white/10 p-2 shadow-2xl">
+                 <Image src="/images/ncc-cadets.jpeg" alt="NCC Training" fill className="object-cover rounded-2xl" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Placement Section */}
+      {/* 4. News Section (Single Slide with Heading) */}
       <section className="snap-section bg-slate-50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-black text-academic-navy mb-16 tracking-tight">Our Students Placed At</h2>
-          <BrandScroller />
-          <div className="mt-20 flex justify-center gap-12 grayscale opacity-40">
-             <div className="flex flex-col items-center">
-                <p className="text-3xl font-black text-academic-navy">500+</p>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Placements</p>
-             </div>
-             <div className="flex flex-col items-center">
-                <p className="text-3xl font-black text-academic-navy">15.5 LPA</p>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Highest Package</p>
-             </div>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+             <p className="text-academic-gold font-black uppercase tracking-[0.4em] text-[10px] mb-4">Official Updates</p>
+             <h2 className="text-4xl font-black text-academic-navy tracking-tight">Latest News</h2>
           </div>
+          <NewsSection />
         </div>
       </section>
 
-      {/* 5. College Bulletin (News + Notices) */}
+      {/* 5. Notice Board + CTA */}
       <section className="snap-section bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-black text-academic-navy">College Bulletin</h2>
-            <p className="text-slate-400 font-bold uppercase tracking-widest text-xs mt-2">Latest News & Official Notices</p>
+          <div className="flex items-center justify-between mb-10">
+             <h2 className="text-3xl font-black text-academic-navy">Notice Board</h2>
+             <Link href="/notices" className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest">
+                View All <ArrowRight size={16} />
+             </Link>
           </div>
-          
-          <div className="mb-16">
-            <NewsSection />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {recentNotices.map((notice, i) => (
               <div key={notice.id} className="animate-reveal" style={{ animationDelay: `${i * 150}ms` }}>
                 <NoticeCard notice={notice} />
               </div>
             ))}
           </div>
-          
-          <div className="mt-12 text-center">
-            <Link href="/notices" className="inline-flex items-center gap-2 text-academic-gold font-bold uppercase text-xs tracking-widest hover:gap-4 transition-all">
-              Access Full Notice Board <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
 
-      {/* 6. Final CTA Section */}
-      <section className="snap-section bg-academic-gold">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-7xl font-black text-academic-navy mb-8 tracking-tighter">Your Future Starts Now</h2>
-          <p className="text-xl md:text-2xl text-academic-navy/70 mb-12 max-w-2xl mx-auto font-medium">
-            Join the region's premier institution and secure your place in a legacy of academic excellence.
-          </p>
-          <div className="flex flex-wrap justify-center gap-6">
-            <Link 
-              href="/admissions" 
-              className="px-12 py-5 bg-academic-navy text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-2xl text-lg"
-            >
-              Apply Now Online
-            </Link>
-            <Link 
-              href="/contact" 
-              className="px-12 py-5 bg-white text-academic-navy font-bold rounded-full hover:bg-slate-50 transition-all shadow-xl text-lg"
-            >
-              Contact Office
-            </Link>
+          <div className="bg-academic-navy rounded-[3rem] p-12 text-center relative overflow-hidden">
+             <div className="relative z-10">
+                <h3 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter">Your Future Starts Now</h3>
+                <Link href="/admissions" className="px-10 py-4 bg-academic-gold text-academic-navy font-bold rounded-full hover:scale-105 transition-all shadow-xl inline-block">
+                   Apply Now 2026-27
+                </Link>
+             </div>
           </div>
-        </div>
-        
-        {/* Footer Link Overlay */}
-        <div className="absolute bottom-10 w-full text-center">
-           <p className="text-xs font-bold text-academic-navy/40 uppercase tracking-[0.4em]">© 2026 S.K. Degree & P.G. College</p>
         </div>
       </section>
     </main>
