@@ -239,9 +239,9 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
         variants={fadeIn}
-        className="snap-section bg-slate-50"
+        className="snap-section bg-slate-50 overflow-y-auto no-scrollbar"
       >
-        <div className="container mx-auto px-4 pt-12">
+        <div className="container mx-auto px-4 pt-4 pb-20">
           <div className="flex flex-col md:flex-row items-end justify-between mb-8 gap-6">
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-academic-gold/10 text-academic-gold rounded-full text-[10px] font-black uppercase tracking-widest mb-4 border border-academic-gold/20">
@@ -276,9 +276,9 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
         variants={fadeIn}
-        className="snap-section bg-white"
+        className="snap-section bg-white overflow-y-auto no-scrollbar"
       >
-        <div className="container mx-auto px-4 pt-10">
+        <div className="container mx-auto px-4 pt-4 pb-20">
           <div className="flex items-center justify-between mb-8">
              <h2 className="text-3xl font-black text-academic-navy">Notice Board</h2>
              <Link 

@@ -30,7 +30,7 @@ export default function NewsCard({ news }: NewsCardProps) {
       </div>
  
       {/* Content */}
-      <div className="p-5 flex flex-col flex-grow">
+      <div className="p-5 pb-8 flex flex-col flex-grow">
         <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold mb-2">
           <Calendar size={12} className="text-academic-gold" />
           {new Date(news.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
