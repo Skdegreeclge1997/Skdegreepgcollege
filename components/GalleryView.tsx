@@ -52,7 +52,7 @@ export default function GalleryView({ items }: GalleryViewProps) {
       <LayoutGroup>
         <motion.div
           layout
-          className="columns-2 sm:columns-3 lg:columns-4 gap-4 md:gap-6"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
         >
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item) => (
@@ -63,7 +63,7 @@ export default function GalleryView({ items }: GalleryViewProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative rounded-2xl overflow-hidden bg-slate-100 cursor-pointer shadow-md hover:shadow-2xl break-inside-avoid mb-4 md:mb-6"
+                className="group relative rounded-2xl overflow-hidden bg-slate-100 cursor-pointer shadow-md hover:shadow-2xl aspect-[4/3]"
                 onClick={() => setSelectedImage(item)}
                 whileHover={{ y: -4 }}
               >
@@ -71,7 +71,7 @@ export default function GalleryView({ items }: GalleryViewProps) {
                 <img
                   src={item.url}
                   alt={item.caption}
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 
                 {/* Hover overlay */}

@@ -7,12 +7,14 @@ import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2, Newspaper } f
 import { motion } from 'framer-motion';
 import NoticeCard from '@/components/NoticeCard';
 import noticesData from '@/lib/data/notices.json';
-import { Notice } from '@/lib/types';
+import { Notice, GalleryItem } from '@/lib/types';
+import initialGalleryData from '@/lib/data/gallery.json';
 import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
 import { ThreeBackground } from '@/components/Visuals';
 
 const recentNotices = (noticesData as Notice[]).slice(0, 3);
+const recentGallery = (initialGalleryData as GalleryItem[]).slice(0, 6);
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -328,6 +330,55 @@ export default function LandingPage() {
                 </Link>
              </div>
           </motion.div>
+        </div>
+      </motion.section>
+
+      {/* 6. Gallery Section */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        variants={fadeIn}
+        className="snap-section bg-slate-50 overflow-y-auto no-scrollbar"
+      >
+        <div className="container mx-auto px-4 pt-4 pb-20">
+          <div className="flex items-center justify-between mb-8">
+             <h2 className="text-3xl font-black text-academic-navy">Campus Gallery</h2>
+             <Link 
+                href="/gallery" 
+                aria-label="View full campus gallery"
+                className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
+             >
+                View All <ArrowRight size={16} />
+             </Link>
+          </div>
+          <div className="relative overflow-hidden py-4 -mx-4 px-4">
+            <motion.div 
+              animate={{ 
+                x: [0, -1000],
+              }}
+              transition={{ 
+               duration: 30,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="flex gap-6 w-max"
+            >
+              {[...recentGallery, ...recentGallery, ...recentGallery].map((item, i) => (
+                <div key={`${item.id}-${i}`} className="w-[80vw] sm:w-[350px] aspect-[4/3] shrink-0 relative rounded-3xl overflow-hidden shadow-md group">
+                  <Image src={item.url} alt={item.caption} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                     <p className="text-white font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{item.caption}</p>
+                     <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest mt-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{item.category}</span>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+            
+            {/* Edge Gradients */}
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
+          </div>
         </div>
       </motion.section>
     </main>

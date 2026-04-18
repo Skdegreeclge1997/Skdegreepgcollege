@@ -68,13 +68,6 @@ export default function Header() {
             >
               <Search size={20} />
             </button>
-            
-            <Link 
-              href="/admin/login" 
-              className="px-6 py-2 bg-academic-gold text-academic-navy text-sm font-bold rounded-full hover:shadow-xl hover:shadow-academic-gold/20 transition-all"
-            >
-              Admin Console
-            </Link>
           </div>
 
           {/* Mobile Toggle inside Header for better control */}

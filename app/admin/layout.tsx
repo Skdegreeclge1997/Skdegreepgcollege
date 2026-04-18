@@ -73,6 +73,33 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     checkAdminStatus();
   }, [user, authLoading, pathname, router]);
 
+  // Inactivity Timeout
+  useEffect(() => {
+    if (!user || pathname === '/admin/login') return;
+
+    let timeoutId: NodeJS.Timeout;
+
+    const resetTimeout = () => {
+      clearTimeout(timeoutId);
+      // 10 minutes = 600,000 ms
+      timeoutId = setTimeout(() => {
+        supabase.auth.signOut().then(() => {
+          router.push('/admin/login?message=Session expired due to inactivity');
+        });
+      }, 600000);
+    };
+
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+    events.forEach((evt) => document.addEventListener(evt, resetTimeout));
+    
+    resetTimeout(); // Initialize the timer
+
+    return () => {
+      clearTimeout(timeoutId);
+      events.forEach((evt) => document.removeEventListener(evt, resetTimeout));
+    };
+  }, [user, pathname, router]);
+
   if (authLoading || (isVerifying && pathname !== '/admin/login')) {
     return (
       <div className="min-h-screen bg-[#08090a] flex items-center justify-center">

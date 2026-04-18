@@ -41,12 +41,7 @@ export default function ContactPage() {
     setStatus('loading');
     setErrorMsg('');
 
-    // BOT PROTECTION: Only allow @gmail.com
-    if (!formData.email.toLowerCase().endsWith('@gmail.com')) {
-      setErrorMsg('For security purposes, only @gmail.com addresses are accepted.');
-      setStatus('error');
-      return;
-    }
+    // Removed Gmail-only restriction
 
     try {
       const { error } = await supabase.from('inquiries').insert([
@@ -144,12 +139,12 @@ export default function ContactPage() {
           <div className="lg:col-span-2 space-y-8">
             <MotionSection delay={0.2}>
               <motion.div
-                className="w-full h-[400px] rounded-3xl overflow-hidden border-2 border-slate-100 shadow-xl relative group"
+                className="w-full h-[250px] rounded-3xl overflow-hidden border-2 border-slate-100 shadow-xl relative group"
                 whileHover={{ scale: 1.01 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3791.954201389279!2d83.4158!3d18.1251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3bee186368d49f%3A0x6d90a887034c5147!2sSK%20DEGREE%20COLLEGE!5e0!3m2!1sen!2sin!4v1713331200000!5m2!1sen!2sin" 
+                  src="https://maps.google.com/maps?q=SK+Degree+College+Exam+Centre,+Vizianagaram&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   width="100%" 
                   height="100%" 
                   style={{ border: 0 }} 
@@ -237,7 +232,7 @@ export default function ContactPage() {
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Email (Gmail Only)</label>
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Email</label>
                           <motion.input 
                             required
                             type="email" 
@@ -245,7 +240,7 @@ export default function ContactPage() {
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
                             onFocus={() => setFocusedField('email')}
                             onBlur={() => setFocusedField(null)}
-                            placeholder="yourname@gmail.com"
+                            placeholder="yourname@example.com"
                             className={`w-full bg-white/5 border rounded-xl px-4 py-3 outline-none transition-all ${errorMsg ? 'border-red-500' : 'border-white/10 focus:border-academic-gold'}`}
                             animate={{
                               borderColor: errorMsg ? '#ef4444' : focusedField === 'email' ? '#D4AF37' : 'rgba(255,255,255,0.1)',

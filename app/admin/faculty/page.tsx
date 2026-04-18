@@ -62,7 +62,7 @@ export default function FacultyManager() {
       qualification: '',
       email: '',
       experience: '',
-      image_url: '/images/sf.jpeg'
+      image_url: ''
     });
     setIsModalOpen(true);
   };
@@ -195,7 +195,13 @@ export default function FacultyManager() {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
                        <div className="w-12 h-12 rounded-xl bg-slate-100 overflow-hidden relative border border-slate-200 shadow-sm">
-                          <Image src={f.image_url || '/images/sf.jpeg'} alt={f.name} fill className="object-cover" />
+                          {f.image_url ? (
+                            <Image src={f.image_url} alt={f.name} fill className="object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-slate-100">
+                              <Users size={24} className="text-slate-300" />
+                            </div>
+                          )}
                        </div>
                        <div>
                           <p className="font-black text-academic-navy">{f.name}</p>
@@ -257,7 +263,13 @@ export default function FacultyManager() {
                     {/* Profile Image Section */}
                     <div className="md:col-span-2 flex flex-col items-center justify-center py-6 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
                        <div className="relative w-32 h-32 rounded-3xl overflow-hidden border-4 border-white shadow-xl mb-4 group/img">
-                          <Image src={editingFaculty?.image_url || '/images/sf.jpeg'} alt="Preview" fill className="object-cover" />
+                          {editingFaculty?.image_url ? (
+                             <Image src={editingFaculty.image_url} alt="Preview" fill className="object-cover" />
+                          ) : (
+                             <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                                <Users size={48} className="text-slate-300" />
+                             </div>
+                          )}
                           <label className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/img:opacity-100 cursor-pointer transition-opacity">
                              {uploadingImage ? <Loader2 className="animate-spin text-white" /> : <Camera className="text-white" />}
                              <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} disabled={uploadingImage} />
