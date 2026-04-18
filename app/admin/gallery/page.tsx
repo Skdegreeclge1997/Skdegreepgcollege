@@ -44,7 +44,7 @@ export default function GalleryManager() {
       .order('created_at', { ascending: false });
     
     if (!error && data) {
-      setImages(data.filter(img => !img.url.includes('youtube.com') && !img.url.includes('youtu.be')));
+      setImages(data.filter((img: GalleryImage) => !img.url.includes('youtube.com') && !img.url.includes('youtu.be')));
     }
     setIsLoading(false);
   };
