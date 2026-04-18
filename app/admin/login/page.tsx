@@ -23,6 +23,7 @@ export default function AdminLoginPage() {
     const { error: signInError } = await signIn(email, password);
 
     if (signInError) {
+      console.error('[Admin Login Error]', signInError);
       setError(signInError.message);
     } else {
       router.push('/admin/dashboard');
