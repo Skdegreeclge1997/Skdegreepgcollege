@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/AuthProvider';
 import { 
   LayoutDashboard, 
@@ -86,22 +88,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     await supabase.auth.signOut();
     router.push('/admin/login');
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <Loader2 className="animate-spin text-academic-navy" size={40} />
-      </div>
-    );
-  }
-
-  // If on login page, just render the login form without the admin chrome
-  if (pathname === '/admin/login') {
-    return <>{children}</>;
-  }
-
-  // If not on login page and no user, we've already redirected or are about to
-  if (!user) return null;
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
