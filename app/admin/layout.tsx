@@ -39,8 +39,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
+      
+      // Check if user exists AND has admin privileges
+      const isAdmin = user?.app_metadata?.role === 'admin' || user?.user_metadata?.is_admin === true;
+
       if (!user) {
         router.push('/admin/login');
+      } else if (!isAdmin) {
+        // If logged in but not an admin, sign out and redirect
+        await supabase.auth.signOut();
+        router.push('/admin/login?error=unauthorized');
       } else {
         setUser(user);
       }
