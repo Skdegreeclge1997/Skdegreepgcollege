@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { Loader2, Lock, Mail } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -10,10 +11,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signIn, isLoading } = useAuth();
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    signIn(email);
+    const { error } = await signIn(email);
+    if (!error) {
+      router.push('/dashboard');
+    }
   };
 
   return (
