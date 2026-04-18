@@ -3,16 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import SearchModal from './SearchModal';
-import { Search } from 'lucide-react';
+import { Search, Menu, X } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuth();
 
-  // Keyboard shortcut for search (Cmd+K or Ctrl+K) & Custom Event
+  // Keyboard shortcut for search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -21,6 +22,7 @@ export default function Header() {
       }
       if (e.key === 'Escape') {
         setIsSearchOpen(false);
+        setIsMenuOpen(false);
       }
     };
 
@@ -36,10 +38,10 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-academic-navy/90 backdrop-blur-md border-b border-white/5">
+    <header className={`fixed top-0 z-[1000] w-full transition-colors duration-300 border-b border-white/5 ${isMenuOpen ? 'bg-academic-navy' : 'bg-academic-navy/90 backdrop-blur-md'}`}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         {/* Brand */}
-        <Link href="/" className="flex items-center space-x-2 group">
+        <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 group relative z-[1001]">
           <div className="relative w-12 h-12 overflow-hidden rounded-full bg-white border-2 border-academic-gold transition-transform group-hover:scale-110">
             <Image 
               src="/images/logo.jpeg" 
@@ -56,7 +58,7 @@ export default function Header() {
         
         {/* Navigation & Actions */}
         <div className="flex items-center gap-8">
-          <Navbar />
+          <Navbar isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
           
           <div className="hidden lg:flex items-center gap-4 pl-8 border-l border-white/10">
             <button 
@@ -65,9 +67,6 @@ export default function Header() {
               aria-label="Search"
             >
               <Search size={20} />
-              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-white text-academic-navy text-[10px] font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl">
-                Search (⌘K)
-              </span>
             </button>
             
             <Link 
@@ -76,6 +75,18 @@ export default function Header() {
             >
               Admin Console
             </Link>
+          </div>
+
+          {/* Mobile Toggle inside Header for better control */}
+          <div className="md:hidden flex items-center relative z-[1001]">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-white hover:bg-white/10 rounded-xl transition-all active:scale-90"
+              aria-expanded={isMenuOpen}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
         </div>
       </div>

@@ -52,7 +52,7 @@ export default function NewsArchive() {
                 <span>Media & Press</span>
               </div>
               <h1 className="text-5xl md:text-6xl font-black text-white leading-tight mb-6">
-                Campus <span className="text-academic-gold">News</span> Archive
+                Latest Events <span className="text-academic-gold">& Activities</span>
               </h1>
               <p className="text-xl text-slate-300 font-medium leading-relaxed">
                 A comprehensive record of all announcements, events, and milestones at S.K. Degree & P.G. College.

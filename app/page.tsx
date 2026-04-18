@@ -249,7 +249,7 @@ export default function LandingPage() {
                 <span>Campus Buzz</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-black text-academic-navy leading-tight">
-                Latest News & <span className="text-academic-gold">Updates</span>
+                Latest Events & <span className="text-academic-gold">Activities</span>
               </h2>
               <p className="mt-4 text-slate-500 font-medium text-sm md:text-base">
                 Stay informed with the latest happenings, achievements, and events from our vibrant campus community.
@@ -258,10 +258,10 @@ export default function LandingPage() {
             
             <Link 
               href="/news" 
-              aria-label="Explore News Archive"
+              aria-label="Explore Events Archive"
               className="group flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-bold rounded-xl hover:bg-academic-gold hover:text-academic-navy transition-all duration-300 shadow-lg text-sm"
             >
-              Explore News Archive
+              Explore Events Archive
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -302,7 +302,7 @@ export default function LandingPage() {
               className="flex gap-6 w-max"
             >
               {[...recentNotices, ...recentNotices, ...recentNotices].map((notice, i) => (
-                <div key={`${notice.id}-${i}`} className="w-[350px] shrink-0">
+                <div key={`${notice.id}-${i}`} className="w-[85vw] max-w-[350px] shrink-0">
                   <NoticeCard notice={notice} />
                 </div>
               ))}

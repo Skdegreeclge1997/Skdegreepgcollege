@@ -73,14 +73,14 @@ h1, h2, h3, h4, h5, h6 {
   }
   /* Full-Page Snap Utilities */
   .snap-container {
-    height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
   }
   
   .snap-section {
-    height: 100vh;
+    height: 100dvh;
     width: 100%;
     scroll-snap-align: start;
     scroll-snap-stop: always;
