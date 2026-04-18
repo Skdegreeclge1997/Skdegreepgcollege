@@ -272,7 +272,81 @@ export default function LandingPage() {
         </div>
       </motion.section>
 
-      {/* 5. Notice Board + CTA */}
+      {/* 5. Gallery Section */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        variants={fadeIn}
+        className="snap-section bg-slate-50 overflow-y-auto no-scrollbar"
+      >
+        <div className="container mx-auto px-4 pt-4 pb-20">
+          <div className="flex items-center justify-between mb-8">
+             <h2 className="text-3xl font-black text-academic-navy">Campus Gallery</h2>
+             <Link 
+                href="/gallery" 
+                aria-label="View full campus gallery"
+                className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
+             >
+                View All <ArrowRight size={16} />
+             </Link>
+          </div>
+          <div className="relative overflow-hidden py-4 -mx-4 px-4">
+            <motion.div 
+              animate={{ 
+                x: [0, -1000],
+              }}
+              transition={{ 
+               duration: 30,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="flex gap-6 w-max"
+            >
+              {[...recentGallery, ...recentGallery, ...recentGallery].map((item, i) => {
+                const isVideo = item.url.includes('youtube.com') || item.url.includes('youtu.be');
+                const getYoutubeId = (url: string) => {
+                  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                  const match = url.match(regExp);
+                  return (match && match[2].length === 11) ? match[2] : null;
+                };
+                const videoId = isVideo ? getYoutubeId(item.url) : null;
+                const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : item.url;
+
+                return (
+                <Link 
+                  href={isVideo ? item.url : "/gallery"} 
+                  target={isVideo ? "_blank" : undefined}
+                  rel={isVideo ? "noopener noreferrer" : undefined}
+                  key={`${item.id}-${i}`} 
+                  className="w-[80vw] sm:w-[350px] aspect-[4/3] shrink-0 relative rounded-3xl overflow-hidden shadow-md group block"
+                >
+                  <img src={thumbnailUrl} alt={item.caption} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  
+                  {isVideo && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                      <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition-transform">
+                        <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 z-20">
+                     <p className="text-white font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{item.caption}</p>
+                     <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest mt-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{item.category}</span>
+                  </div>
+                </Link>
+              )})}
+            </motion.div>
+            
+            {/* Edge Gradients */}
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-30 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-30 pointer-events-none" />
+          </div>
+        </div>
+      </motion.section>
+
+      {/* 6. Notice Board + CTA */}
       <motion.section 
         initial="hidden"
         whileInView="visible"
@@ -317,7 +391,7 @@ export default function LandingPage() {
 
           <motion.div 
             whileHover={{ scale: 1.01 }}
-            className="bg-academic-navy rounded-[2.5rem] p-8 md:p-12 text-center relative overflow-hidden"
+            className="bg-academic-navy rounded-[2.5rem] p-8 md:p-12 text-center relative overflow-hidden mt-12"
           >
              <div className="relative z-10">
                 <h3 className="text-2xl md:text-4xl font-black text-white mb-6 tracking-tighter">Your Future Starts Now</h3>
@@ -330,55 +404,6 @@ export default function LandingPage() {
                 </Link>
              </div>
           </motion.div>
-        </div>
-      </motion.section>
-
-      {/* 6. Gallery Section */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
-        variants={fadeIn}
-        className="snap-section bg-slate-50 overflow-y-auto no-scrollbar"
-      >
-        <div className="container mx-auto px-4 pt-4 pb-20">
-          <div className="flex items-center justify-between mb-8">
-             <h2 className="text-3xl font-black text-academic-navy">Campus Gallery</h2>
-             <Link 
-                href="/gallery" 
-                aria-label="View full campus gallery"
-                className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
-             >
-                View All <ArrowRight size={16} />
-             </Link>
-          </div>
-          <div className="relative overflow-hidden py-4 -mx-4 px-4">
-            <motion.div 
-              animate={{ 
-                x: [0, -1000],
-              }}
-              transition={{ 
-               duration: 30,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="flex gap-6 w-max"
-            >
-              {[...recentGallery, ...recentGallery, ...recentGallery].map((item, i) => (
-                <div key={`${item.id}-${i}`} className="w-[80vw] sm:w-[350px] aspect-[4/3] shrink-0 relative rounded-3xl overflow-hidden shadow-md group">
-                  <Image src={item.url} alt={item.caption} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                     <p className="text-white font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{item.caption}</p>
-                     <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest mt-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{item.category}</span>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-            
-            {/* Edge Gradients */}
-            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
-          </div>
         </div>
       </motion.section>
     </main>

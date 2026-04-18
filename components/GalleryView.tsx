@@ -52,10 +52,20 @@ export default function GalleryView({ items }: GalleryViewProps) {
       <LayoutGroup>
         <motion.div
           layout
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredItems.map((item) => (
+            {filteredItems.map((item) => {
+              const isVideo = item.url.includes('youtube.com') || item.url.includes('youtu.be');
+              const getYoutubeId = (url: string) => {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+              };
+              const videoId = isVideo ? getYoutubeId(item.url) : null;
+              const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : item.url;
+
+              return (
               <motion.div
                 key={item.id}
                 layout
@@ -67,9 +77,8 @@ export default function GalleryView({ items }: GalleryViewProps) {
                 onClick={() => setSelectedImage(item)}
                 whileHover={{ y: -4 }}
               >
-                {/* Standard image tag instead of Next/Image for natural aspect ratio in masonry */}
                 <img
-                  src={item.url}
+                  src={thumbnailUrl}
                   alt={item.caption}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
@@ -92,10 +101,18 @@ export default function GalleryView({ items }: GalleryViewProps) {
                   </span>
                 </div>
 
+                {isVideo && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition-transform shadow-2xl">
+                      <div className="w-0 h-0 border-t-8 border-t-transparent border-l-[14px] border-l-white border-b-8 border-b-transparent ml-1" />
+                    </div>
+                  </div>
+                )}
+
                 {/* Gold accent on hover */}
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-academic-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </motion.div>
-            ))}
+            )})}
           </AnimatePresence>
         </motion.div>
       </LayoutGroup>
@@ -127,12 +144,28 @@ export default function GalleryView({ items }: GalleryViewProps) {
               transition={{ type: 'spring', stiffness: 200, damping: 25 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
-                src={selectedImage.url}
-                alt={selectedImage.caption}
-                fill
-                className="object-contain rounded-2xl"
-              />
+              {selectedImage.url.includes('youtube.com') || selectedImage.url.includes('youtu.be') ? (
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${(() => {
+                    const match = selectedImage.url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+                    return match && match[2].length === 11 ? match[2] : '';
+                  })()}?autoplay=1`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="rounded-2xl shadow-2xl bg-black"
+                ></iframe>
+              ) : (
+                <Image
+                  src={selectedImage.url}
+                  alt={selectedImage.caption}
+                  fill
+                  className="object-contain rounded-2xl"
+                />
+              )}
               <motion.div
                 className="absolute -bottom-16 left-0 right-0 text-center"
                 initial={{ opacity: 0, y: 20 }}

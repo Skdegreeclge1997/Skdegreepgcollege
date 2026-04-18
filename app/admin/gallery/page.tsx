@@ -31,6 +31,7 @@ export default function GalleryManager() {
   const [newImage, setNewImage] = useState<Partial<GalleryImage>>({ caption: '', category: 'Campus' });
   const [uploading, setUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [uploadType, setUploadType] = useState<'image' | 'video'>('image');
  
   useEffect(() => {
     fetchImages();
@@ -148,31 +149,86 @@ export default function GalleryManager() {
                </button>
             </div>
             
+            {/* Upload Tabs */}
+            <div className="flex gap-4 mb-6 border-b border-slate-100 pb-4">
+              <button 
+                onClick={() => { setUploadType('image'); setNewImage(p => ({...p, url: undefined})); }}
+                className={`text-sm font-bold pb-2 border-b-2 transition-all ${uploadType === 'image' ? 'border-academic-navy text-academic-navy' : 'border-transparent text-slate-400 hover:text-slate-600'}`}
+              >
+                Upload Photo
+              </button>
+              <button 
+                onClick={() => { setUploadType('video'); setNewImage(p => ({...p, url: '', category: 'Video'})); }}
+                className={`text-sm font-bold pb-2 border-b-2 transition-all ${uploadType === 'video' ? 'border-academic-navy text-academic-navy' : 'border-transparent text-slate-400 hover:text-slate-600'}`}
+              >
+                YouTube Video
+              </button>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-               {/* Upload Area */}
+               {/* Media Area */}
                <div className="relative aspect-video bg-slate-50 rounded-[2rem] border-4 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 overflow-hidden group/upload">
-                  {newImage.url ? (
-                     <>
-                        <Image src={newImage.url} alt="Preview" fill className="object-cover" />
-                        <button 
-                           onClick={() => setNewImage(p => ({...p, url: undefined}))}
-                           className="absolute top-4 right-4 p-2 bg-red-500 text-white rounded-full shadow-lg"
-                        >
-                           <Trash2 size={16} />
-                        </button>
-                     </>
+                  {uploadType === 'image' ? (
+                    newImage.url ? (
+                       <>
+                          <Image src={newImage.url} alt="Preview" fill className="object-cover" />
+                          <button 
+                             onClick={() => setNewImage(p => ({...p, url: undefined}))}
+                             className="absolute top-4 right-4 p-2 bg-red-500 text-white rounded-full shadow-lg"
+                          >
+                             <Trash2 size={16} />
+                          </button>
+                       </>
+                    ) : (
+                       <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100 transition-all">
+                          {uploading ? <Loader2 className="animate-spin text-academic-gold mb-2" size={32} /> : <ImageIcon size={48} className="mb-2 opacity-20" />}
+                          <p className="text-xs font-black uppercase tracking-widest text-slate-500">
+                             {uploading ? 'Processing File...' : 'Click to Upload Photo'}
+                          </p>
+                          <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} disabled={uploading} />
+                       </label>
+                    )
                   ) : (
-                     <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100 transition-all">
-                        {uploading ? <Loader2 className="animate-spin text-academic-gold mb-2" size={32} /> : <ImageIcon size={48} className="mb-2 opacity-20" />}
+                    newImage.url && (newImage.url.includes('youtube.com') || newImage.url.includes('youtu.be')) ? (
+                      <>
+                        <img 
+                          src={`https://img.youtube.com/vi/${(() => {
+                            const match = newImage.url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+                            return match && match[2].length === 11 ? match[2] : '';
+                          })()}/hqdefault.jpg`} 
+                          alt="Video Preview" 
+                          className="w-full h-full object-cover" 
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50">
+                            <div className="w-0 h-0 border-t-8 border-t-transparent border-l-[14px] border-l-white border-b-8 border-b-transparent ml-1" />
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="text-center p-6">
+                        <Camera size={48} className="mx-auto mb-2 opacity-20" />
                         <p className="text-xs font-black uppercase tracking-widest text-slate-500">
-                           {uploading ? 'Processing File...' : 'Click to Upload Photo'}
+                          Video Preview
                         </p>
-                        <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} disabled={uploading} />
-                     </label>
+                      </div>
+                    )
                   )}
                </div>
  
                <div className="space-y-6">
+                  {uploadType === 'video' && (
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">YouTube Video URL</label>
+                       <input 
+                          type="url" 
+                          value={newImage.url || ''}
+                          onChange={(e) => setNewImage({...newImage, url: e.target.value})}
+                          className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none font-bold text-academic-navy transition-all" 
+                          placeholder="https://www.youtube.com/watch?v=..." 
+                       />
+                    </div>
+                  )}
                   <div className="space-y-2">
                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Photo Caption</label>
                      <input 
@@ -195,6 +251,7 @@ export default function GalleryManager() {
                         <option>Facilities</option>
                         <option>Students</option>
                         <option>NCC</option>
+                        <option>Video</option>
                      </select>
                   </div>
                   <div className="pt-4 flex gap-4">
@@ -223,7 +280,25 @@ export default function GalleryManager() {
         ) : images.map((img) => (
           <div key={img.id} className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden group hover:shadow-2xl transition-all duration-500">
             <div className="aspect-[4/3] relative overflow-hidden">
-               <Image src={img.url} alt={img.caption} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+               {img.url.includes('youtube.com') || img.url.includes('youtu.be') ? (
+                 <img 
+                   src={`https://img.youtube.com/vi/${(() => {
+                     const match = img.url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+                     return match && match[2].length === 11 ? match[2] : '';
+                   })()}/hqdefault.jpg`} 
+                   alt={img.caption} 
+                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                 />
+               ) : (
+                 <Image src={img.url} alt={img.caption} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+               )}
+               {(img.url.includes('youtube.com') || img.url.includes('youtu.be')) && (
+                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                   <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50">
+                     <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                   </div>
+                 </div>
+               )}
                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                   <button 
                     onClick={() => handleDelete(img.id)}
