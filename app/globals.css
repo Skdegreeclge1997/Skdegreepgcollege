@@ -75,21 +75,30 @@ h1, h2, h3, h4, h5, h6 {
   .snap-container {
     height: 100dvh;
     overflow-y: auto;
-    scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
   }
   
   .snap-section {
-    height: 100dvh;
+    min-height: 100dvh;
     width: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding-top: 6rem; /* Ensures heading visibility below navbar */
     position: relative;
     overflow: hidden;
+  }
+
+  /* Only enable aggressive snapping on tablets and desktops */
+  @media (min-width: 768px) {
+    .snap-container {
+      scroll-snap-type: y mandatory;
+    }
+    .snap-section {
+      height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
   }
 
   /* Utility for internal scrolling without scrollbars */
