@@ -25,7 +25,7 @@ export default function FacultyPage() {
       .from('faculty')
       .select('*')
       .order('id', { ascending: true });
-    
+
     if (!error && data && data.length > 0) {
       setFaculty(data);
     } else {
@@ -36,19 +36,33 @@ export default function FacultyPage() {
 
   const departments = [
     'All Departments',
-    ...new Set(faculty.map(m => m.department).sort())
+    'Administration',
+    ...new Set(faculty
+      .map(m => m.department)
+      .filter(d => d !== 'Administration' && d !== 'All Departments')
+      .sort()
+    )
   ];
 
-  const filteredFaculty = selectedDept === 'All Departments' 
-    ? faculty 
-    : faculty.filter(m => m.department === selectedDept);
+  const filteredFaculty = selectedDept === 'All Departments'
+    ? faculty
+    : faculty.filter(m => {
+      if (selectedDept === 'Administration') {
+        return m.designation?.toLowerCase().includes('principal') ||
+          m.designation?.toLowerCase().includes('founder of the society') ||
+          //  m.designation?.toLowerCase().includes('hod') ||
+          m.designation?.toLowerCase().includes('head of department') ||
+          m.department === 'Administration';
+      }
+      return m.department === selectedDept;
+    });
 
   return (
     <main className="min-h-screen bg-slate-50 pb-20">
       {/* Hero Section with 3D Particle Background */}
       <section className="relative bg-academic-navy pt-32 pb-24 overflow-hidden">
         <ParticleCanvas className="opacity-60" />
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row items-end justify-between gap-8">
             <div className="max-w-2xl">
@@ -68,12 +82,12 @@ export default function FacultyPage() {
 
               <MotionSection delay={0.4}>
                 <p className="text-lg text-slate-300 leading-relaxed">
-                  Our faculty members are not just teachers, but mentors and researchers 
+                  Our faculty members are not just teachers, but mentors and researchers
                   committed to academic excellence and the holistic development of every student.
                 </p>
               </MotionSection>
             </div>
-            
+
             <MotionSection delay={0.5} direction="right">
               <div className="hidden lg:flex items-center gap-4 p-3 glass rounded-xl">
                 <div className="flex -space-x-3 overflow-hidden px-2">
@@ -107,8 +121,8 @@ export default function FacultyPage() {
         <div className="bg-white p-4 md:p-6 rounded-3xl shadow-xl border border-slate-100 flex flex-col md:flex-row gap-4 items-center">
           <div className="relative flex-1 w-full">
             <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Search by name or department..."
               className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-academic-gold transition-all text-sm font-medium"
               onChange={(e) => {
@@ -116,8 +130,8 @@ export default function FacultyPage() {
                 if (term === '') {
                   fetchFaculty();
                 } else {
-                  setFaculty(faculty.filter(f => 
-                    f.name.toLowerCase().includes(term) || 
+                  setFaculty(faculty.filter(f =>
+                    f.name.toLowerCase().includes(term) ||
                     f.department.toLowerCase().includes(term)
                   ));
                 }
@@ -129,11 +143,10 @@ export default function FacultyPage() {
               <button
                 key={i}
                 onClick={() => setSelectedDept(dept)}
-                className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${
-                  selectedDept === dept 
-                    ? 'bg-academic-navy text-white shadow-lg' 
-                    : 'bg-white text-slate-500 hover:bg-slate-50 border border-slate-100'
-                }`}
+                className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${selectedDept === dept
+                  ? 'bg-academic-navy text-white shadow-lg'
+                  : 'bg-white text-slate-500 hover:bg-slate-50 border border-slate-100'
+                  }`}
               >
                 {dept}
               </button>
@@ -167,7 +180,7 @@ export default function FacultyPage() {
                   </StaggerContainer>
                 </motion.div>
               </AnimatePresence>
-              
+
               {filteredFaculty.length === 0 && (
                 <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-200">
                   <p className="text-slate-400 font-medium">No faculty members found matching your search.</p>
