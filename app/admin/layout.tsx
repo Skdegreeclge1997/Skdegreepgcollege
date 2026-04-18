@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
-import { useRouter, usePathname } from 'next/navigation';
+import { useAuth } from '@/components/AuthProvider';
 import { 
   LayoutDashboard, 
   Users, 
@@ -31,31 +30,57 @@ const navItems = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [user, setUser] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isLoading: authLoading, signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      // Check if user exists AND has admin privileges
+    if (!authLoading) {
       const isAdmin = user?.app_metadata?.role === 'admin' || user?.user_metadata?.is_admin === true;
 
-      if (!user) {
+      if (!user && pathname !== '/admin/login') {
         router.push('/admin/login');
-      } else if (!isAdmin) {
-        // If logged in but not an admin, sign out and redirect
-        await supabase.auth.signOut();
+      } else if (user && !isAdmin && pathname !== '/admin/login') {
+        // If logged in but not an admin, redirect but don't force signout here to avoid loop
         router.push('/admin/login?error=unauthorized');
-      } else {
-        setUser(user);
       }
-      setIsLoading(false);
-    };
-    checkUser();
-  }, [router]);
+    }
+  }, [user, authLoading, pathname, router]);
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#08090a] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="animate-spin text-academic-gold" size={40} />
+          <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">Verifying Credentials...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If on login page, just render the login form
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
+
+  // Double check admin status before rendering dashboard
+  const isAdmin = user?.app_metadata?.role === 'admin' || user?.user_metadata?.is_admin === true;
+  if (!user || !isAdmin) {
+    return (
+      <div className="min-h-screen bg-[#08090a] flex items-center justify-center p-4">
+        <div className="text-center space-y-4">
+          <ShieldCheck size={48} className="text-red-500 mx-auto opacity-50" />
+          <p className="text-white font-bold">Access Restricted</p>
+          <button 
+            onClick={() => signOut()} 
+            className="text-academic-gold text-xs font-black uppercase tracking-widest hover:underline"
+          >
+            Sign Out & Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
