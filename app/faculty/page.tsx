@@ -25,7 +25,7 @@ export default function FacultyPage() {
       .from('faculty')
       .select('*')
       .order('id', { ascending: true });
-    
+
     if (!error && data && data.length > 0) {
       setFaculty(data);
     } else {
@@ -34,18 +34,37 @@ export default function FacultyPage() {
     setLoading(false);
   };
 
-  const departments = ['All Departments', ...new Set((faculty.length > 0 ? faculty : (initialFacultyData as Faculty[])).map(m => m.department))];
+  const departments = [
+    'All Departments',
+    'Administration',
+    ...new Set(faculty
+      .map(m => m.department)
+      .filter(d => d !== 'Administration')
+      .sort()
+    )
+  ];
 
-  const filteredFaculty = selectedDept === 'All Departments' 
-    ? faculty 
-    : faculty.filter(m => m.department === selectedDept);
+  const filteredFaculty = selectedDept === 'All Departments'
+    ? faculty
+    : faculty.filter(m => {
+      if (selectedDept === 'Administration') {
+        const isAdminRole =
+          m.designation?.toLowerCase().includes('principal') ||
+          m.designation?.toLowerCase().includes('founder of the society') ||
+          m.designation?.toLowerCase().includes('head of department') ||
+          // m.designation?.toLowerCase().includes('hod') ||
+          m.department === 'Administration';
+        return isAdminRole;
+      }
+      return m.department === selectedDept;
+    });
 
   return (
     <main className="min-h-screen bg-slate-50 pb-20">
       {/* Hero Section with 3D Particle Background */}
       <section className="relative bg-academic-navy pt-32 pb-24 overflow-hidden">
         <ParticleCanvas className="opacity-60" />
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row items-end justify-between gap-8">
             <div className="max-w-2xl">
@@ -65,12 +84,12 @@ export default function FacultyPage() {
 
               <MotionSection delay={0.4}>
                 <p className="text-lg text-slate-300 leading-relaxed">
-                  Our faculty members are not just teachers, but mentors and researchers 
+                  Our faculty members are not just teachers, but mentors and researchers
                   committed to academic excellence and the holistic development of every student.
                 </p>
               </MotionSection>
             </div>
-            
+
             <MotionSection delay={0.5} direction="right">
               <div className="hidden lg:flex items-center gap-4 p-3 glass rounded-xl">
                 <div className="flex -space-x-3 overflow-hidden px-2">
@@ -111,20 +130,42 @@ export default function FacultyPage() {
                     <Filter size={18} className="text-academic-gold" aria-hidden="true" />
                     <h2>Departments</h2>
                   </div>
-                  
-                  <nav className="space-y-2">
-                    {departments.map((dept, i) => (
-                      <motion.button 
-                        key={i}
-                        onClick={() => setSelectedDept(dept)}
-                        className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${selectedDept === dept ? 'bg-academic-navy text-white shadow-md' : 'text-slate-600 hover:bg-slate-50'}`}
-                        whileHover={{ x: 4 }}
-                        whileTap={{ scale: 0.97 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                      >
-                        {dept}
-                      </motion.button>
-                    ))}
+
+                  <nav className="space-y-1.5">
+                    {departments.map((dept, i) => {
+                      const count = dept === 'All Departments'
+                        ? faculty.length
+                        : faculty.filter(m => {
+                          if (dept === 'Administration') {
+                            return m.designation?.toLowerCase().includes('principal') ||
+                              m.designation?.toLowerCase().includes('founder') ||
+                              m.designation?.toLowerCase().includes('hod') ||
+                              m.department === 'Administration';
+                          }
+                          return m.department === dept;
+                        }).length;
+
+                      if (count === 0 && dept !== 'All Departments') return null;
+
+                      return (
+                        <motion.button
+                          key={i}
+                          onClick={() => setSelectedDept(dept)}
+                          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all ${selectedDept === dept
+                            ? 'bg-academic-navy text-white shadow-xl shadow-academic-navy/20'
+                            : 'text-slate-500 hover:text-academic-navy hover:bg-slate-50 border border-transparent hover:border-slate-100'
+                            }`}
+                          whileHover={{ x: 4 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <span className="flex-1 text-left">{dept}</span>
+                          <span className={`text-[10px] px-2 py-0.5 rounded-full ${selectedDept === dept ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-400'
+                            }`}>
+                            {count}
+                          </span>
+                        </motion.button>
+                      );
+                    })}
                   </nav>
                 </div>
 
@@ -148,7 +189,7 @@ export default function FacultyPage() {
                       View Career Openings →
                     </motion.button>
                   </div>
-                  
+
                   {/* Decoration */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -mr-16 -mt-16" aria-hidden="true" />
                   <div className="absolute bottom-0 left-0 w-24 h-24 bg-academic-gold/10 rounded-full blur-xl -ml-12 -mb-12" aria-hidden="true" />
@@ -188,7 +229,7 @@ export default function FacultyPage() {
                     </StaggerContainer>
                   </motion.div>
                 </AnimatePresence>
-                
+
                 {filteredFaculty.length === 0 && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
