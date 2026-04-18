@@ -59,13 +59,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         setRole(currentRole);
         
         const isAdmin = currentRole === 'admin';
-        console.log(`[Admin Guard] ${isAdmin ? "✅ ACCESS GRANTED" : "❌ ACCESS DENIED"} | Role: ${currentRole || "none"} | Email: ${user.email}`);
 
         if (!isAdmin && pathname !== '/admin/login') {
           router.push('/admin/login?error=unauthorized');
         }
       } catch (err) {
-        console.error('[Admin Guard] Error:', err);
+        // Silent catch
       } finally {
         setIsVerifying(false);
       }
