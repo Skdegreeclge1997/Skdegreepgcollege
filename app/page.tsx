@@ -14,7 +14,9 @@ import NewsSection from '@/components/NewsSection';
 import { ThreeBackground } from '@/components/Visuals';
 
 const recentNotices = (noticesData as Notice[]).slice(0, 3);
-const recentGallery = (initialGalleryData as GalleryItem[]).slice(0, 6);
+const allGallery = initialGalleryData as GalleryItem[];
+const photoGallery = allGallery.filter(item => !item.url.includes('youtube.com') && !item.url.includes('youtu.be')).slice(0, 6);
+const videoGallery = allGallery.filter(item => item.url.includes('youtube.com') || item.url.includes('youtu.be')).slice(0, 6);
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -303,34 +305,18 @@ export default function LandingPage() {
               }}
               className="flex gap-6 w-max"
             >
-              {[...recentGallery, ...recentGallery, ...recentGallery].map((item, i) => {
-                const isVideo = item.url.includes('youtube.com') || item.url.includes('youtu.be');
-                const getYoutubeId = (url: string) => {
-                  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                  const match = url.match(regExp);
-                  return (match && match[2].length === 11) ? match[2] : null;
-                };
-                const videoId = isVideo ? getYoutubeId(item.url) : null;
-                const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : item.url;
+              {[...photoGallery, ...photoGallery, ...photoGallery].map((item, i) => {
+                const isVideo = false;
+                const thumbnailUrl = item.url;
 
                 return (
                 <Link 
-                  href={isVideo ? item.url : "/gallery"} 
-                  target={isVideo ? "_blank" : undefined}
-                  rel={isVideo ? "noopener noreferrer" : undefined}
+                  href="/gallery" 
                   key={`${item.id}-${i}`} 
                   className="w-[80vw] sm:w-[350px] aspect-[4/3] shrink-0 relative rounded-3xl overflow-hidden shadow-md group block"
                 >
                   <img src={thumbnailUrl} alt={item.caption} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   
-                  {isVideo && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                      <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition-transform">
-                        <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
-                      </div>
-                    </div>
-                  )}
-
                   <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 z-20">
                      <p className="text-white font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{item.caption}</p>
                      <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest mt-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{item.category}</span>
@@ -342,6 +328,81 @@ export default function LandingPage() {
             {/* Edge Gradients */}
             <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-30 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-30 pointer-events-none" />
+          </div>
+        </div>
+      </motion.section>
+
+      {/* 5B. Video Section */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        variants={fadeIn}
+        className="snap-section bg-slate-100 overflow-y-auto no-scrollbar"
+      >
+        <div className="container mx-auto px-4 pt-4 pb-20">
+          <div className="flex items-center justify-between mb-8">
+             <h2 className="text-3xl font-black text-academic-navy">Campus Video Tour</h2>
+             <Link 
+                href="/gallery" 
+                aria-label="View full campus gallery"
+                className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
+             >
+                Watch All <ArrowRight size={16} />
+             </Link>
+          </div>
+          <div className="relative overflow-hidden py-4 -mx-4 px-4">
+            <motion.div 
+              animate={{ 
+                x: [0, -1000],
+              }}
+              transition={{ 
+               duration: 35,
+                repeat: Infinity,
+                ease: "linear",
+                repeatType: "loop"
+              }}
+              className="flex gap-6 w-max"
+            >
+              {videoGallery.length > 0 ? [...videoGallery, ...videoGallery, ...videoGallery, ...videoGallery].map((item, i) => {
+                const getYoutubeId = (url: string) => {
+                  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                  const match = url.match(regExp);
+                  return (match && match[2].length === 11) ? match[2] : null;
+                };
+                const videoId = getYoutubeId(item.url);
+                const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : item.url;
+
+                return (
+                <Link 
+                  href={item.url} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={`video-${item.id}-${i}`} 
+                  className="w-[80vw] sm:w-[350px] aspect-video shrink-0 relative rounded-3xl overflow-hidden shadow-md group block border-2 border-slate-200"
+                >
+                  <img src={thumbnailUrl} alt={item.caption} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                    <div className="w-16 h-16 bg-academic-navy/70 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50 group-hover:bg-academic-gold group-hover:border-academic-gold transition-all duration-300">
+                      <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1" />
+                    </div>
+                  </div>
+
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pt-12 pb-4 px-6 z-20">
+                     <p className="text-white font-bold text-sm md:text-base">{item.caption}</p>
+                  </div>
+                </Link>
+              )}) : (
+                <div className="w-[80vw] sm:w-[350px] aspect-video shrink-0 flex items-center justify-center rounded-3xl border-2 border-dashed border-slate-300">
+                  <p className="text-slate-400 font-bold">More videos coming soon</p>
+                </div>
+              )}
+            </motion.div>
+            
+            {/* Edge Gradients */}
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-100 to-transparent z-30 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-100 to-transparent z-30 pointer-events-none" />
           </div>
         </div>
       </motion.section>
