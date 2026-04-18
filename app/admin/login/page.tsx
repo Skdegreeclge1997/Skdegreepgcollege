@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/components/AuthProvider';
 import { Loader2, Lock, Mail, ShieldAlert } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ import Link from 'next/link';
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const { signIn, isLoading } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
@@ -18,22 +18,14 @@ export default function AdminLoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError(null);
 
-    const { data, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error: signInError } = await signIn(email, password);
 
-    if (authError) {
-      setError(authError.message);
-      setIsLoading(false);
-    } else if (data.user) {
-      // Small delay to allow AuthProvider to catch up
-      setTimeout(() => {
-        router.push('/admin/dashboard');
-      }, 500);
+    if (signInError) {
+      setError(signInError.message);
+    } else {
+      router.push('/admin/dashboard');
     }
   };
 
