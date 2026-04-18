@@ -341,8 +341,8 @@ export default function LandingPage() {
         className="snap-section bg-slate-100 overflow-y-auto no-scrollbar"
       >
         <div className="container mx-auto px-4 pt-4 pb-20">
-          <div className="flex items-center justify-between mb-8">
-             <h2 className="text-3xl font-black text-academic-navy">Campus Video Tour</h2>
+          <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+             <h2 className="text-3xl font-black text-academic-navy text-center md:text-left">Video Gallery</h2>
              <Link 
                 href="/gallery" 
                 aria-label="View full campus gallery"
@@ -351,58 +351,45 @@ export default function LandingPage() {
                 Watch All <ArrowRight size={16} />
              </Link>
           </div>
-          <div className="relative overflow-hidden py-4 -mx-4 px-4">
-            <motion.div 
-              animate={{ 
-                x: [0, -1000],
-              }}
-              transition={{ 
-               duration: 35,
-                repeat: Infinity,
-                ease: "linear",
-                repeatType: "loop"
-              }}
-              className="flex gap-6 w-max"
-            >
-              {videoGallery.length > 0 ? [...videoGallery, ...videoGallery, ...videoGallery, ...videoGallery].map((item, i) => {
-                const getYoutubeId = (url: string) => {
-                  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                  const match = url.match(regExp);
-                  return (match && match[2].length === 11) ? match[2] : null;
-                };
-                const videoId = getYoutubeId(item.url);
-                const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : item.url;
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {videoGallery.length > 0 ? videoGallery.slice(0, 3).map((item, i) => {
+              const getYoutubeId = (url: string) => {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+              };
+              const videoId = getYoutubeId(item.url);
 
-                return (
-                <Link 
-                  href={item.url} 
-                  target="_blank"
-                  rel="noopener noreferrer"
+              return (
+                <div 
                   key={`video-${item.id}-${i}`} 
-                  className="w-[80vw] sm:w-[350px] aspect-video shrink-0 relative rounded-3xl overflow-hidden shadow-md group block border-2 border-slate-200"
+                  className="w-full aspect-video relative rounded-3xl overflow-hidden shadow-lg border-4 border-white bg-black"
                 >
-                  <img src={thumbnailUrl} alt={item.caption} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                    <div className="w-16 h-16 bg-academic-navy/70 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50 group-hover:bg-academic-gold group-hover:border-academic-gold transition-all duration-300">
-                      <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1" />
+                  {videoId ? (
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      title={item.caption}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full"
+                    ></iframe>
+                  ) : (
+                    <div className="flex items-center justify-center h-full bg-slate-800 text-white">
+                      <p>Invalid Video URL</p>
                     </div>
-                  </div>
-
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pt-12 pb-4 px-6 z-20">
-                     <p className="text-white font-bold text-sm md:text-base">{item.caption}</p>
-                  </div>
-                </Link>
-              )}) : (
-                <div className="w-[80vw] sm:w-[350px] aspect-video shrink-0 flex items-center justify-center rounded-3xl border-2 border-dashed border-slate-300">
-                  <p className="text-slate-400 font-bold">More videos coming soon</p>
+                  )}
                 </div>
-              )}
-            </motion.div>
-            
-            {/* Edge Gradients */}
-            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-100 to-transparent z-30 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-100 to-transparent z-30 pointer-events-none" />
+              )
+            }) : (
+              <div className="col-span-full aspect-video flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50">
+                <p className="text-slate-400 font-bold mb-2">No videos available</p>
+                <p className="text-slate-400 text-sm">Add videos from the admin panel.</p>
+              </div>
+            )}
           </div>
         </div>
       </motion.section>
