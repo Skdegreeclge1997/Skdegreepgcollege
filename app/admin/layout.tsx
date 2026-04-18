@@ -32,7 +32,9 @@ const navItems = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [role, setRole] = useState<string | null>(null);
   const { user, isLoading: authLoading, signOut } = useAuth();
+  const [isVerifying, setIsVerifying] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -41,38 +43,38 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       if (authLoading) return;
 
       if (!user) {
+        setIsVerifying(false);
         if (pathname !== '/admin/login') router.push('/admin/login');
         return;
       }
 
       try {
-        // Professional Pattern: Fetch role from public.profiles table
-        const { data: profile, error } = await supabase
+        const { data: profile } = await supabase
           .from('profiles')
           .select('role')
           .eq('id', user.id)
           .single();
 
-        const isAdmin = profile?.role === 'admin';
-        console.log(`[Admin Guard] ${isAdmin ? "✅ ACCESS GRANTED" : "❌ ACCESS DENIED"} | Role: ${profile?.role || "none"} | Email: ${user.email}`);
+        const currentRole = profile?.role || user?.app_metadata?.role || (user?.user_metadata?.is_admin ? 'admin' : null);
+        setRole(currentRole);
+        
+        const isAdmin = currentRole === 'admin';
+        console.log(`[Admin Guard] ${isAdmin ? "✅ ACCESS GRANTED" : "❌ ACCESS DENIED"} | Role: ${currentRole || "none"} | Email: ${user.email}`);
 
         if (!isAdmin && pathname !== '/admin/login') {
           router.push('/admin/login?error=unauthorized');
         }
       } catch (err) {
-        console.error('[Admin Guard] Error fetching profile:', err);
-        // Fallback to metadata if table doesn't exist yet (for transition)
-        const metadataAdmin = user?.app_metadata?.role === 'admin' || user?.user_metadata?.is_admin === true;
-        if (!metadataAdmin && pathname !== '/admin/login') {
-          router.push('/admin/login?error=unauthorized');
-        }
+        console.error('[Admin Guard] Error:', err);
+      } finally {
+        setIsVerifying(false);
       }
     };
 
     checkAdminStatus();
   }, [user, authLoading, pathname, router]);
 
-  if (authLoading) {
+  if (authLoading || (isVerifying && pathname !== '/admin/login')) {
     return (
       <div className="min-h-screen bg-[#08090a] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
@@ -89,13 +91,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   // Double check admin status before rendering dashboard
-  const isAdmin = user?.app_metadata?.role === 'admin' || user?.user_metadata?.is_admin === true;
+  const isAdmin = role === 'admin';
   if (!user || !isAdmin) {
     return (
       <div className="min-h-screen bg-[#08090a] flex items-center justify-center p-4">
         <div className="text-center space-y-4">
           <ShieldCheck size={48} className="text-red-500 mx-auto opacity-50" />
           <p className="text-white font-bold">Access Restricted</p>
+          <p className="text-slate-500 text-xs">You are logged in as {user?.email}, but you do not have Admin privileges.</p>
           <button 
             onClick={() => signOut()} 
             className="text-academic-gold text-xs font-black uppercase tracking-widest hover:underline"
