@@ -39,6 +39,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (!authLoading) {
       const isAdmin = user?.app_metadata?.role === 'admin' || user?.user_metadata?.is_admin === true;
+      console.log('[Admin Guard] User Auth State:', { 
+        loggedIn: !!user, 
+        email: user?.email,
+        isAdmin,
+        metadata: user?.user_metadata,
+        app_metadata: user?.app_metadata 
+      });
 
       if (!user && pathname !== '/admin/login') {
         router.push('/admin/login');
