@@ -37,23 +37,39 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!authLoading) {
-      const isAdmin = user?.app_metadata?.role === 'admin' || user?.user_metadata?.is_admin === true;
-      console.log('[Admin Guard] User Auth State:', { 
-        loggedIn: !!user, 
-        email: user?.email,
-        isAdmin,
-        metadata: user?.user_metadata,
-        app_metadata: user?.app_metadata 
-      });
+    const checkAdminStatus = async () => {
+      if (authLoading) return;
 
-      if (!user && pathname !== '/admin/login') {
-        router.push('/admin/login');
-      } else if (user && !isAdmin && pathname !== '/admin/login') {
-        // If logged in but not an admin, redirect but don't force signout here to avoid loop
-        router.push('/admin/login?error=unauthorized');
+      if (!user) {
+        if (pathname !== '/admin/login') router.push('/admin/login');
+        return;
       }
-    }
+
+      try {
+        // Professional Pattern: Fetch role from public.profiles table
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+
+        const isAdmin = profile?.role === 'admin';
+        console.log(`[Admin Guard] ${isAdmin ? "✅ ACCESS GRANTED" : "❌ ACCESS DENIED"} | Role: ${profile?.role || "none"} | Email: ${user.email}`);
+
+        if (!isAdmin && pathname !== '/admin/login') {
+          router.push('/admin/login?error=unauthorized');
+        }
+      } catch (err) {
+        console.error('[Admin Guard] Error fetching profile:', err);
+        // Fallback to metadata if table doesn't exist yet (for transition)
+        const metadataAdmin = user?.app_metadata?.role === 'admin' || user?.user_metadata?.is_admin === true;
+        if (!metadataAdmin && pathname !== '/admin/login') {
+          router.push('/admin/login?error=unauthorized');
+        }
+      }
+    };
+
+    checkAdminStatus();
   }, [user, authLoading, pathname, router]);
 
   if (authLoading) {
