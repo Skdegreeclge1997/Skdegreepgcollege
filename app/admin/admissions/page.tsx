@@ -21,16 +21,27 @@ export default function AdmissionsAdmin() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetchInquiries();
-  }, []);
+    const delayDebounceFn = setTimeout(() => {
+      fetchInquiries(searchTerm);
+    }, 500);
 
-  const fetchInquiries = async () => {
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
+  const fetchInquiries = async (searchQuery: string = '') => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('inquiries')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(100);
+        
+      if (searchQuery) {
+        query = query.or(`name.ilike.%${searchQuery}%,course.ilike.%${searchQuery}%`);
+      }
+      
+      const { data, error } = await query;
       
       if (!error && data) {
         setInquiries(data);
@@ -49,10 +60,8 @@ export default function AdmissionsAdmin() {
     XLSX.writeFile(workbook, "Student_Inquiries_SK_College.xlsx");
   };
 
-  const filteredInquiries = inquiries.filter(inq => 
-    inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    inq.course.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Client-side filter removed; using server-side 'inquiries' directly
+  const filteredInquiries = inquiries;
 
   return (
     <div className="space-y-8">
@@ -88,7 +97,7 @@ export default function AdmissionsAdmin() {
               <Filter size={18} />
               Filter
            </button>
-           <button onClick={fetchInquiries} className="px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all">
+           <button onClick={() => fetchInquiries(searchTerm)} className="px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all">
               Refresh
            </button>
         </div>

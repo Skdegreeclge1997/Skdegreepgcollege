@@ -55,7 +55,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           .eq('id', user.id)
           .single();
 
-        const currentRole = profile?.role || user?.app_metadata?.role || (user?.user_metadata?.is_admin ? 'admin' : null);
+        const currentRole = profile?.role || user?.app_metadata?.role;
         setRole(currentRole);
         
         const isAdmin = currentRole === 'admin';
