@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { X, Maximize2 } from 'lucide-react';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { X, Maximize2, ZoomIn } from 'lucide-react';
 import { GalleryItem } from '@/lib/types';
 
 interface GalleryViewProps {
@@ -21,77 +22,132 @@ export default function GalleryView({ items }: GalleryViewProps) {
 
   return (
     <div className="space-y-12">
-      {/* Category Tabs */}
-      <div className="flex flex-wrap justify-center gap-4">
+      {/* Category Tabs with animated indicator */}
+      <div className="flex flex-wrap justify-center gap-3">
         {categories.map((cat) => (
-          <button
+          <motion.button
             key={cat}
             onClick={() => setFilter(cat)}
-            className={`px-6 py-2 rounded-full font-bold transition-all duration-300 ${
+            className={`relative px-6 py-2.5 rounded-full font-bold transition-colors duration-300 ${
               filter === cat 
-                ? 'bg-academic-gold text-academic-navy shadow-lg' 
+                ? 'text-academic-navy' 
                 : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
             }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            {cat}
-          </button>
+            {filter === cat && (
+              <motion.div
+                layoutId="activeTab"
+                className="absolute inset-0 bg-academic-gold rounded-full shadow-lg"
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">{cat}</span>
+          </motion.button>
         ))}
       </div>
 
-      {/* Masonry-style Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-        {filteredItems.map((item) => (
-          <div 
-            key={item.id}
-            className="group relative aspect-square md:aspect-[4/5] rounded-2xl overflow-hidden bg-slate-100 cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
-            onClick={() => setSelectedImage(item)}
-          >
-            <Image
-              src={item.url}
-              alt={item.caption}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            {/* Overlay - visible on hover for desktop, always visible subtley on mobile */}
-            <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
-              <Maximize2 className="hidden md:block absolute top-4 right-4 text-white/70" size={20} />
-              <p className="text-white text-xs md:text-base font-bold leading-tight transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
-                {item.caption}
-              </p>
-              <span className="text-academic-gold text-[8px] md:text-xs font-bold uppercase tracking-widest mt-1 md:mt-2 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 delay-75">
-                {item.category}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Animated Grid */}
+      <LayoutGroup>
+        <motion.div
+          layout
+          className="columns-2 sm:columns-3 lg:columns-4 gap-4 md:gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredItems.map((item) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative rounded-2xl overflow-hidden bg-slate-100 cursor-pointer shadow-md hover:shadow-2xl break-inside-avoid mb-4 md:mb-6"
+                onClick={() => setSelectedImage(item)}
+                whileHover={{ y: -4 }}
+              >
+                {/* Standard image tag instead of Next/Image for natural aspect ratio in masonry */}
+                <img
+                  src={item.url}
+                  alt={item.caption}
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
+                  <motion.div
+                    className="hidden md:flex absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm items-center justify-center"
+                    initial={{ scale: 0 }}
+                    whileHover={{ scale: 1.2 }}
+                  >
+                    <ZoomIn className="text-white/80" size={18} />
+                  </motion.div>
+                  
+                  <p className="text-white text-xs md:text-base font-bold leading-tight transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
+                    {item.caption}
+                  </p>
+                  <span className="text-academic-gold text-[8px] md:text-xs font-bold uppercase tracking-widest mt-1 md:mt-2 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 delay-75">
+                    {item.category}
+                  </span>
+                </div>
 
-      {/* Lightbox Modal */}
-      {selectedImage && (
-        <div className="fixed inset-0 z-[100] bg-academic-navy/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
-          <button 
+                {/* Gold accent on hover */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-academic-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </LayoutGroup>
+
+      {/* Lightbox Modal with Motion */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            className="fixed inset-0 z-[100] bg-academic-navy/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={() => setSelectedImage(null)}
-            className="absolute top-8 right-8 text-white/70 hover:text-white transition-colors p-2 rounded-full bg-white/5 hover:bg-white/10"
           >
-            <X size={32} />
-          </button>
-          
-          <div className="relative w-full max-w-5xl aspect-video md:aspect-[16/10]">
-            <Image
-              src={selectedImage.url}
-              alt={selectedImage.caption}
-              fill
-              className="object-contain"
-            />
-            <div className="absolute -bottom-16 left-0 right-0 text-center">
-              <h3 className="text-white text-xl font-bold">{selectedImage.caption}</h3>
-              <p className="text-academic-gold font-medium uppercase tracking-widest text-sm mt-2">
-                {selectedImage.category}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+            <motion.button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-8 right-8 text-white/70 hover:text-white transition-colors p-2 rounded-full bg-white/5 hover:bg-white/10 z-10"
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              <X size={32} />
+            </motion.button>
+            
+            <motion.div
+              className="relative w-full max-w-5xl aspect-video md:aspect-[16/10]"
+              initial={{ scale: 0.8, opacity: 0, y: 40 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 40 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={selectedImage.url}
+                alt={selectedImage.caption}
+                fill
+                className="object-contain rounded-2xl"
+              />
+              <motion.div
+                className="absolute -bottom-16 left-0 right-0 text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <h3 className="text-white text-xl font-bold">{selectedImage.caption}</h3>
+                <p className="text-academic-gold font-medium uppercase tracking-widest text-sm mt-2">
+                  {selectedImage.category}
+                </p>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

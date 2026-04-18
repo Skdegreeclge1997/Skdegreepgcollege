@@ -53,7 +53,7 @@ export default function CourseDetailPage({ params }: CoursePageProps) {
               <span className="text-slate-600 font-medium">{course.department} Department</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold text-academic-navy mb-8 leading-tight">
+            <h1 className="text-white mb-8">
               {course.title}
             </h1>
 

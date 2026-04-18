@@ -20,7 +20,7 @@ export default function AdmissionsPage() {
       {/* Premium Hero */}
       <section className="bg-academic-navy pt-32 pb-24 text-center text-white relative">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl font-black mb-6">
+          <h1 className="mb-6 text-white">
             Admissions <span className="text-academic-gold">2026-27</span>
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">

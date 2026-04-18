@@ -20,8 +20,7 @@ const courses = [
   "B.Sc. Honours (Botany)",
   "B.Sc. Honours (Zoology)",
   "B.Com. Honours (Comp. Applications)",
-  "B.A. Honours (Political Science)",
-  "B.A. Honours (Telugu)"
+  "B.A. Honours (Political Science)"
 ];
 
 export default function AdmissionsForm() {
@@ -103,15 +102,15 @@ export default function AdmissionsForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Full Name */}
         <div className="space-y-2">
           <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
           <input
             {...register('name')}
             className={cn(
-              "w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
+              "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
               errors.name ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
             )}
             placeholder="Enter your full name"
@@ -127,7 +126,7 @@ export default function AdmissionsForm() {
             type="email"
             spellCheck={false}
             className={cn(
-              "w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
+              "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
               errors.email ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
             )}
             placeholder="example@mail.com"
@@ -142,7 +141,7 @@ export default function AdmissionsForm() {
             {...register('phone')}
             spellCheck={false}
             className={cn(
-              "w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
+              "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
               errors.phone ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
             )}
             placeholder="10-digit mobile number"
@@ -155,7 +154,7 @@ export default function AdmissionsForm() {
           <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Gender</label>
           <select
             {...register('gender')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-academic-gold focus:ring-2 focus:ring-academic-gold/20 outline-none"
+            className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-200 focus:border-academic-gold focus:ring-2 focus:ring-academic-gold/20 outline-none"
           >
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -169,7 +168,7 @@ export default function AdmissionsForm() {
           <input
             {...register('intermediateGroup')}
             className={cn(
-              "w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
+              "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
               errors.intermediateGroup ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
             )}
             placeholder="e.g. MPC"
@@ -183,7 +182,7 @@ export default function AdmissionsForm() {
           <select
             {...register('courseInterest')}
             className={cn(
-              "w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
+              "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
               errors.courseInterest ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
             )}
           >
@@ -201,7 +200,7 @@ export default function AdmissionsForm() {
           {...register('address')}
           rows={3}
           className={cn(
-            "w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
+            "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
             errors.address ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
           )}
           placeholder="Enter your permanent address"
@@ -212,7 +211,7 @@ export default function AdmissionsForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-4 bg-academic-navy text-white font-bold rounded-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-xl hover:shadow-academic-navy/20 disabled:opacity-70"
+        className="w-full py-3 bg-academic-navy text-white font-bold rounded-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-academic-navy/20 disabled:opacity-70"
       >
         {isSubmitting ? (
           <>

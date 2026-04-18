@@ -9,8 +9,9 @@ The journey starts with establishing a robust, responsive foundation and a commo
 - [x] **Phase 1: Foundation & Shell** - Setup the Next.js/Tailwind environment and build the responsive site structure. (completed 2026-04-17)
 - [ ] **Phase 2: Informational Hub** - Model and implement core content areas (About, Courses, Faculty) using the CMS.
 - [ ] **Phase 3: Dynamic Updates** - Implement the notice board and photo gallery for real-time campus updates.
-- [ ] **Phase 4: Admissions & Portal** - Develop the online inquiry system and secure student portal dashboards.
-- [ ] **Phase 5: Launch & Refinement** - Final accessibility audit, performance optimization, and deployment.
+- [x] **Phase 4: Admissions & Portal** - Develop the online inquiry system and secure student portal dashboards.
+- [x] **Phase 5: Launch & Refinement** - Final accessibility audit, performance optimization, and deployment.
+- [x] **Phase 6: Admin Module** - Supabase integration, secure admin dashboard, and cloud deployment.
 
 ## Phase Details
 

@@ -30,6 +30,7 @@ export interface Faculty {
   experience: string;
   specialization: string;
   image: string;
+  image_url?: string;
   email: string;
 }
 

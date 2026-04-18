@@ -24,7 +24,7 @@ export default function AboutPage() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10 text-center text-white">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance">
+          <h1 className="mb-6">
             Excellence Since <span className="text-academic-gold italic">1995</span>
           </h1>
           <div className="flex justify-center mb-6">
