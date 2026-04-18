@@ -29,15 +29,15 @@ export default function AdminOverview() {
       try {
         // Fetch counts
         const [inqRes, notRes, facRes] = await Promise.all([
-          supabase.from('admissions').select('id', { count: 'exact', head: true }),
+          supabase.from('inquiries').select('id', { count: 'exact', head: true }),
           supabase.from('notices').select('id', { count: 'exact', head: true }),
           supabase.from('faculty').select('id', { count: 'exact', head: true })
         ]);
 
         // Fetch recent inquiries
         const { data: recentInq } = await supabase
-          .from('admissions')
-          .select('id, full_name, program_interest, created_at')
+          .from('inquiries')
+          .select('id, name, course, created_at')
           .order('created_at', { ascending: false })
           .limit(3);
 
@@ -133,11 +133,11 @@ export default function AdminOverview() {
                 return (
                  <div key={inq.id} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 group">
                     <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-black group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
-                       {inq.full_name.charAt(0).toUpperCase()}
+                       {inq.name ? inq.name.charAt(0).toUpperCase() : '?'}
                     </div>
                     <div className="flex-1 min-w-0">
-                       <p className="font-black text-academic-navy leading-tight truncate">{inq.full_name}</p>
-                       <p className="text-xs text-slate-500 font-medium truncate">{inq.program_interest}</p>
+                       <p className="font-black text-academic-navy leading-tight truncate">{inq.name || 'Unknown'}</p>
+                       <p className="text-xs text-slate-500 font-medium truncate">{inq.course || 'Not specified'}</p>
                     </div>
                     <div className="text-right">
                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{timeStr}</p>
