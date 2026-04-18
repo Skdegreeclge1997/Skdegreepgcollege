@@ -248,10 +248,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 pt-4 pb-20">
           <div className="flex flex-col md:flex-row items-end justify-between mb-8 gap-6">
             <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-academic-gold/10 text-academic-gold rounded-full text-[10px] font-black uppercase tracking-widest mb-4 border border-academic-gold/20">
-                <Newspaper size={14} />
-                <span>Campus Buzz</span>
-              </div>
+              <div className="mb-4"></div>
               <h2 className="text-4xl md:text-5xl font-black text-academic-navy leading-tight">
                 Latest Events & <span className="text-academic-gold">Activities</span>
               </h2>
@@ -436,22 +433,6 @@ export default function LandingPage() {
             <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
           </div>
-
-          <motion.div 
-            whileHover={{ scale: 1.01 }}
-            className="bg-academic-navy rounded-[2.5rem] p-8 md:p-12 text-center relative overflow-hidden mt-12"
-          >
-             <div className="relative z-10">
-                <h3 className="text-2xl md:text-4xl font-black text-white mb-6 tracking-tighter">Your Future Starts Now</h3>
-                <Link 
-                  href="/admissions" 
-                  aria-label="Start Admission Process for 2026-27"
-                  className="px-10 py-4 bg-academic-gold text-academic-navy font-bold rounded-full hover:scale-105 transition-all shadow-xl inline-block"
-                >
-                   Apply Now 2026-27
-                </Link>
-             </div>
-          </motion.div>
         </div>
       </motion.section>
     </main>

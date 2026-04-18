@@ -28,8 +28,7 @@ export default function GalleryManager() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
-  const [newImage, setNewImage] = useState<Partial<GalleryImage>>({ caption: '', category: 'Campus' });
-  const [uploading, setUploading] = useState(false);
+  const [newImage, setNewImage] = useState<Partial<GalleryImage>>({ caption: '', category: 'Video', url: '' });
   const [isSaving, setIsSaving] = useState(false);
  
   useEffect(() => {
@@ -44,42 +43,14 @@ export default function GalleryManager() {
       .order('created_at', { ascending: false });
     
     if (!error && data) {
-      setImages(data.filter(img => !img.url.includes('youtube.com') && !img.url.includes('youtu.be')));
+      setImages(data.filter(img => img.url.includes('youtube.com') || img.url.includes('youtu.be')));
     }
     setIsLoading(false);
   };
  
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
- 
-    setUploading(true);
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `gallery/${fileName}`;
- 
-      const { error: uploadError } = await supabase.storage
-        .from('images')
-        .upload(filePath, file);
- 
-      if (uploadError) throw uploadError;
- 
-      const { data: { publicUrl } } = supabase.storage
-        .from('images')
-        .getPublicUrl(filePath);
- 
-      setNewImage(prev => ({ ...prev, url: publicUrl }));
-    } catch (error: any) {
-      alert('Error uploading image: ' + error.message);
-    } finally {
-      setUploading(false);
-    }
-  };
- 
   const handleSave = async () => {
     if (!newImage.url || !newImage.caption) {
-      alert('Image and Caption are required');
+      alert('Video URL and Caption are required');
       return;
     }
  
@@ -87,13 +58,13 @@ export default function GalleryManager() {
     try {
       const { error } = await supabase
         .from('gallery')
-        .insert([newImage]);
+        .insert([{ ...newImage, category: 'Video' }]);
       
       if (error) throw error;
       
       await fetchImages();
       setIsAdding(false);
-      setNewImage({ caption: '', category: 'Campus' });
+      setNewImage({ caption: '', category: 'Video', url: '' });
     } catch (error: any) {
       alert('Error saving to gallery: ' + error.message);
     } finally {
@@ -102,7 +73,7 @@ export default function GalleryManager() {
   };
  
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to remove this image from the gallery?')) return;
+    if (!confirm('Are you sure you want to remove this video from the gallery?')) return;
  
     try {
       await supabase.from('gallery').delete().eq('id', id);
@@ -124,15 +95,15 @@ export default function GalleryManager() {
     <div className="space-y-8 pb-20 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-black text-academic-navy tracking-tight">Photo Gallery Manager</h1>
-          <p className="text-slate-500 font-medium">Curate the visual legacy of S.K. Degree College.</p>
+          <h1 className="text-3xl font-black text-academic-navy tracking-tight">Video Gallery Manager</h1>
+          <p className="text-slate-500 font-medium">Curate YouTube videos for S.K. Degree College.</p>
         </div>
         <button 
           onClick={() => setIsAdding(true)}
           className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:scale-95"
         >
           <Camera size={20} />
-          Upload New Photo
+          Add YouTube Video
         </button>
       </div>
  
@@ -141,62 +112,62 @@ export default function GalleryManager() {
             <div className="flex items-center justify-between mb-8">
                <h2 className="text-xl font-black text-academic-navy flex items-center gap-3">
                   <UploadCloud className="text-blue-500" />
-                  Media Upload
+                  Add YouTube Link
                </h2>
                <button onClick={() => setIsAdding(false)} className="p-2 hover:bg-slate-50 rounded-full transition-all">
                   <X size={20} className="text-slate-400" />
                </button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                {/* Media Area */}
-               <div className="relative aspect-[4/3] bg-slate-50 rounded-[2rem] border-4 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 overflow-hidden group/upload">
-                    {newImage.url ? (
-                       <>
-                          <Image src={newImage.url} alt="Preview" fill className="object-cover" />
-                          <button 
-                             onClick={() => setNewImage(p => ({...p, url: undefined}))}
-                             className="absolute top-4 right-4 p-3 bg-red-500 text-white rounded-2xl shadow-lg hover:bg-red-600 transition-colors"
-                          >
-                             <Trash2 size={20} />
-                          </button>
-                       </>
+               <div className="relative aspect-video bg-slate-50 rounded-[2rem] border-4 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 overflow-hidden group/upload">
+                    {newImage.url && (newImage.url.includes('youtube.com') || newImage.url.includes('youtu.be')) ? (
+                      <>
+                        <img 
+                          src={`https://img.youtube.com/vi/${(() => {
+                            const match = newImage.url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+                            return match && match[2].length === 11 ? match[2] : '';
+                          })()}/hqdefault.jpg`} 
+                          alt="Video Preview" 
+                          className="w-full h-full object-cover" 
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50">
+                            <div className="w-0 h-0 border-t-8 border-t-transparent border-l-[14px] border-l-white border-b-8 border-b-transparent ml-1" />
+                          </div>
+                        </div>
+                      </>
                     ) : (
-                       <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100 transition-all">
-                          {uploading ? <Loader2 className="animate-spin text-blue-500 mb-2" size={48} /> : <ImageIcon size={48} className="mb-2 opacity-20 text-blue-500" />}
-                          <p className="text-xs font-black uppercase tracking-widest text-slate-500">
-                             {uploading ? 'Processing File...' : 'Click to Upload Photo'}
-                          </p>
-                          <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} disabled={uploading} />
-                       </label>
+                      <div className="text-center p-6">
+                        <Camera size={48} className="mx-auto mb-2 opacity-20 text-blue-500" />
+                        <p className="text-xs font-black uppercase tracking-widest text-slate-500">
+                          Video Preview
+                        </p>
+                      </div>
                     )}
                </div>
  
                <div className="space-y-6">
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">YouTube Video URL</label>
+                       <input 
+                          type="url" 
+                          value={newImage.url || ''}
+                          onChange={(e) => setNewImage({...newImage, url: e.target.value})}
+                          className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-blue-500 outline-none font-bold text-academic-navy transition-all" 
+                          placeholder="https://www.youtube.com/watch?v=..." 
+                       />
+                    </div>
                   <div className="space-y-2">
-                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Photo Caption</label>
+                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Video Title</label>
                      <input 
                         type="text" 
                         value={newImage.caption}
                         onChange={(e) => setNewImage({...newImage, caption: e.target.value})}
-                        className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none font-bold text-academic-navy transition-all" 
-                        placeholder="e.g. Inauguration of New Computer Lab" 
+                        className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-blue-500 outline-none font-bold text-academic-navy transition-all" 
+                        placeholder="e.g. Annual Day Celebrations" 
                      />
-                  </div>
-                  <div className="space-y-2">
-                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Category</label>
-                     <select 
-                        value={newImage.category}
-                        onChange={(e) => setNewImage({...newImage, category: e.target.value})}
-                        className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none font-bold text-slate-600 appearance-none bg-no-repeat bg-[right_1.25rem_center] bg-[length:1em_1em]"
-                     >
-                        <option>Campus</option>
-                        <option>Events</option>
-                        <option>Facilities</option>
-                        <option>Students</option>
-                        <option>NCC</option>
-                        <option>Video</option>
-                     </select>
                   </div>
                   <div className="pt-4 flex gap-4">
                      <button 
@@ -205,7 +176,7 @@ export default function GalleryManager() {
                         className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-xl shadow-academic-navy/20 disabled:opacity-50"
                      >
                         {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                        Save to Gallery
+                        Save Video
                      </button>
                   </div>
                </div>

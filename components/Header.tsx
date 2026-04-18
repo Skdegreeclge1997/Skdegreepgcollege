@@ -39,28 +39,38 @@ export default function Header() {
 
   return (
     <header className={`fixed top-0 z-[1000] w-full transition-colors duration-300 border-b border-white/5 ${isMenuOpen ? 'bg-academic-navy' : 'bg-academic-navy/90 backdrop-blur-md'}`}>
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        {/* Brand */}
-        <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 group relative z-[1001]">
-          <div className="relative w-12 h-12 overflow-hidden rounded-full bg-white border-2 border-academic-gold transition-transform group-hover:scale-110">
-            <Image 
-              src="/images/logo.jpeg" 
-              alt="S.K. Degree College Logo" 
-              fill
-              className="object-contain p-1"
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-black tracking-tight text-white leading-none">S.K. DEGREE</span>
-            <span className="text-[10px] font-bold text-academic-gold tracking-[0.2em] uppercase"> & P.G. COLLEGE</span>
-          </div>
-        </Link>
+      <div className="container mx-auto flex h-20 items-center px-4 md:px-6">
+        {/* Brand - Left */}
+        <div className="flex-1 flex items-center justify-start">
+          <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 group relative z-[1001]">
+            <div className="relative w-12 h-12 overflow-hidden rounded-full bg-white border-2 border-academic-gold transition-transform group-hover:scale-110">
+              <Image 
+                src="/images/logo.jpeg" 
+                alt="S.K. Degree College Logo" 
+                fill
+                className="object-contain p-1"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-black tracking-tight text-white leading-none">S.K. DEGREE</span>
+              <span className="text-[10px] font-bold text-academic-gold tracking-[0.2em] uppercase"> & P.G. COLLEGE</span>
+            </div>
+          </Link>
+        </div>
         
-        {/* Navigation & Actions */}
-        <div className="flex items-center gap-8">
+        {/* Centered Navigation */}
+        <div className="hidden lg:flex flex-1 justify-center">
           <Navbar isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
-          
-          <div className="hidden lg:flex items-center gap-4 pl-8 border-l border-white/10">
+        </div>
+
+        {/* Mobile Navbar component (only renders overlay for mobile) */}
+        <div className="lg:hidden">
+          <Navbar isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+        </div>
+        
+        {/* Actions - Right */}
+        <div className="flex-1 flex items-center justify-end gap-4">
+          <div className="hidden lg:flex items-center pl-8 border-l border-white/10">
             <button 
               onClick={() => setIsSearchOpen(true)}
               className="p-2 text-white/70 hover:text-academic-gold transition-colors relative group"
@@ -70,8 +80,8 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile Toggle inside Header for better control */}
-          <div className="md:hidden flex items-center relative z-[1001]">
+          {/* Mobile Toggle */}
+          <div className="lg:hidden flex items-center relative z-[1001]">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 text-white hover:bg-white/10 rounded-xl transition-all active:scale-90"
