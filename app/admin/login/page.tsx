@@ -76,6 +76,7 @@ export default function AdminLoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-12 pr-4 py-3.5 bg-black/20 text-white rounded-xl border border-white/5 focus:border-academic-gold/50 focus:ring-4 focus:ring-academic-gold/5 outline-none transition-all placeholder:text-slate-700"
                     placeholder="admin@skcollege.com"
+                    autoComplete="email"
                   />
                 </div>
               </div>
@@ -91,6 +92,7 @@ export default function AdminLoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full pl-12 pr-4 py-3.5 bg-black/20 text-white rounded-xl border border-white/5 focus:border-academic-gold/50 focus:ring-4 focus:ring-academic-gold/5 outline-none transition-all placeholder:text-slate-700"
                     placeholder="••••••••"
+                    autoComplete="current-password"
                   />
                 </div>
               </div>

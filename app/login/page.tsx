@@ -53,6 +53,7 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 focus:border-academic-gold focus:ring-2 focus:ring-academic-gold/20 outline-none transition-all"
                   placeholder="name@student.com"
+                  autoComplete="email"
                 />
               </div>
             </div>
@@ -68,6 +69,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 focus:border-academic-gold focus:ring-2 focus:ring-academic-gold/20 outline-none transition-all"
                   placeholder="••••••••"
+                  autoComplete="current-password"
                 />
               </div>
             </div>
