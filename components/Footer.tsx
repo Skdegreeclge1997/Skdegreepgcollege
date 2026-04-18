@@ -49,14 +49,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold uppercase tracking-widest text-academic-gold">Student Portal</h4>
+            <h4 className="text-sm font-bold uppercase tracking-widest text-academic-gold">Academics</h4>
             <ul className="space-y-2 text-sm text-slate-400">
-              <li><Link href="/login" className="hover:text-white transition-colors">Login</Link></li>
-              <li><Link href="/dashboard" className="hover:text-white transition-colors">Exam Results (Portal)</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Academic Library</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Support Center</Link></li>
+              <li><Link href="/academics" className="hover:text-white transition-colors">Course Overview</Link></li>
+              <li><Link href="/faculty" className="hover:text-white transition-colors">Faculty Directory</Link></li>
+              <li><Link href="/gallery" className="hover:text-white transition-colors">Campus Gallery</Link></li>
+              <li><Link href="/achievements" className="hover:text-white transition-colors">Achievements</Link></li>
             </ul>
           </div>
 

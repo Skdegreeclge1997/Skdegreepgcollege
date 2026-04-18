@@ -70,22 +70,12 @@ export default function Header() {
               </span>
             </button>
             
-            {user ? (
-              <Link 
-                href="/dashboard" 
-                className="px-6 py-2 bg-white/5 hover:bg-white/10 text-white text-sm font-bold rounded-full border border-white/10 transition-all flex items-center gap-2"
-              >
-                <div className="w-2 h-2 rounded-full bg-green-500" />
-                Portal
-              </Link>
-            ) : (
-              <Link 
-                href="/login" 
-                className="px-6 py-2 bg-academic-gold text-academic-navy text-sm font-bold rounded-full hover:shadow-xl hover:shadow-academic-gold/20 transition-all"
-              >
-                Student Login
-              </Link>
-            )}
+            <Link 
+              href="/admin/login" 
+              className="px-6 py-2 bg-academic-gold text-academic-navy text-sm font-bold rounded-full hover:shadow-xl hover:shadow-academic-gold/20 transition-all"
+            >
+              Admin Console
+            </Link>
           </div>
         </div>
       </div>
