@@ -37,8 +37,8 @@ export default function LandingPage() {
         .order('created_at', { ascending: false });
       
       if (!error && data) {
-        setPhotoGallery(data.filter(item => item.category !== 'Video').slice(0, 6));
-        setVideoGallery(data.filter(item => item.category === 'Video').slice(0, 3));
+        setPhotoGallery(data.filter((item: GalleryItem) => item.category !== 'Video').slice(0, 6));
+        setVideoGallery(data.filter((item: GalleryItem) => item.category === 'Video').slice(0, 3));
       }
     };
     fetchGallery();
