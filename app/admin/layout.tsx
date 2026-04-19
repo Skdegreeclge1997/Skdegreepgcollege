@@ -89,7 +89,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       // 10 minutes = 600,000 ms
       timeoutId = setTimeout(() => {
         supabase.auth.signOut().then(() => {
-          router.push('/admin/login?message=Session expired due to inactivity');
+          window.location.href = '/';
         });
       }, 600000);
     };
@@ -143,7 +143,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push('/');
+    window.location.href = '/';
   };
 
   return (

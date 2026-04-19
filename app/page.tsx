@@ -455,6 +455,31 @@ export default function LandingPage() {
           </div>
         </div>
       </motion.section>
+      
+      {/* 7. Minimal CTA Section */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        className="bg-white pb-24 pt-12"
+      >
+        <div className="container mx-auto px-4">
+           <div className="max-w-4xl mx-auto bg-slate-50 border border-slate-100 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+              <div className="text-center md:text-left relative z-10">
+                 <h3 className="text-xl font-black text-academic-navy mb-1">Your Future Starts Now</h3>
+                 <p className="text-sm text-slate-500 font-bold uppercase tracking-widest opacity-80">Admissions Open 2026-27</p>
+              </div>
+              <Link 
+                 href="/admissions"
+                 className="relative z-10 whitespace-nowrap px-10 py-4 bg-academic-gold text-academic-navy font-black rounded-2xl hover:bg-academic-navy hover:text-white transition-all shadow-xl active:scale-95 group"
+              >
+                 Apply Online Now
+              </Link>
+           </div>
+        </div>
+      </motion.section>
     </main>
   );
 }

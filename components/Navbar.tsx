@@ -26,12 +26,12 @@ export default function Navbar({ isOpen, setIsOpen }: NavbarProps) {
   return (
     <nav className="flex items-center">
       {/* Desktop Menu */}
-      <div className="hidden md:flex space-x-8 items-center">
+      <div className="hidden lg:flex space-x-6 items-center">
         {navLinks.map((link) => (
           <Link
             key={link.name}
             href={link.href}
-            className="text-sm font-medium transition-colors hover:text-academic-gold text-white"
+            className="text-[13px] font-bold tracking-tight transition-colors hover:text-academic-gold text-white whitespace-nowrap"
           >
             {link.name}
           </Link>
