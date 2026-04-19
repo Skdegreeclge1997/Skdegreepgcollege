@@ -13,10 +13,12 @@ import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
 import { ThreeBackground } from '@/components/Visuals';
 
+import { supabase } from '@/lib/supabase';
+
 const recentNotices = (noticesData as Notice[]).slice(0, 3);
-const allGallery = initialGalleryData as GalleryItem[];
-const photoGallery = allGallery.filter(item => !item.url.includes('youtube.com') && !item.url.includes('youtu.be')).slice(0, 6);
-const videoGallery = allGallery.filter(item => item.url.includes('youtube.com') || item.url.includes('youtu.be')).slice(0, 6);
+const initialAllGallery = initialGalleryData as GalleryItem[];
+const initialPhotoGallery = initialAllGallery.filter(item => item.category !== 'Video').slice(0, 6);
+const initialVideoGallery = initialAllGallery.filter(item => item.category === 'Video').slice(0, 3);
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -24,6 +26,24 @@ const fadeIn = {
 };
 
 export default function LandingPage() {
+  const [photoGallery, setPhotoGallery] = React.useState<GalleryItem[]>(initialPhotoGallery);
+  const [videoGallery, setVideoGallery] = React.useState<GalleryItem[]>(initialVideoGallery);
+
+  React.useEffect(() => {
+    const fetchGallery = async () => {
+      const { data, error } = await supabase
+        .from('gallery')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (!error && data) {
+        setPhotoGallery(data.filter(item => item.category !== 'Video').slice(0, 6));
+        setVideoGallery(data.filter(item => item.category === 'Video').slice(0, 3));
+      }
+    };
+    fetchGallery();
+  }, []);
+
   return (
     <main className="snap-container bg-academic-navy">
       {/* 1. Hero Section */}

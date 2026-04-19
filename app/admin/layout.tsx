@@ -143,7 +143,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push('/admin/login');
+    router.push('/');
   };
 
   return (
@@ -181,7 +181,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   key={item.name}
                   href={item.href}
                   className={`
-                    flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all group relative overflow-hidden
+                    flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all group relative overflow-hidden active:scale-[0.97]
                     ${isActive 
                       ? 'text-white bg-blue-600/10 border border-blue-500/20 shadow-lg' 
                       : 'text-slate-400 hover:text-white hover:bg-white/5'}
@@ -213,7 +213,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
           
           <div className="flex items-center gap-4 ml-auto">
-             <button className="relative w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 hover:text-academic-navy hover:bg-slate-100 transition-colors">
+             <button className="relative w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 hover:text-academic-navy hover:bg-slate-100 transition-all active:scale-90">
                 <Bell size={20} />
                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
              </button>
@@ -222,7 +222,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
              <div className="relative">
                 <button 
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center gap-3 pl-2 pr-4 py-1.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all focus:ring-2 focus:ring-blue-500/20"
+                  className="flex items-center gap-3 pl-2 pr-4 py-1.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all focus:ring-2 focus:ring-blue-500/20 active:scale-[0.98]"
                 >
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-xs shadow-md">
                      {user?.email?.[0]?.toUpperCase() || 'A'}

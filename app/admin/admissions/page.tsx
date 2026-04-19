@@ -73,7 +73,7 @@ export default function AdmissionsAdmin() {
         </div>
         <button 
           onClick={exportToExcel}
-          className="flex items-center justify-center gap-2 px-6 py-3 bg-academic-gold text-academic-navy font-black rounded-xl hover:shadow-xl hover:shadow-academic-gold/20 transition-all"
+          className="flex items-center justify-center gap-2 px-6 py-3 bg-academic-gold text-academic-navy font-black rounded-xl hover:shadow-xl hover:shadow-academic-gold/20 transition-all active:scale-95"
         >
           <Download size={20} />
           Export to Excel
@@ -92,12 +92,12 @@ export default function AdmissionsAdmin() {
             className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none transition-all shadow-sm"
           />
         </div>
-        <div className="flex gap-2">
-           <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all">
-              <Filter size={18} />
-              Filter
-           </button>
-           <button onClick={() => fetchInquiries(searchTerm)} className="px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all">
+         <div className="flex gap-2">
+            <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all active:scale-95">
+               <Filter size={18} />
+               Filter
+            </button>
+            <button onClick={() => fetchInquiries(searchTerm)} className="px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all active:scale-95">
               Refresh
            </button>
         </div>

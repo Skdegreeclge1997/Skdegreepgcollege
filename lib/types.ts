@@ -38,7 +38,7 @@ export interface GalleryItem {
   id: string;
   url: string;
   caption: string;
-  category: 'Campus' | 'Labs' | 'NCC' | 'Placements' | 'All';
+  category: string;
 }
  
 export interface News {

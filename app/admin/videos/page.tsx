@@ -173,7 +173,7 @@ export default function GalleryManager() {
                      <button 
                         onClick={handleSave}
                         disabled={isSaving || !newImage.url || !newImage.caption}
-                        className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-xl shadow-academic-navy/20 disabled:opacity-50"
+                        className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2 shadow-xl shadow-academic-navy/20 disabled:opacity-50"
                      >
                         {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
                         Save Video
