@@ -410,7 +410,7 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-white overflow-y-auto no-scrollbar flex flex-col"
+        className="snap-section bg-white"
       >
         <div className="container mx-auto px-4 pt-4 pb-12">
           <div className="flex items-center justify-between mb-8">
@@ -440,12 +440,15 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* 7. Minimal CTA Section (Integrated) */}
-        <div className="container mx-auto px-4 pb-8">
-           <div className="max-w-4xl mx-auto bg-slate-50 border border-slate-100 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm relative overflow-hidden">
+      </motion.section>
+
+      {/* 7. CTA + Footer Section */}
+      <section className="snap-section bg-slate-50 !h-auto !min-h-screen flex flex-col justify-between pt-20">
+        <div className="container mx-auto px-4 mb-20">
+           <div className="max-w-4xl mx-auto bg-white border border-slate-200 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <div className="text-center md:text-left relative z-10">
-                 <h3 className="text-xl font-black text-academic-navy mb-1">Your Future Starts Now</h3>
+                 <h3 className="text-2xl font-black text-academic-navy mb-1">Your Future Starts Now</h3>
                  <p className="text-sm text-slate-600 font-bold uppercase tracking-widest opacity-80">Admissions Open 2026-27</p>
               </div>
               <Link 
@@ -456,10 +459,6 @@ export default function LandingPage() {
               </Link>
            </div>
         </div>
-      </motion.section>
-
-      {/* Footer as a snap section */}
-      <section className="bg-white">
         <Footer />
       </section>
     </main>
