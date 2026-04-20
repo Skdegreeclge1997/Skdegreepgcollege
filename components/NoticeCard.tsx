@@ -36,7 +36,7 @@ export default function NoticeCard({ notice }: NoticeCardProps) {
           <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full ${getCategoryStyles(notice.category)}`}>
             {notice.category}
           </span>
-          <div className="flex items-center gap-1 text-slate-500 text-xs font-medium" aria-hidden="true">
+          <div className="flex items-center gap-1 text-slate-600 text-xs font-medium" aria-hidden="true">
             <Calendar size={14} />
             <span>{new Date(notice.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
           </div>

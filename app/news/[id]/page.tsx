@@ -191,7 +191,7 @@ export default function NewsDetail() {
                     <p className="text-base font-bold text-academic-navy italic">
                       "Excellence is not an act, but a habit. Our latest achievements are a testament to the collective effort of our dedicated students and staff."
                     </p>
-                    <p className="mt-3 text-[10px] font-black uppercase tracking-widest text-slate-500">— Principal's Office</p>
+                    <p className="mt-3 text-[10px] font-black uppercase tracking-widest text-slate-500">— Principal&apos;s Office</p>
                   </div>
                 </div>
               </div>

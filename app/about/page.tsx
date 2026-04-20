@@ -1,4 +1,4 @@
-import React from 'react';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'About Us | S.K. Degree & P.G. College',
@@ -10,10 +10,13 @@ export default function AboutPage() {
     <main className="min-h-screen bg-white pt-32 pb-20 relative">
       {/* Transparent Logo Watermark Background */}
       <div className="fixed inset-0 pointer-events-none flex items-center justify-center z-0 opacity-[0.08]">
-        <img 
+        <Image 
           src="/images/logo.jpeg" 
           alt="Watermark" 
+          width={1000}
+          height={1000}
           className="w-full max-w-4xl object-contain" 
+          priority
         />
       </div>
 
@@ -68,7 +71,7 @@ export default function AboutPage() {
                 <tr>
                   <td className="border border-slate-200 px-4 py-3 text-slate-700">1</td>
                   <td className="border border-slate-200 px-4 py-3 text-slate-700 font-medium">Main Academic Block</td>
-                  <td className="border border-slate-200 px-4 py-3 text-slate-700">Administrative Office, Admission Cell, Principal's Office</td>
+                  <td className="border border-slate-200 px-4 py-3 text-slate-700">Administrative Office, Admission Cell, Principal&apos;s Office</td>
                 </tr>
                 <tr className="bg-slate-50">
                   <td className="border border-slate-200 px-4 py-3 text-slate-700">2</td>
@@ -92,7 +95,7 @@ export default function AboutPage() {
 
         {/* 4. Special Highlights */}
         <section className="mb-12 bg-slate-50 p-8 rounded-lg border-l-4 border-academic-gold">
-          <h2 className="text-2xl font-bold text-academic-navy mb-6">What's Special About S.K. College</h2>
+          <h2 className="text-2xl font-bold text-academic-navy mb-6">What&apos;s Special About S.K. College</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 list-disc pl-5">
             <li className="text-slate-700 font-medium text-sm">Eco-friendly Green Campus</li>
             <li className="text-slate-700 font-medium text-sm">State-of-the-art Science Laboratories</li>

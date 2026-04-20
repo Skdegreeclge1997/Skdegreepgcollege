@@ -11,7 +11,13 @@ import { Notice, GalleryItem } from '@/lib/types';
 import initialGalleryData from '@/lib/data/gallery.json';
 import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
-import { ThreeBackground } from '@/components/Visuals';
+import YouTubeFacade from '@/components/YouTubeFacade';
+import dynamic from 'next/dynamic';
+
+const ThreeBackground = dynamic(() => import('@/components/Visuals').then(mod => mod.ThreeBackground), { 
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-academic-navy/10" />
+});
 
 import { supabase } from '@/lib/supabase';
 
@@ -57,7 +63,7 @@ export default function LandingPage() {
         <ThreeBackground />
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=2000"
+            src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1200"
             alt="S.K. Degree and P.G. College Vizianagaram Campus View"
             fill
             className="object-cover opacity-20 mix-blend-overlay"
@@ -91,7 +97,7 @@ export default function LandingPage() {
             variants={fadeIn}
           >
             <MapPin size={20} className="text-academic-gold" />
-            <span>Vizianagaram's Premier Institution</span>
+            <span>Vizianagaram&apos;s Premier Institution</span>
           </motion.div>
 
           <motion.div 
@@ -119,7 +125,7 @@ export default function LandingPage() {
       >
         <div className="container mx-auto px-4 py-8">
           <div className="text-center mb-10">
-            <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-xs mb-1">Part of</p>
+            <p className="text-slate-600 font-bold uppercase tracking-[0.2em] text-xs mb-1">Part of</p>
             <h2 className="text-2xl font-black text-academic-navy">Arunodaya Educational Society</h2>
           </div>
 
@@ -138,7 +144,7 @@ export default function LandingPage() {
                   {stat.icon}
                 </div>
                 <p className="text-2xl font-black text-academic-navy">{stat.value}</p>
-                <p className="text-slate-500 font-bold uppercase tracking-wider text-xs">{stat.label}</p>
+                <p className="text-slate-600 font-bold uppercase tracking-wider text-xs">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -171,7 +177,7 @@ export default function LandingPage() {
               </h2>
               
               <div className="space-y-6 mb-8">
-                <p className="text-base text-slate-400 leading-relaxed max-w-xl">
+                <p className="text-base text-slate-200 leading-relaxed max-w-xl">
                   S.K. Degree College is a premier hub for National Cadet Corps (NCC) training, 
                   fostering discipline, leadership, and a spirit of selfless service.
                 </p>
@@ -188,8 +194,8 @@ export default function LandingPage() {
                         <CheckCircle2 size={16} className="text-academic-gold" />
                       </div>
                       <div>
-                        <h4 className="text-white font-bold text-sm">{item.title}</h4>
-                        <p className="text-slate-500 text-xs">{item.desc}</p>
+                        <h3 className="text-white font-bold text-sm">{item.title}</h3>
+                        <p className="text-slate-300 text-xs">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -197,8 +203,8 @@ export default function LandingPage() {
               </div>
 
               <Link 
-                href="/ncc" 
-                aria-label="View NCC Achievements and Training Details"
+                href="/academics#ncc" 
+                aria-label="Explore NCC Program - View Achievements and Training Details"
                 className="inline-flex items-center gap-2 text-academic-gold font-bold hover:gap-4 transition-all uppercase text-xs tracking-widest"
               >
                 Explore NCC Program <ArrowRight size={16} />
@@ -272,7 +278,7 @@ export default function LandingPage() {
               <h2 className="text-4xl md:text-5xl font-black text-academic-navy leading-tight">
                 Latest Events & <span className="text-academic-gold">Activities</span>
               </h2>
-              <p className="mt-4 text-slate-500 font-medium text-sm md:text-base">
+              <p className="mt-4 text-slate-600 font-medium text-sm md:text-base">
                 Stay informed with the latest happenings, achievements, and events from our vibrant campus community.
               </p>
             </div>
@@ -304,7 +310,7 @@ export default function LandingPage() {
              <h2 className="text-3xl font-black text-academic-navy">Campus Gallery</h2>
              <Link 
                 href="/gallery" 
-                aria-label="View full campus gallery"
+                aria-label="View All Campus Gallery Photos"
                 className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
              >
                 View All <ArrowRight size={16} />
@@ -332,7 +338,13 @@ export default function LandingPage() {
                   key={`${item.id}-${i}`} 
                   className="w-[80vw] sm:w-[350px] aspect-[4/3] shrink-0 relative rounded-3xl overflow-hidden shadow-md group block"
                 >
-                  <img src={thumbnailUrl} alt={item.caption} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <Image 
+                    src={thumbnailUrl} 
+                    alt={item.caption} 
+                    fill
+                    sizes="(max-width: 768px) 80vw, 350px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                  />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 z-20">
                      <p className="text-white font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{item.caption}</p>
@@ -362,7 +374,7 @@ export default function LandingPage() {
              <h2 className="text-3xl font-black text-academic-navy text-center md:text-left">Video Gallery</h2>
              <Link 
                 href="/gallery" 
-                aria-label="View full campus gallery"
+                aria-label="Watch All Campus Videos"
                 className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
              >
                 Watch All <ArrowRight size={16} />
@@ -384,16 +396,7 @@ export default function LandingPage() {
                   className="w-full aspect-video relative rounded-3xl overflow-hidden shadow-lg border-4 border-white bg-black"
                 >
                   {videoId ? (
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={`https://www.youtube.com/embed/${videoId}`}
-                      title={item.caption}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full"
-                    ></iframe>
+                    <YouTubeFacade videoId={videoId} title={item.caption} />
                   ) : (
                     <div className="flex items-center justify-center h-full bg-slate-800 text-white">
                       <p>Invalid Video URL</p>
@@ -403,8 +406,8 @@ export default function LandingPage() {
               )
             }) : (
               <div className="col-span-full aspect-video flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50">
-                <p className="text-slate-400 font-bold mb-2">No videos available</p>
-                <p className="text-slate-400 text-sm">Add videos from the admin panel.</p>
+                <p className="text-slate-600 font-bold mb-2">No videos available</p>
+                <p className="text-slate-600 text-sm">Add videos from the admin panel.</p>
               </div>
             )}
           </div>
@@ -424,7 +427,7 @@ export default function LandingPage() {
              <h2 className="text-3xl font-black text-academic-navy">Notice Board</h2>
              <Link 
                 href="/notices" 
-                aria-label="View all official notices and board updates"
+                aria-label="View All Official Notices and Board Updates"
                 className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
              >
                 View All <ArrowRight size={16} />
@@ -469,7 +472,7 @@ export default function LandingPage() {
               <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <div className="text-center md:text-left relative z-10">
                  <h3 className="text-xl font-black text-academic-navy mb-1">Your Future Starts Now</h3>
-                 <p className="text-sm text-slate-500 font-bold uppercase tracking-widest opacity-80">Admissions Open 2026-27</p>
+                 <p className="text-sm text-slate-600 font-bold uppercase tracking-widest opacity-80">Admissions Open 2026-27</p>
               </div>
               <Link 
                  href="/admissions"

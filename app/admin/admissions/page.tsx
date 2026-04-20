@@ -20,14 +20,6 @@ export default function AdmissionsAdmin() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      fetchInquiries(searchTerm);
-    }, 500);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm]);
-
   const fetchInquiries = async (searchQuery: string = '') => {
     setIsLoading(true);
     try {
@@ -52,6 +44,14 @@ export default function AdmissionsAdmin() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      fetchInquiries(searchTerm);
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(inquiries);

@@ -31,7 +31,7 @@ export default function GalleryView({ items }: GalleryViewProps) {
             className={`relative px-6 py-2.5 rounded-full font-bold transition-colors duration-300 ${
               filter === cat 
                 ? 'text-academic-navy' 
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -77,10 +77,12 @@ export default function GalleryView({ items }: GalleryViewProps) {
                 onClick={() => setSelectedImage(item)}
                 whileHover={{ y: -4 }}
               >
-                <img
+                <Image
                   src={thumbnailUrl}
                   alt={item.caption}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 
                 {/* Hover overlay */}

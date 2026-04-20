@@ -9,6 +9,7 @@ import initialFacultyData from '@/lib/data/faculty.json';
 import { Faculty } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { Users, Filter, Sparkles, Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 export default function FacultyPage() {
   const [faculty, setFaculty] = useState<Faculty[]>([]);
@@ -99,7 +100,13 @@ export default function FacultyPage() {
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 0.6 + i * 0.1, type: 'spring', stiffness: 200 }}
                     >
-                      <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=003366&color=fff`} alt="" />
+                      <Image 
+                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=003366&color=fff`} 
+                        alt={m.name}
+                        width={40}
+                        height={40}
+                        className="object-cover"
+                      />
                     </motion.div>
                   ))}
                 </div>

@@ -36,7 +36,7 @@ export default function CourseAccordion({ department, courses }: CourseAccordion
           </motion.div>
           <div>
             <h3 className="text-xl font-bold text-academic-navy">{department} Department</h3>
-            <p className="text-sm text-slate-500">{courses.length} Programs Offered</p>
+            <p className="text-sm text-slate-600">{courses.length} Programs Offered</p>
           </div>
         </div>
         <motion.div
@@ -71,14 +71,14 @@ export default function CourseAccordion({ department, courses }: CourseAccordion
                     >
                       <div className="flex-grow">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-xs font-bold text-academic-gold uppercase tracking-tighter">
+                          <span className="text-xs font-bold text-academic-gold-dark uppercase tracking-tighter">
                             {course.degree}
                           </span>
                           <h4 className="font-bold text-academic-navy group-hover:text-academic-gold transition-colors">
                             {course.title}
                           </h4>
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-slate-500">
+                        <div className="flex items-center gap-2 text-xs text-slate-600">
                           <Clock size={12} aria-hidden="true" />
                           <span>{course.duration}</span>
                         </div>

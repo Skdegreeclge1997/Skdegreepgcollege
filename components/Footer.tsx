@@ -79,7 +79,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-white/5 text-center text-xs text-slate-500">
+        <div className="mt-16 pt-8 border-t border-white/5 text-center text-xs text-slate-400">
           <p>© {new Date().getFullYear()} S.K. Degree & P.G. College (17950). All rights reserved.</p>
         </div>
       </div>

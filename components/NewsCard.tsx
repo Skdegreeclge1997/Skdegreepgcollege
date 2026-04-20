@@ -31,7 +31,7 @@ export default function NewsCard({ news }: NewsCardProps) {
  
       {/* Content */}
       <div className="p-5 pb-8 flex flex-col flex-grow">
-        <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold mb-2">
+        <div className="flex items-center gap-2 text-slate-600 text-[10px] font-bold mb-2">
           <Calendar size={12} className="text-academic-gold" />
           {new Date(news.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
@@ -40,14 +40,14 @@ export default function NewsCard({ news }: NewsCardProps) {
           {news.title}
         </h3>
         
-        <p className="text-slate-500 text-xs leading-relaxed line-clamp-2 mb-4">
+        <p className="text-slate-600 text-xs leading-relaxed line-clamp-2 mb-4">
           {news.description}
         </p>
  
         <div className="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
           <Link 
             href={`/news/${news.id}`}
-            aria-label={`Read more about ${news.title}`}
+            aria-label={`Read More - ${news.title}`}
             className="text-academic-navy font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all group/btn"
           >
             Read More
