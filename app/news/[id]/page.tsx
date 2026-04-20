@@ -26,15 +26,7 @@ export default function NewsDetail() {
   const [loading, setLoading] = useState(true);
   const [recentNews, setRecentNews] = useState<News[]>([]);
 
-  useEffect(() => {
-    if (params.id) {
-      fetchNewsDetail();
-      fetchRecentNews();
-    }
-  }, [params.id]);
-
-  const fetchNewsDetail = async () => {
-    setLoading(true);
+  const fetchNewsDetail = React.useCallback(async () => {
     const { data, error } = await supabase
       .from('news')
       .select('*')
@@ -47,9 +39,9 @@ export default function NewsDetail() {
       console.error('Error fetching news:', error);
     }
     setLoading(false);
-  };
+  }, [params.id]);
 
-  const fetchRecentNews = async () => {
+  const fetchRecentNews = React.useCallback(async () => {
     const { data } = await supabase
       .from('news')
       .select('*')
@@ -60,7 +52,17 @@ export default function NewsDetail() {
     if (data) {
       setRecentNews(data);
     }
-  };
+  }, [params.id]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (params.id) {
+        fetchNewsDetail();
+        fetchRecentNews();
+      }
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [params.id, fetchNewsDetail, fetchRecentNews]);
 
   if (loading) {
     return (
@@ -189,7 +191,7 @@ export default function NewsDetail() {
                   </p>
                   <div className="bg-slate-100 p-6 rounded-2xl border-l-4 border-academic-gold">
                     <p className="text-base font-bold text-academic-navy italic">
-                      "Excellence is not an act, but a habit. Our latest achievements are a testament to the collective effort of our dedicated students and staff."
+                      &quot;Excellence is not an act, but a habit. Our latest achievements are a testament to the collective effort of our dedicated students and staff.&quot;
                     </p>
                     <p className="mt-3 text-[10px] font-black uppercase tracking-widest text-slate-500">— Principal&apos;s Office</p>
                   </div>

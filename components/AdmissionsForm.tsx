@@ -72,8 +72,8 @@ export default function AdmissionsForm() {
       
       setIsSuccess(true);
       reset();
-    } catch (err: any) {
-      console.error(err);
+    } catch (err) {
+      console.error('Inquiry submission error:', err);
       alert('Failed to submit inquiry. Please check your internet connection and try again.');
     } finally {
       setIsSubmitting(false);

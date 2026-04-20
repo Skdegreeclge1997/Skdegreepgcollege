@@ -44,7 +44,7 @@ export default function NoticeBoardPage() {
         {/* Contact/Help Section */}
         <div className="mt-20 p-8 md:p-12 bg-academic-navy rounded-2xl text-white flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden relative">
           <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Didn't find what you were looking for?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Didn&apos;t find what you were looking for?</h2>
             <p className="text-slate-300 max-w-xl">
               Our administrative office is open from Monday to Saturday, 9:00 AM to 4:30 PM. 
               Feel free to reach out for specific queries.

@@ -21,7 +21,14 @@ export default function AdminOverview() {
     notices: 0,
     faculty: 0,
   });
-  const [recentInquiries, setRecentInquiries] = useState<any[]>([]);
+  interface Inquiry {
+    id: string;
+    name: string;
+    course: string;
+    created_at: string;
+  }
+
+  const [recentInquiries, setRecentInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -80,7 +87,7 @@ export default function AdminOverview() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10">
           <h1 className="text-3xl md:text-4xl font-black text-academic-navy tracking-tight mb-2">System Overview</h1>
-          <p className="text-slate-500 font-medium">Welcome back. Here's your mission control for S.K. College today.</p>
+          <p className="text-slate-500 font-medium">Welcome back. Here&apos;s your mission control for S.K. College today.</p>
         </div>
         <div className="flex items-center gap-4 bg-emerald-50/50 p-3 rounded-2xl border border-emerald-100/50 shadow-sm relative z-10 backdrop-blur-sm">
            <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 shadow-inner">

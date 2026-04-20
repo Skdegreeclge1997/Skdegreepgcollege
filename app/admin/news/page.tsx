@@ -36,12 +36,7 @@ export default function NewsManager() {
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState<'image' | 'pdf' | null>(null);
  
-  useEffect(() => {
-    fetchNews();
-  }, []);
- 
-  const fetchNews = async () => {
-    setIsLoading(true);
+  const fetchNews = React.useCallback(async () => {
     const { data, error } = await supabase
       .from('news')
       .select('*')
@@ -51,7 +46,14 @@ export default function NewsManager() {
       setNews(data);
     }
     setIsLoading(false);
-  };
+  }, []);
+ 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchNews();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [fetchNews]);
  
   const handleOpenModal = (item?: News) => {
     setEditingNews(item || {
@@ -94,8 +96,9 @@ export default function NewsManager() {
         ...prev, 
         [type === 'image' ? 'image_url' : 'pdf_url']: publicUrl 
       } : null);
-    } catch (error: any) {
-      alert(`Error uploading ${type}: ` + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert(`Error uploading ${type}: ` + err.message);
     } finally {
       setIsUploading(null);
     }
@@ -118,8 +121,9 @@ export default function NewsManager() {
       }
       await fetchNews();
       handleCloseModal();
-    } catch (error: any) {
-      alert('Error saving news: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert('Error saving news: ' + err.message);
     } finally {
       setIsSaving(false);
     }
@@ -130,8 +134,9 @@ export default function NewsManager() {
     try {
       await supabase.from('news').delete().eq('id', id);
       await fetchNews();
-    } catch (error: any) {
-      alert('Error deleting: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert('Error deleting: ' + err.message);
     }
   };
  

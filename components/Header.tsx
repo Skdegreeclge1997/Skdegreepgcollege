@@ -48,6 +48,7 @@ export default function Header() {
                 src="/images/logo.jpeg" 
                 alt="S.K. Degree College Logo" 
                 fill
+                sizes="48px"
                 className="object-contain p-1"
               />
             </div>

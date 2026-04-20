@@ -17,7 +17,6 @@ interface SearchResult {
 
 export default function SearchModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -29,38 +28,31 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean, onCl
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    if (query.length < 2) {
-      setResults([]);
-      return;
-    }
-
-    const filtered: SearchResult[] = [
-      ...coursesData.filter(c => c.title.toLowerCase().includes(query.toLowerCase())).map(c => ({
-        id: c.id,
-        title: c.title,
-        category: 'Course' as const,
-        link: `/academics/${c.slug}`,
-        subtext: c.department
-      })),
-      ...facultyData.filter(f => f.name.toLowerCase().includes(query.toLowerCase())).map(f => ({
-        id: f.id,
-        title: f.name,
-        category: 'Faculty' as const,
-        link: '/faculty',
-        subtext: f.designation
-      })),
-      ...noticesData.filter(n => n.title.toLowerCase().includes(query.toLowerCase())).map(n => ({
-        id: n.id,
-        title: n.title,
-        category: 'Notice' as const,
-        link: '/notices',
-        subtext: n.date
-      }))
-    ].slice(0, 6);
-
-    setResults(filtered);
-  }, [query]);
+  const results: SearchResult[] = query.length < 2 
+    ? [] 
+    : [
+        ...coursesData.filter(c => c.title.toLowerCase().includes(query.toLowerCase())).map(c => ({
+          id: c.id,
+          title: c.title,
+          category: 'Course' as const,
+          link: `/academics/${c.slug}`,
+          subtext: c.department
+        })),
+        ...facultyData.filter(f => f.name.toLowerCase().includes(query.toLowerCase())).map(f => ({
+          id: f.id,
+          title: f.name,
+          category: 'Faculty' as const,
+          link: '/faculty',
+          subtext: f.designation
+        })),
+        ...noticesData.filter(n => n.title.toLowerCase().includes(query.toLowerCase())).map(n => ({
+          id: n.id,
+          title: n.title,
+          category: 'Notice' as const,
+          link: '/notices',
+          subtext: n.date
+        }))
+      ].slice(0, 6);
 
   if (!isOpen) return null;
 
@@ -120,7 +112,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean, onCl
             </div>
           ) : (
             <div className="p-12 text-center">
-              <p className="text-slate-400 font-medium">No results found for "{query}"</p>
+              <p className="text-slate-400 font-medium">No results found for &quot;{query}&quot;</p>
             </div>
           )}
         </div>

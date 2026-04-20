@@ -51,19 +51,15 @@ export default function NoticeManager() {
       if (uploadError) throw uploadError;
       const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(filePath);
       setEditingNotice(prev => prev ? { ...prev, [type === 'pdf' ? 'pdf_url' : 'image_url']: publicUrl } : null);
-    } catch (error: any) {
-      alert(`Error uploading ${type}: ` + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert(`Error uploading ${type}: ` + err.message);
     } finally {
       setIsUploading(null);
     }
   };
  
-  useEffect(() => {
-    fetchNotices();
-  }, []);
- 
-  const fetchNotices = async () => {
-    setIsLoading(true);
+  const fetchNotices = React.useCallback(async () => {
     const { data, error } = await supabase
       .from('notices')
       .select('*')
@@ -73,7 +69,14 @@ export default function NoticeManager() {
       setNotices(data);
     }
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchNotices();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [fetchNotices]);
  
   const handleOpenModal = (item?: Notice) => {
     setEditingNotice(item || {
@@ -116,8 +119,9 @@ export default function NoticeManager() {
       
       await fetchNotices();
       handleCloseModal();
-    } catch (error: any) {
-      alert('Error saving notice: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert('Error saving notice: ' + err.message);
     } finally {
       setIsSaving(false);
     }
@@ -133,8 +137,9 @@ export default function NoticeManager() {
         .eq('id', id);
       if (error) throw error;
       await fetchNotices();
-    } catch (error: any) {
-      alert('Error deleting: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert('Error deleting: ' + err.message);
     }
   };
  

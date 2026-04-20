@@ -8,6 +8,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 const inter = Inter({ subsets: ["latin"], display: 'swap' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://sk-degree-college.vercel.app'),
   title: {
     default: 'S.K. Degree & P.G. College | Vizianagaram',
     template: '%s | S.K. Degree College'

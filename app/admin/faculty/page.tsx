@@ -37,12 +37,7 @@ export default function FacultyManager() {
   const [isSaving, setIsSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
  
-  useEffect(() => {
-    fetchFaculty();
-  }, []);
- 
-  const fetchFaculty = async () => {
-    setIsLoading(true);
+  const fetchFaculty = React.useCallback(async () => {
     const { data, error } = await supabase
       .from('faculty')
       .select('*')
@@ -52,7 +47,14 @@ export default function FacultyManager() {
       setFaculty(data);
     }
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchFaculty();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [fetchFaculty]);
  
   const handleOpenModal = (item?: Faculty) => {
     setEditingFaculty(item || {
@@ -93,8 +95,9 @@ export default function FacultyManager() {
         .getPublicUrl(filePath);
  
       setEditingFaculty(prev => prev ? { ...prev, image_url: publicUrl } : null);
-    } catch (error: any) {
-      alert('Error uploading image: ' + error.message);
+    } catch (error) {
+      const err = error as { message: string };
+      alert('Error uploading image: ' + err.message);
     } finally {
       setUploadingImage(false);
     }
@@ -125,8 +128,9 @@ export default function FacultyManager() {
       
       await fetchFaculty();
       handleCloseModal();
-    } catch (error: any) {
-      alert('Error saving faculty: ' + error.message);
+    } catch (error) {
+      const err = error as { message: string };
+      alert('Error saving faculty: ' + err.message);
     } finally {
       setIsSaving(false);
     }
@@ -142,8 +146,9 @@ export default function FacultyManager() {
         .eq('id', id);
       if (error) throw error;
       await fetchFaculty();
-    } catch (error: any) {
-      alert('Error deleting: ' + error.message);
+    } catch (error) {
+      const err = error as { message: string };
+      alert('Error deleting: ' + err.message);
     }
   };
  

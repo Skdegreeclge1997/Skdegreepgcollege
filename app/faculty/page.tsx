@@ -20,7 +20,7 @@ export default function FacultyPage() {
     fetchFaculty();
   }, []);
 
-  const fetchFaculty = async () => {
+  async function fetchFaculty() {
     setLoading(true);
     const { data, error } = await supabase
       .from('faculty')
@@ -33,7 +33,7 @@ export default function FacultyPage() {
       setFaculty(initialFacultyData as Faculty[]);
     }
     setLoading(false);
-  };
+  }
 
   const departments = [
     'All Departments',

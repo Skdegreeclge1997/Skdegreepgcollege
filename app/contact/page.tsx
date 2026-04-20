@@ -57,8 +57,8 @@ export default function ContactPage() {
       
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
-    } catch (err: any) {
-      console.error(err);
+    } catch (err) {
+      console.error('Contact form error:', err);
       setErrorMsg('Something went wrong. Please try again later.');
       setStatus('error');
     }

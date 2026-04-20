@@ -32,12 +32,7 @@ export default function GalleryManager() {
   const [uploading, setUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
  
-  useEffect(() => {
-    fetchImages();
-  }, []);
- 
-  const fetchImages = async () => {
-    setIsLoading(true);
+  const fetchImages = React.useCallback(async () => {
     const { data, error } = await supabase
       .from('gallery')
       .select('*')
@@ -47,7 +42,14 @@ export default function GalleryManager() {
       setImages(data.filter((img: GalleryImage) => !img.url.includes('youtube.com') && !img.url.includes('youtu.be')));
     }
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchImages();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [fetchImages]);
  
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -70,8 +72,9 @@ export default function GalleryManager() {
         .getPublicUrl(filePath);
  
       setNewImage(prev => ({ ...prev, url: publicUrl }));
-    } catch (error: any) {
-      alert('Error uploading image: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert('Error uploading image: ' + err.message);
     } finally {
       setUploading(false);
     }
@@ -94,8 +97,9 @@ export default function GalleryManager() {
       await fetchImages();
       setIsAdding(false);
       setNewImage({ caption: '', category: 'Campus' });
-    } catch (error: any) {
-      alert('Error saving to gallery: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert('Error saving to gallery: ' + err.message);
     } finally {
       setIsSaving(false);
     }
@@ -107,8 +111,9 @@ export default function GalleryManager() {
     try {
       await supabase.from('gallery').delete().eq('id', id);
       await fetchImages();
-    } catch (error: any) {
-      alert('Error deleting: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      alert('Error deleting: ' + err.message);
     }
   };
  
@@ -225,12 +230,14 @@ export default function GalleryManager() {
           <div key={img.id} className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden group hover:shadow-2xl transition-all duration-500">
             <div className="aspect-[4/3] relative overflow-hidden">
                {img.url.includes('youtube.com') || img.url.includes('youtu.be') ? (
-                 <img 
+                 <Image 
                    src={`https://img.youtube.com/vi/${(() => {
                      const match = img.url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
                      return match && match[2].length === 11 ? match[2] : '';
                    })()}/hqdefault.jpg`} 
-                   alt={img.caption} 
+                   alt={img.caption}
+                   fill
+                   unoptimized
                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                  />
                ) : (

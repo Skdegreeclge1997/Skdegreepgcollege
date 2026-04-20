@@ -20,7 +20,7 @@ export default function AdmissionsAdmin() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchInquiries = async (searchQuery: string = '') => {
+  async function fetchInquiries(searchQuery: string = '') {
     setIsLoading(true);
     try {
       let query = supabase
@@ -43,7 +43,7 @@ export default function AdmissionsAdmin() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {

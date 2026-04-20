@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
     const { error: signInError } = await signIn(email, password);
 
     if (signInError) {
-      setError(signInError.message);
+      setError((signInError as { message: string }).message || 'Sign in failed');
     } else {
       router.push('/admin/dashboard');
     }
@@ -45,6 +45,7 @@ export default function AdminLoginPage() {
                    alt="Logo" 
                    width={48} 
                    height={48} 
+                   sizes="48px"
                    className="object-contain"
                  />
               </div>

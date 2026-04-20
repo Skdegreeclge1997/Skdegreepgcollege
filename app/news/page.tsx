@@ -11,13 +11,7 @@ export default function NewsArchive() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-
-  useEffect(() => {
-    fetchNews();
-  }, []);
-
-  const fetchNews = async () => {
-    setLoading(true);
+  const fetchNews = React.useCallback(async () => {
     const { data, error } = await supabase
       .from('news')
       .select('*')
@@ -27,7 +21,14 @@ export default function NewsArchive() {
       setNews(data);
     }
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchNews();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [fetchNews]);
 
   const categories = ['All', ...new Set(news.map(item => item.category))];
 

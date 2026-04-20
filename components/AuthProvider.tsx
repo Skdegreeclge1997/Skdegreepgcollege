@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 interface AuthContextType {
   user: SupabaseUser | null;
   isLoading: boolean;
-  signIn: (email: string, password?: string) => Promise<{ error: any }>;
+  signIn: (email: string, password?: string) => Promise<{ error: unknown }>;
   signOut: () => Promise<void>;
 }
  
@@ -30,7 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkSession();
  
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setIsLoading(false);
     });
@@ -45,7 +45,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // If no password provided, it's a mock student login (for now)
     if (!password) {
       // Create a mock user object to satisfy the UI
-      const mockUser = { id: 'student-id', email, user_metadata: { name: email.split('@')[0] } } as any;
+      const mockUser = { 
+        id: 'student-id', 
+        email, 
+        user_metadata: { name: email.split('@')[0] },
+        app_metadata: {},
+        aud: 'authenticated',
+        created_at: new Date().toISOString()
+      } as unknown as SupabaseUser;
       setUser(mockUser);
       setIsLoading(false);
       return { error: null };

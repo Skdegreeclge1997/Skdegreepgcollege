@@ -63,7 +63,7 @@ export default function AcademicsContent() {
 
               <MotionSection delay={0.4}>
                 <p className="text-xl text-slate-300 leading-relaxed max-w-2xl">
-                  We don't just hand out degrees. At S.K. Degree College, we focus on building 
+                  We don&apos;t just hand out degrees. At S.K. Degree College, we focus on building 
                   the critical thinking skills and professional discipline you need to excel in your chosen career path.
                 </p>
               </MotionSection>

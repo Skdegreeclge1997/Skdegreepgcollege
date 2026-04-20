@@ -55,11 +55,14 @@ export const ThreeBackground = () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
+    const container = containerRef.current;
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      containerRef.current?.removeChild(renderer.domElement);
+      if (container && renderer.domElement) {
+        container.removeChild(renderer.domElement);
+      }
     };
   }, []);
 

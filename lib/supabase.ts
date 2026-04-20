@@ -4,7 +4,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 const createMockQuery = () => {
-  const mock: any = {
+  const mock = {
     select: () => mock,
     order: () => mock,
     limit: () => mock,
@@ -17,8 +17,11 @@ const createMockQuery = () => {
     update: () => mock,
     delete: () => mock,
     match: () => mock,
-    then: (resolve: any) => resolve({ data: [], error: null }),
-    catch: (resolve: any) => mock,
+    then: (resolve: (val: unknown) => void) => {
+      resolve({ data: [], error: null });
+      return mock;
+    },
+    catch: () => mock,
   };
   return mock;
 };
@@ -35,7 +38,14 @@ export const supabase = supabaseUrl && supabaseAnonKey
         signOut: async () => ({}),
       },
       from: () => createMockQuery(),
-    } as any);
+      storage: {
+        from: () => ({
+          upload: async () => ({ data: {}, error: null }),
+          getPublicUrl: () => ({ data: { publicUrl: '' } }),
+          remove: async () => ({ data: {}, error: null }),
+        })
+      }
+    } as unknown as ReturnType<typeof createClient>);
 
 if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('Supabase credentials missing. Admin module will be in mock mode.');

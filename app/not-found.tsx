@@ -14,7 +14,7 @@ export default function NotFound() {
           <div className="absolute inset-0 flex items-center justify-center">
              <div className="text-center">
                 <h2 className="text-4xl md:text-5xl font-black text-academic-navy mb-2 tracking-tight">Lost on Campus?</h2>
-                <p className="text-lg text-slate-500 font-medium">The page you're looking for has moved or graduated.</p>
+                <p className="text-lg text-slate-500 font-medium">The page you&apos;re looking for has moved or graduated.</p>
              </div>
           </div>
         </div>

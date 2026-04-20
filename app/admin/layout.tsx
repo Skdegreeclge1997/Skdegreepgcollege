@@ -68,8 +68,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         if (!isAdmin && pathname !== '/admin/login') {
           router.push('/admin/login?error=unauthorized');
         }
-      } catch (err) {
-        // Silent catch
+      } catch (error) {
+        console.error('Admin status check failed:', error);
       } finally {
         setIsVerifying(false);
       }
