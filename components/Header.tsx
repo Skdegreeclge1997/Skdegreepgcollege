@@ -50,6 +50,8 @@ export default function Header() {
                 fill
                 sizes="48px"
                 className="object-contain p-1"
+                priority
+                fetchPriority="high"
               />
             </div>
             <div className="flex flex-col">

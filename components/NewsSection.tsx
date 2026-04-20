@@ -41,16 +41,8 @@ export default function NewsSection() {
 
   return (
     <div className="relative overflow-hidden py-4 -mx-4 px-4">
-      <motion.div 
-        animate={{ 
-          x: [0, -1200],
-        }}
-        transition={{ 
-          duration: 30,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        className="flex gap-8 hover:[animation-play-state:paused] w-max"
+      <div 
+        className="flex gap-8 animate-marquee hover:[animation-play-state:paused] w-max [--duration:40s] [--gap:2rem]"
       >
         {/* Triple the items for a truly seamless loop */}
         {[...newsItems, ...newsItems, ...newsItems].map((news, index) => (
@@ -58,7 +50,7 @@ export default function NewsSection() {
             <NewsCard news={news} />
           </div>
         ))}
-      </motion.div>
+      </div>
 
       {/* Edge Gradients for smoothness */}
       <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />

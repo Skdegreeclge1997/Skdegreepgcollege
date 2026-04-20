@@ -27,7 +27,6 @@ export default function FacultyCard({ member }: FacultyCardProps) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            unoptimized={true}
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(member.name) + '&background=003366&color=fff&size=512';

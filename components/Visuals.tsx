@@ -9,32 +9,38 @@ export const ThreeBackground = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const isMobile = window.innerWidth < 768;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ 
+      alpha: true, 
+      antialias: !isMobile,
+      powerPreference: "high-performance"
+    });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     containerRef.current.appendChild(renderer.domElement);
-
+ 
     // Create Particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const count = 2000;
+    const count = isMobile ? 500 : 2000;
     const positions = new Float32Array(count * 3);
-
+ 
     for (let i = 0; i < count * 3; i++) {
       positions[i] = (Math.random() - 0.5) * 10;
     }
-
+ 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
+ 
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.02,
+      size: isMobile ? 0.04 : 0.02,
       color: '#D4AF37', // Academic Gold
       transparent: true,
       opacity: 0.4,
       blending: THREE.AdditiveBlending,
     });
-
+ 
     const particles = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particles);
 

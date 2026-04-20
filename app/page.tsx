@@ -54,12 +54,8 @@ export default function LandingPage() {
   return (
     <main className="snap-container bg-academic-navy">
       {/* 1. Hero Section */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeIn}
-        className="snap-section mesh-gradient items-center justify-center pt-0"
+      <section 
+        className="snap-section mesh-gradient items-center justify-center pt-0 relative overflow-hidden"
       >
         <ThreeBackground />
         <div className="absolute inset-0 z-0">
@@ -68,8 +64,9 @@ export default function LandingPage() {
             alt="S.K. Degree and P.G. College Vizianagaram Campus View"
             fill
             className="object-cover opacity-20 mix-blend-overlay"
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, 1200px"
             priority
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-academic-navy/20 to-academic-navy/95" />
         </div>
@@ -114,7 +111,7 @@ export default function LandingPage() {
             </Link>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
       {/* 2. Institutional Success */}
       <motion.section 
@@ -251,7 +248,6 @@ export default function LandingPage() {
                     fill 
                     sizes="(max-width: 768px) 50vw, 25vw"
                     className="object-cover opacity-60 group-hover:opacity-100 transition-opacity" 
-                    unoptimized
                  />
                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
                     <div className="w-10 h-10 rounded-full bg-academic-gold/20 border border-academic-gold/40 flex items-center justify-center mb-2">
@@ -303,7 +299,7 @@ export default function LandingPage() {
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
         className="snap-section bg-slate-50 overflow-y-auto no-scrollbar"
       >
@@ -319,16 +315,8 @@ export default function LandingPage() {
              </Link>
           </div>
           <div className="relative overflow-hidden py-4 -mx-4 px-4">
-            <motion.div 
-              animate={{ 
-                x: [0, -1000],
-              }}
-              transition={{ 
-               duration: 30,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="flex gap-6 w-max"
+            <div 
+              className="flex gap-6 w-max animate-marquee [--duration:50s] [--gap:1.5rem] hover:[animation-play-state:paused]"
             >
               {[...photoGallery, ...photoGallery, ...photoGallery].map((item, i) => {
                 const isVideo = false;
@@ -346,7 +334,6 @@ export default function LandingPage() {
                     fill
                     sizes="(max-width: 768px) 80vw, 350px"
                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                    unoptimized
                   />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 z-20">
@@ -355,7 +342,7 @@ export default function LandingPage() {
                   </div>
                 </Link>
               )})}
-            </motion.div>
+            </div>
             
             {/* Edge Gradients */}
             <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-30 pointer-events-none" />
@@ -368,7 +355,7 @@ export default function LandingPage() {
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
         className="snap-section bg-slate-100 overflow-y-auto no-scrollbar"
       >
@@ -421,9 +408,9 @@ export default function LandingPage() {
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.1 }}
+        viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-white overflow-y-auto no-scrollbar flex flex-col justify-between"
+        className="snap-section bg-white overflow-y-auto no-scrollbar flex flex-col"
       >
         <div className="container mx-auto px-4 pt-4 pb-12">
           <div className="flex items-center justify-between mb-8">
@@ -437,23 +424,15 @@ export default function LandingPage() {
              </Link>
           </div>
           <div className="relative overflow-hidden py-4 -mx-4 px-4">
-            <motion.div 
-              animate={{ 
-                x: [0, -1000],
-              }}
-              transition={{ 
-                duration: 25,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="flex gap-6 w-max"
+            <div 
+              className="flex gap-6 w-max animate-marquee [--duration:40s] [--gap:1.5rem] hover:[animation-play-state:paused]"
             >
               {[...recentNotices, ...recentNotices, ...recentNotices].map((notice, i) => (
                 <div key={`${notice.id}-${i}`} className="w-[85vw] max-w-[350px] shrink-0">
                   <NoticeCard notice={notice} />
                 </div>
               ))}
-            </motion.div>
+            </div>
             
             {/* Edge Gradients */}
             <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
@@ -480,7 +459,7 @@ export default function LandingPage() {
       </motion.section>
 
       {/* Footer as a snap section */}
-      <section className="snap-section bg-white !h-auto !min-h-0 pt-0">
+      <section className="bg-white">
         <Footer />
       </section>
     </main>

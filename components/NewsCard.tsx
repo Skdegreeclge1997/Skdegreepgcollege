@@ -21,7 +21,6 @@ export default function NewsCard({ news }: NewsCardProps) {
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-cover transition-transform duration-700 group-hover:scale-110"
-          unoptimized
         />
         <div className="absolute top-3 left-3">
           <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-academic-navy text-[9px] font-black uppercase tracking-widest rounded-full shadow-lg border border-white/20">
