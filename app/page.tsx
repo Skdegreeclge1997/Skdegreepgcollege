@@ -462,7 +462,7 @@ export default function LandingPage() {
         </div>
 
         {/* 7. Minimal CTA Section (Integrated) */}
-        <div className="container mx-auto px-4 pb-20">
+        <div className="container mx-auto px-4 pb-8">
            <div className="max-w-4xl mx-auto bg-slate-50 border border-slate-100 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <div className="text-center md:text-left relative z-10">
@@ -480,7 +480,7 @@ export default function LandingPage() {
       </motion.section>
 
       {/* Footer as a snap section */}
-      <section className="snap-section bg-academic-navy !h-auto !min-h-0 pt-0">
+      <section className="snap-section bg-white !h-auto !min-h-0 pt-0">
         <Footer />
       </section>
     </main>

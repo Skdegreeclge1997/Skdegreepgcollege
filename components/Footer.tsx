@@ -5,7 +5,7 @@ import { Mail, MapPin, Phone, MessageSquare, Globe, User } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-academic-navy text-slate-50 pt-16 pb-8 border-t border-white/5">
+    <footer className="bg-academic-navy text-slate-50 pt-10 pb-8">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand & Info */}
