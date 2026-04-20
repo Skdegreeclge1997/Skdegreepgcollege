@@ -33,10 +33,11 @@ export default function YouTubeFacade({ videoId, title }: YouTubeFacadeProps) {
       onClick={() => setIsLoaded(true)}
     >
       <Image
-        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
         alt={title}
         fill
         className="object-cover transition-transform duration-700 group-hover:scale-105"
+        unoptimized
       />
       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
         <div className="w-16 h-16 bg-academic-gold rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">

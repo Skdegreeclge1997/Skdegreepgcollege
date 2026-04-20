@@ -16,7 +16,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       <main className="flex-grow">
         {children}
       </main>
-      {!isAdminPath && <Footer />}
+      {!isAdminPath && pathname !== '/' && <Footer />}
     </>
   );
 }

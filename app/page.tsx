@@ -12,6 +12,7 @@ import initialGalleryData from '@/lib/data/gallery.json';
 import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
 import YouTubeFacade from '@/components/YouTubeFacade';
+import Footer from '@/components/Footer';
 import dynamic from 'next/dynamic';
 
 const ThreeBackground = dynamic(() => import('@/components/Visuals').then(mod => mod.ThreeBackground), { 
@@ -250,6 +251,7 @@ export default function LandingPage() {
                     fill 
                     sizes="(max-width: 768px) 50vw, 25vw"
                     className="object-cover opacity-60 group-hover:opacity-100 transition-opacity" 
+                    unoptimized
                  />
                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
                     <div className="w-10 h-10 rounded-full bg-academic-gold/20 border border-academic-gold/40 flex items-center justify-center mb-2">
@@ -344,6 +346,7 @@ export default function LandingPage() {
                     fill
                     sizes="(max-width: 768px) 80vw, 350px"
                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                    unoptimized
                   />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 z-20">
@@ -418,11 +421,11 @@ export default function LandingPage() {
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-white overflow-y-auto no-scrollbar"
+        className="snap-section bg-white overflow-y-auto no-scrollbar flex flex-col justify-between"
       >
-        <div className="container mx-auto px-4 pt-4 pb-20">
+        <div className="container mx-auto px-4 pt-4 pb-12">
           <div className="flex items-center justify-between mb-8">
              <h2 className="text-3xl font-black text-academic-navy">Notice Board</h2>
              <Link 
@@ -457,17 +460,9 @@ export default function LandingPage() {
             <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
           </div>
         </div>
-      </motion.section>
-      
-      {/* 7. Minimal CTA Section */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeIn}
-        className="bg-white pb-24 pt-12"
-      >
-        <div className="container mx-auto px-4">
+
+        {/* 7. Minimal CTA Section (Integrated) */}
+        <div className="container mx-auto px-4 pb-20">
            <div className="max-w-4xl mx-auto bg-slate-50 border border-slate-100 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <div className="text-center md:text-left relative z-10">
@@ -483,6 +478,11 @@ export default function LandingPage() {
            </div>
         </div>
       </motion.section>
+
+      {/* Footer as a snap section */}
+      <section className="snap-section bg-academic-navy !h-auto !min-h-0 pt-0">
+        <Footer />
+      </section>
     </main>
   );
 }
