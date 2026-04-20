@@ -21,6 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+console errors.txt
+mobile report.html
 
 # local env files
 .env*.local

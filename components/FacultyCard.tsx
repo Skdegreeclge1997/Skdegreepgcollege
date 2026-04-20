@@ -22,14 +22,15 @@ export default function FacultyCard({ member }: FacultyCardProps) {
         <div className="w-full h-full relative transition-all duration-700 group-hover:scale-105">
           <div className="absolute inset-0 bg-academic-navy/5 group-hover:bg-transparent transition-colors duration-500 z-10" />
           <Image
-            src={member.image || member.image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=003366&color=fff&size=512`}
+            src={member.image || member.image_url || '/images/avatar-placeholder.png'}
             alt={member.name}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            unoptimized={true}
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(member.name) + '&background=003366&color=fff&size=512';
+              target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=003366&color=fff&size=512`;
             }}
           />
         </div>

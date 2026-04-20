@@ -101,11 +101,12 @@ export default function FacultyPage() {
                       transition={{ delay: 0.6 + i * 0.1, type: 'spring', stiffness: 200 }}
                     >
                       <Image 
-                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=003366&color=fff`} 
+                        src="/images/avatar-placeholder.png" 
                         alt={m.name}
                         width={40}
                         height={40}
                         className="object-cover"
+                        unoptimized={true}
                       />
                     </motion.div>
                   ))}
