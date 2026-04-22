@@ -16,7 +16,7 @@ This phase covers the final deployment and handoff of the SK Degree College webs
 - [x] **Task 07-01**: Create new GitHub account/repo and push code.
 - [x] **Task 07-02**: Set up new Supabase project and migrate schema.
 - [x] **Task 07-03**: Create Vercel account and import project.
-- [ ] **Task 07-04**: Purchase and connect custom domain.
+- [x] **Task 07-04**: Purchase and connect custom domain.
 - [ ] **Task 07-05**: Integrate Google Analytics and Search Console.
 - [ ] **Task 07-06**: Set up Sentry for error tracking.
 - [x] **Task 07-09**: Configure environment variables in Vercel and trigger production deploy.
@@ -24,7 +24,7 @@ This phase covers the final deployment and handoff of the SK Degree College webs
 ### Wave 3: Final Polishing & Deployment
 - [x] **Task 07-07**: Perform final code cleanup (logs, test data).
 - [x] **Task 07-08**: Update .gitignore and production metadata in layout.tsx.
-- [ ] **Task 07-09**: Trigger production deployment on Cloudflare.
+- [x] **Task 07-09**: Trigger production deployment on Cloudflare.
 - [ ] **Task 07-10**: Run Lighthouse audit and fix identified issues.
 - [x] **Task 07-11**: Final end-to-end testing on production URL.
 

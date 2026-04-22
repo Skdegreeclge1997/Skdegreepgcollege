@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Pin, Bell, ArrowRight } from 'lucide-react';
+import { Calendar, Pin, Bell, ArrowRight, FileText } from 'lucide-react';
 import { Notice, NoticeCategory } from '@/lib/types';
 
 interface NoticeCardProps {
@@ -50,10 +50,47 @@ export default function NoticeCard({ notice }: NoticeCardProps) {
           {notice.content}
         </p>
 
+        {/* Attachments */}
+        {(notice.image_url || notice.pdf_url) && (
+          <div className="mb-6 space-y-3">
+            {notice.image_url && (
+              <div className="relative w-full h-32 rounded-lg overflow-hidden border border-slate-100">
+                <img 
+                  src={notice.image_url} 
+                  alt="Notice attachment" 
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" 
+                />
+              </div>
+            )}
+            {notice.pdf_url && (
+              <a 
+                href={notice.pdf_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-academic-navy hover:bg-academic-gold hover:border-academic-gold transition-all"
+              >
+                <FileText size={14} />
+                Download PDF Document
+              </a>
+            )}
+          </div>
+        )}
+
         <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between text-academic-navy font-semibold text-sm">
-          <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-300">
-            Read Full Notice <ArrowRight size={16} aria-hidden="true" />
-          </span>
+          {notice.pdf_url ? (
+            <a 
+              href={notice.pdf_url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-300"
+            >
+              View Document <ArrowRight size={16} aria-hidden="true" />
+            </a>
+          ) : (
+            <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-300">
+              Read Full Notice <ArrowRight size={16} aria-hidden="true" />
+            </span>
+          )}
           <Bell size={18} className="text-academic-gold/50 group-hover:text-academic-gold transition-colors duration-300" aria-hidden="true" />
         </div>
       </div>

@@ -7,6 +7,8 @@ export interface Notice {
   category: NoticeCategory;
   content: string;
   isPinned: boolean;
+  pdf_url?: string;
+  image_url?: string;
 }
 
 export interface Course {

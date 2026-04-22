@@ -22,7 +22,7 @@ const ThreeBackground = dynamic(() => import('@/components/Visuals').then(mod =>
 
 import { supabase } from '@/lib/supabase';
 
-const recentNotices = (noticesData as Notice[]).slice(0, 3);
+const initialNotices = (noticesData as Notice[]).slice(0, 3);
 const initialAllGallery = initialGalleryData as GalleryItem[];
 const initialPhotoGallery = initialAllGallery.filter(item => item.category !== 'Video').slice(0, 6);
 const initialVideoGallery = initialAllGallery.filter(item => item.category === 'Video').slice(0, 3);
@@ -35,6 +35,7 @@ const fadeIn = {
 export default function LandingPage() {
   const [photoGallery, setPhotoGallery] = React.useState<GalleryItem[]>(initialPhotoGallery);
   const [videoGallery, setVideoGallery] = React.useState<GalleryItem[]>(initialVideoGallery);
+  const [recentNotices, setRecentNotices] = React.useState<Notice[]>(initialNotices);
 
   React.useEffect(() => {
     const fetchGallery = async () => {
@@ -48,7 +49,22 @@ export default function LandingPage() {
         setVideoGallery(data.filter((item: GalleryItem) => item.category === 'Video').slice(0, 3));
       }
     };
+
+    const fetchNotices = async () => {
+      const { data, error } = await supabase
+        .from('notices')
+        .select('*')
+        .order('isPinned', { ascending: false })
+        .order('date', { ascending: false })
+        .limit(3);
+      
+      if (!error && data && data.length > 0) {
+        setRecentNotices(data as Notice[]);
+      }
+    };
+
     fetchGallery();
+    fetchNotices();
   }, []);
 
   return (

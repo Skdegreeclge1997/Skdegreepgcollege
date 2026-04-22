@@ -3,21 +3,27 @@ import NoticeCard from '@/components/NoticeCard';
 import noticesData from '@/lib/data/notices.json';
 import { Notice } from '@/lib/types';
 
-// Cast JSON data to Notice array
-const notices = noticesData as Notice[];
+import { supabase } from '@/lib/supabase';
 
 export const metadata = {
   title: 'Notice Board | S.K. Degree & P.G. College',
   description: 'Stay updated with the latest news, events, and academic announcements from S.K. Degree & P.G. College.',
 };
 
-export default function NoticeBoardPage() {
-  // Sort notices: Pinned first, then by date descending
-  const sortedNotices = [...notices].sort((a, b) => {
-    if (a.isPinned && !b.isPinned) return -1;
-    if (!a.isPinned && b.isPinned) return 1;
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
-  });
+export default async function NoticeBoardPage() {
+  // Fetch from Supabase
+  const { data: dbNotices } = await supabase
+    .from('notices')
+    .select('*')
+    .order('isPinned', { ascending: false })
+    .order('date', { ascending: false });
+
+  // Use DB data if available, otherwise fallback to local JSON
+  const notices = (dbNotices && dbNotices.length > 0) 
+    ? (dbNotices as Notice[]) 
+    : (noticesData as Notice[]);
+
+  const sortedNotices = notices;
 
   return (
     <main className="min-h-screen bg-slate-50 pt-32 pb-20">
