@@ -53,6 +53,7 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  themeColor: '#001F3F',
 };
 
 import LayoutWrapper from "@/components/LayoutWrapper";
