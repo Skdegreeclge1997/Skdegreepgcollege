@@ -70,7 +70,7 @@ export default function NewsSection() {
                 {newsItems[0].title}
               </h3>
               <p className="text-slate-600 line-clamp-3 mb-6 text-sm md:text-base leading-relaxed">
-                {newsItems[0].content}
+                {newsItems[0].description}
               </p>
               <Link href="/news" className="inline-flex items-center gap-2 text-academic-navy font-bold text-sm uppercase tracking-widest border-b-2 border-academic-gold pb-1 hover:gap-4 transition-all">
                 Read Full Story <ArrowRight size={16} />

@@ -50,7 +50,7 @@ export default function NoticeCard({ notice }: NoticeCardProps) {
 
         <div className="flex items-center gap-3 mt-2">
           <p className="text-[11px] text-slate-500 font-medium truncate">
-            {notice.department || 'Academic Section'}
+            Academic Section
           </p>
           {(notice.image_url || notice.pdf_url) && (
             <div className="flex items-center gap-1 text-academic-gold">
