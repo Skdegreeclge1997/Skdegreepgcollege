@@ -63,7 +63,44 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://prj_m9THnh0P5niRdKGjlVOtez5fYuqD.supabase.co" />
+      </head>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CollegeOrUniversity",
+              "name": "S.K. Degree & P.G. College",
+              "alternateName": "S.K. Degree College",
+              "url": "https://skdegreecollege.com",
+              "logo": "https://skdegreecollege.com/images/logo.jpeg",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Ayyannapeta Junction",
+                "addressLocality": "Vizianagaram",
+                "addressRegion": "Andhra Pradesh",
+                "postalCode": "535003",
+                "addressCountry": "IN"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+91-9441253163",
+                "contactType": "admissions",
+                "areaServed": "IN",
+                "availableLanguage": ["English", "Telugu"]
+              },
+              "sameAs": [
+                "https://www.facebook.com/skdegreecollege",
+                "https://www.instagram.com/skdegreecollege"
+              ]
+            })
+          }}
+        />
         <AuthProvider>
           <LayoutWrapper>
             {children}
