@@ -249,10 +249,10 @@ export default function NoticeManager() {
                       className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none font-bold text-slate-600 appearance-none bg-no-repeat bg-[right_1.25rem_center] bg-[length:1em_1em]"
                    >
                       <option>General</option>
-                      <option>Exams</option>
-                      <option>Admissions</option>
-                      <option>Holidays</option>
-                      <option>Events</option>
+                      <option>Exam</option>
+                      <option>Admission</option>
+                      <option>Holiday</option>
+                      <option>Event</option>
                    </select>
                 </div>
              </div>
