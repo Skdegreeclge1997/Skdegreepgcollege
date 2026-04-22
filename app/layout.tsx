@@ -40,7 +40,18 @@ export const metadata: Metadata = {
   icons: {
     icon: '/images/logo.jpeg',
     apple: '/images/logo.jpeg',
-  }
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 import LayoutWrapper from "@/components/LayoutWrapper";

@@ -167,6 +167,30 @@ export default function LandingPage() {
              <h3 className="text-xl font-bold text-academic-navy mb-8">Our Students Placed At</h3>
              <BrandScroller />
           </div>
+
+          {/* Quick Navigation Links for SEO & UX */}
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <Link 
+              href="/about" 
+              className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl hover:bg-academic-gold/10 transition-all group"
+            >
+              <div>
+                <h4 className="text-academic-navy font-black text-lg">About Our Institution</h4>
+                <p className="text-slate-500 text-sm">Discover our history, mission, and values.</p>
+              </div>
+              <ArrowRight className="text-academic-gold group-hover:translate-x-2 transition-transform" />
+            </Link>
+            <Link 
+              href="/faculty" 
+              className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl hover:bg-academic-gold/10 transition-all group"
+            >
+              <div>
+                <h4 className="text-academic-navy font-black text-lg">Meet Our Faculty</h4>
+                <p className="text-slate-500 text-sm">Qualified educators dedicated to student success.</p>
+              </div>
+              <ArrowRight className="text-academic-gold group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </div>
         </div>
       </motion.section>
 
