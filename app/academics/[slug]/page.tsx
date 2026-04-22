@@ -53,7 +53,7 @@ export default function CourseDetailPage({ params }: CoursePageProps) {
               <span className="text-slate-600 font-medium">{course.department} Department</span>
             </div>
             
-            <h1 className="text-white mb-8">
+            <h1 className="text-academic-navy mb-8">
               {course.title}
             </h1>
 
@@ -143,7 +143,7 @@ export default function CourseDetailPage({ params }: CoursePageProps) {
               <div className="p-8 border border-slate-200 rounded-3xl">
                 <h4 className="font-bold text-academic-navy mb-4">Contact Admissions</h4>
                 <p className="text-slate-500 text-sm mb-4">Have questions about this program? Our counselors are here to help.</p>
-                <p className="font-bold text-academic-navy mb-1">+91 (080) 1234-5678</p>
+                <p className="font-bold text-academic-navy mb-1">+91 9441253163</p>
                 <p className="text-slate-600 text-sm">admissions@skdegreecollege.com</p>
               </div>
             </div>
