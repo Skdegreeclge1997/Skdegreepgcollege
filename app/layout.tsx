@@ -23,11 +23,17 @@ export const metadata: Metadata = {
     siteName: 'S.K. Degree & P.G. College',
     images: [
       {
-        url: '/images/logo.jpeg',
+        url: 'https://skdegreecollege.com/images/logo.jpeg',
         width: 1200,
         height: 630,
-        alt: 'S.K. Degree College Logo',
+        alt: 'S.K. Degree & P.G. College Logo',
       },
+      {
+        url: 'https://skdegreecollege.com/images/logo.jpeg',
+        width: 400,
+        height: 400,
+        alt: 'S.K. Degree & P.G. College Logo Square',
+      }
     ],
     locale: 'en_IN',
     type: 'website',
@@ -36,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'S.K. Degree & P.G. College',
     description: 'Top-rated degree college in Vizianagaram offering professional honours programs.',
-    images: ['/images/logo.jpeg'],
+    images: ['https://skdegreecollege.com/images/logo.jpeg'],
   },
   icons: {
     icon: '/images/logo.jpeg',
