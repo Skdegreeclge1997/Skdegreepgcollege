@@ -144,7 +144,7 @@ export default function CourseDetailPage({ params }: CoursePageProps) {
                 <h4 className="font-bold text-academic-navy mb-4">Contact Admissions</h4>
                 <p className="text-slate-500 text-sm mb-4">Have questions about this program? Our counselors are here to help.</p>
                 <p className="font-bold text-academic-navy mb-1">+91 (080) 1234-5678</p>
-                <p className="text-slate-600 text-sm">admissions@skdegreecollege.edu</p>
+                <p className="text-slate-600 text-sm">admissions@skdegreecollege.com</p>
               </div>
             </div>
           </div>

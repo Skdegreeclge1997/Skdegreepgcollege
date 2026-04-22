@@ -2,10 +2,10 @@
 
 A modern, high-performance web portal for **S.K. Degree & P.G. College**, Vizianagaram. Built with Next.js, Tailwind CSS, and Supabase to provide a seamless experience for students, faculty, and administration.
 
-![Production Preview](https://skdegreecollege.edu.in/opengraph-image.png)
+![Production Preview](https://skdegreecollege.com/opengraph-image.png)
 
 ## 🚀 Live Demo
-**Production URL:** [https://skdegreecollege.edu.in](https://skdegreecollege.edu.in)
+**Production URL:** [https://skdegreecollege.com](https://skdegreecollege.com)
 
 ---
 
@@ -81,7 +81,7 @@ This project is optimized for deployment on **Vercel**.
 1.  Push your code to a GitHub repository.
 2.  Import the project into Vercel.
 3.  Add the environment variables in the Vercel Dashboard.
-4.  Connect your custom domain (`skdegreecollege.edu.in`).
+4.  Connect your custom domain (`skdegreecollege.com`).
 
 ---
 

@@ -8,7 +8,7 @@
     "experience": "15 Years",
     "specialization": "Political Science, Economics",
     "image": "/faculty/principal.jpg",
-    "email": "principal@skdegreecollege.edu"
+    "email": "principal@skdegreecollege.com"
   },
   {
     "id": "2",
@@ -19,7 +19,7 @@
     "experience": "Retired Asst Professor",
     "specialization": "Telugu Literature",
     "image": "/faculty/founder.jpg",
-    "email": "msnaidu@skdegreecollege.edu"
+    "email": "msnaidu@skdegreecollege.com"
   },
   {
     "id": "3",
@@ -30,7 +30,7 @@
     "experience": "25 Years",
     "specialization": "Accountancy, Commerce",
     "image": "/faculty/ramanandam.jpg",
-    "email": "ramanandam@skdegreecollege.edu"
+    "email": "ramanandam@skdegreecollege.com"
   },
   {
     "id": "4",
@@ -41,7 +41,7 @@
     "experience": "25 Years",
     "specialization": "Naval NCC, Commerce",
     "image": "/faculty/vishnu_sankar.jpg",
-    "email": "vishnusankar@skdegreecollege.edu"
+    "email": "vishnusankar@skdegreecollege.com"
   },
   {
     "id": "5",
@@ -52,7 +52,7 @@
     "experience": "20 Years",
     "specialization": "Political Science, Army NCC",
     "image": "/faculty/sanyasi_naidu.jpg",
-    "email": "v.sanyasi@skdegreecollege.edu"
+    "email": "v.sanyasi@skdegreecollege.com"
   },
   {
     "id": "6",
@@ -63,7 +63,7 @@
     "experience": "20 Years",
     "specialization": "Zoology",
     "image": "/faculty/bangaru_naidu.jpg",
-    "email": "bangaru.naidu@skdegreecollege.edu"
+    "email": "bangaru.naidu@skdegreecollege.com"
   },
   {
     "id": "7",
@@ -74,7 +74,7 @@
     "experience": "15 Years",
     "specialization": "Physics",
     "image": "/faculty/gopi.jpg",
-    "email": "gopi@skdegreecollege.edu"
+    "email": "gopi@skdegreecollege.com"
   },
   {
     "id": "8",
@@ -85,7 +85,7 @@
     "experience": "16 Years",
     "specialization": "Botany",
     "image": "/faculty/chiranjeevi.jpg",
-    "email": "chiranjeevi@skdegreecollege.edu"
+    "email": "chiranjeevi@skdegreecollege.com"
   },
   {
     "id": "9",
@@ -96,7 +96,7 @@
     "experience": "16 Years",
     "specialization": "English",
     "image": "/faculty/arjunarao.jpg",
-    "email": "arjunarao@skdegreecollege.edu"
+    "email": "arjunarao@skdegreecollege.com"
   },
   {
     "id": "10",
@@ -107,7 +107,7 @@
     "experience": "13 Years",
     "specialization": "Maths",
     "image": "/faculty/venkatesh.jpg",
-    "email": "venkatesh@skdegreecollege.edu"
+    "email": "venkatesh@skdegreecollege.com"
   },
   {
     "id": "11",
@@ -118,6 +118,6 @@
     "experience": "4 Years",
     "specialization": "Computer Science",
     "image": "/faculty/sravan.jpg",
-    "email": "sravan@skdegreecollege.edu"
+    "email": "sravan@skdegreecollege.com"
   }
 ]

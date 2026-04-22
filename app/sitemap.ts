@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://skdegreecollege.edu.in';
+  const baseUrl = 'https://skdegreecollege.com';
 
   // In a real app, you would fetch dynamic routes from your CMS or DB here
   // For example, fetching all courses, news articles, etc.
