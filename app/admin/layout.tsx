@@ -200,12 +200,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3">System Health</p>
                <button 
                 onClick={async () => {
+                  const projectUrl = (supabase as any).supabaseUrl || "Unknown";
+                  const projectId = projectUrl.split('.')[0].split('//')[1] || "Unknown";
+                  
                   const { data, error } = await supabase.storage.listBuckets();
                   if (error) {
-                    alert("Storage Error: " + error.message);
+                    alert(`🚨 CONNECTION ERROR\nProject ID: ${projectId}\nError: ${error.message}`);
                   } else {
                     const names = data.map(b => b.name);
-                    alert("✅ Found Buckets: " + (names.join(", ") || "NONE"));
+                    const bucketList = names.length > 0 ? names.join(", ") : "NONE FOUND";
+                    alert(`✅ STORAGE CONNECTED\nProject ID: ${projectId}\nFound Buckets: ${bucketList}`);
+                    
                     if (!names.includes('images')) alert("❌ Missing bucket: 'images'");
                     if (!names.includes('notices')) alert("❌ Missing bucket: 'notices'");
                   }
