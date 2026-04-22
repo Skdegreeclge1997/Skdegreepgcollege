@@ -5,7 +5,11 @@
   --color-academic-gold: #C5A028;
   --color-academic-gold-dark: #A68010;
   
-  --font-inter: "Inter", sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+  --font-display: var(--font-display), "Playfair Display", serif;
+  --font-body: var(--font-body), "DM Sans", sans-serif;
+  
+  --color-cream: #F9F5EE;
 
   --animate-marquee: marquee var(--duration, 40s) linear infinite;
   --animate-marquee-reverse: marquee-reverse var(--duration, 40s) linear infinite;
@@ -74,8 +78,7 @@ h1, h2, h3, h4, h5, h6 {
   }
   /* Full-Page Snap Utilities */
   .snap-container {
-    height: 100dvh;
-    overflow-y: auto;
+    width: 100%;
     scroll-behavior: smooth;
   }
   
@@ -90,16 +93,23 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
   }
 
-  /* Only enable aggressive snapping on tablets and desktops */
+  /* Global Snap Configuration */
   @media (min-width: 768px) {
-    .snap-container {
-      scroll-snap-type: y mandatory;
+    html {
+      scroll-snap-type: y proximity;
+      scroll-behavior: smooth;
     }
+    
     .snap-section {
       height: 100dvh;
       scroll-snap-align: start;
-      scroll-snap-stop: always;
+      scroll-snap-stop: normal;
     }
+  }
+
+  .snap-container {
+    width: 100%;
+    overflow: visible; /* Changed from overflow-y: auto */
   }
 
   /* Utility for internal scrolling without scrollbars */
@@ -118,5 +128,28 @@ h1, h2, h3, h4, h5, h6 {
   @keyframes reveal {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HTML Template Styles */
+  .testimonial-card {
+    @apply bg-cream rounded-3xl p-8 relative overflow-hidden transition-all duration-300 hover:shadow-xl border border-academic-gold/10;
+  }
+  .testimonial-card::before {
+    content: '"';
+    @apply absolute top-4 left-6 text-8xl text-academic-gold opacity-10 font-display font-bold;
+  }
+  
+  .notice-date-box {
+    @apply bg-academic-navy text-white rounded-xl p-3 text-center min-w-[65px] flex flex-col justify-center shadow-lg;
+  }
+  .notice-date-day {
+    @apply text-2xl font-display font-bold text-academic-gold leading-none;
+  }
+  .notice-date-month {
+    @apply text-[10px] uppercase font-bold text-white/60 tracking-widest mt-1;
+  }
+
+  .news-list-item {
+    @apply border-l-4 border-slate-200 pl-6 py-4 transition-all hover:border-academic-gold cursor-pointer bg-white/50 hover:bg-white;
   }
 }

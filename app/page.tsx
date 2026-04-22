@@ -13,6 +13,7 @@ import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
 import YouTubeFacade from '@/components/YouTubeFacade';
 import Footer from '@/components/Footer';
+import TestimonialSection from '@/components/TestimonialSection';
 import dynamic from 'next/dynamic';
 
 const ThreeBackground = dynamic(() => import('@/components/Visuals').then(mod => mod.ThreeBackground), { 
@@ -71,7 +72,7 @@ export default function LandingPage() {
     <main className="snap-container bg-academic-navy">
       {/* 1. Hero Section */}
       <section 
-        className="snap-section mesh-gradient items-center justify-center pt-0 relative overflow-hidden"
+        className="snap-section mesh-gradient items-center justify-center relative overflow-hidden"
       >
         <ThreeBackground />
         <div className="absolute inset-0 z-0">
@@ -135,7 +136,7 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
         variants={fadeIn}
-        className="snap-section bg-white justify-center pt-0"
+        className="snap-section bg-white justify-center"
       >
         <div className="container mx-auto px-4 py-8">
           <div className="text-center mb-10">
@@ -305,15 +306,15 @@ export default function LandingPage() {
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-slate-50 overflow-y-auto no-scrollbar"
+        className="bg-slate-50 py-24"
       >
         <div className="container mx-auto px-4 pt-4 pb-20">
           <div className="flex flex-col md:flex-row items-end justify-between mb-8 gap-6">
             <div className="max-w-2xl">
               <div className="mb-4"></div>
-              <h2 className="text-4xl md:text-5xl font-black text-academic-navy leading-tight">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-academic-navy leading-tight">
                 Latest Events & <span className="text-academic-gold">Activities</span>
               </h2>
               <p className="mt-4 text-slate-600 font-medium text-sm md:text-base">
@@ -341,11 +342,11 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-slate-50 overflow-y-auto no-scrollbar"
+        className="bg-slate-50 py-24 border-t border-slate-100"
       >
         <div className="container mx-auto px-4 pt-4 pb-20">
           <div className="flex items-center justify-between mb-8">
-             <h2 className="text-3xl font-black text-academic-navy">Campus Gallery</h2>
+             <h2 className="text-3xl font-display font-bold text-academic-navy">Campus Gallery</h2>
              <Link 
                 href="/gallery" 
                 aria-label="View All Campus Gallery Photos"
@@ -396,11 +397,11 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-slate-100 overflow-y-auto no-scrollbar"
+        className="bg-slate-100 py-24"
       >
         <div className="container mx-auto px-4 pt-4 pb-20">
           <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
-             <h2 className="text-3xl font-black text-academic-navy text-center md:text-left">Video Gallery</h2>
+             <h2 className="text-3xl font-display font-bold text-academic-navy text-center md:text-left">Video Gallery</h2>
              <Link 
                 href="/gallery" 
                 aria-label="Watch All Campus Videos"
@@ -443,17 +444,35 @@ export default function LandingPage() {
         </div>
       </motion.section>
 
+      {/* 5C. Testimonials Section */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeIn}
+        className="bg-white py-24"
+      >
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-academic-gold text-xs font-black uppercase tracking-[0.3em] mb-4">Student Voices</div>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-academic-navy mb-6">What Our Alumni Say</h2>
+            <p className="text-slate-500 text-sm md:text-base">Thousands of graduates are out there making a difference. Here&apos;s what some of them have to say about their journey.</p>
+          </div>
+          <TestimonialSection />
+        </div>
+      </motion.section>
+
       {/* 6. Notice Board + CTA */}
       <motion.section 
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-white"
+        className="bg-white py-24"
       >
         <div className="container mx-auto px-4 pt-4 pb-12">
           <div className="flex items-center justify-between mb-8">
-             <h2 className="text-3xl font-black text-academic-navy">Notice Board</h2>
+             <h2 className="text-3xl font-display font-bold text-academic-navy">Notice Board</h2>
              <Link 
                 href="/notices" 
                 aria-label="View All Official Notices and Board Updates"
@@ -482,7 +501,7 @@ export default function LandingPage() {
       </motion.section>
 
       {/* 7. CTA + Footer Section */}
-      <section className="snap-section bg-slate-50 !h-auto !min-h-screen flex flex-col justify-between pt-20">
+      <section className="bg-slate-50 py-24 flex flex-col justify-between">
         <div className="container mx-auto px-4 mb-20">
            <div className="max-w-4xl mx-auto bg-white border border-slate-200 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />

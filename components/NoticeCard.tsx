@@ -22,81 +22,48 @@ const getCategoryStyles = (category: NoticeCategory) => {
 };
 
 export default function NoticeCard({ notice }: NoticeCardProps) {
-  return (
-    <div className="group relative flex flex-col h-full bg-white border border-academic-navy/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-      {/* Pinned Indicator */}
-      {notice.isPinned && (
-        <div className="absolute top-3 right-3 z-10 text-academic-gold animate-pulse" aria-hidden="true">
-          <Pin size={18} fill="currentColor" />
-        </div>
-      )}
+  const date = new Date(notice.date);
+  const day = date.getDate();
+  const month = date.toLocaleDateString('en-IN', { month: 'short' });
 
-      <div className="p-6 flex flex-col h-full">
-        <div className="flex items-center gap-2 mb-4">
-          <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full ${getCategoryStyles(notice.category)}`}>
+  return (
+    <div className="group flex items-start gap-5 p-5 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md">
+      <div className="notice-date-box">
+        <span className="notice-date-day">{day}</span>
+        <span className="notice-date-month">{month}</span>
+      </div>
+
+      <div className="flex-grow min-w-0">
+        <div className="flex items-center gap-2 mb-1.5">
+          <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${getCategoryStyles(notice.category)}`}>
             {notice.category}
           </span>
-          <div className="flex items-center gap-1 text-slate-600 text-xs font-medium" aria-hidden="true">
-            <Calendar size={14} />
-            <span>{new Date(notice.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-          </div>
+          {notice.isPinned && (
+            <Pin size={12} className="text-academic-gold fill-current" />
+          )}
         </div>
 
-        <h3 className="text-xl font-bold text-academic-navy mb-3 leading-snug group-hover:text-academic-gold transition-colors duration-300">
+        <h3 className="text-sm md:text-base font-bold text-academic-navy leading-snug group-hover:text-academic-gold transition-colors duration-300 line-clamp-2">
           {notice.title}
+          {notice.isPinned && <span className="new-badge ml-2">URGENT</span>}
         </h3>
 
-        <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-grow">
-          {notice.content}
-        </p>
-
-        {/* Attachments */}
-        {(notice.image_url || notice.pdf_url) && (
-          <div className="mb-6 space-y-3">
-            {notice.image_url && (
-              <div className="relative w-full h-32 rounded-lg overflow-hidden border border-slate-100">
-                <img 
-                  src={notice.image_url} 
-                  alt="Notice attachment" 
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" 
-                />
-              </div>
-            )}
-            {notice.pdf_url && (
-              <a 
-                href={notice.pdf_url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-academic-navy hover:bg-academic-gold hover:border-academic-gold transition-all"
-              >
-                <FileText size={14} />
-                Download PDF Document
-              </a>
-            )}
-          </div>
-        )}
-
-        <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between text-academic-navy font-semibold text-sm">
-          {notice.pdf_url ? (
-            <a 
-              href={notice.pdf_url} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-300"
-            >
-              View Document <ArrowRight size={16} aria-hidden="true" />
-            </a>
-          ) : (
-            <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-300">
-              Read Full Notice <ArrowRight size={16} aria-hidden="true" />
-            </span>
+        <div className="flex items-center gap-3 mt-2">
+          <p className="text-[11px] text-slate-500 font-medium truncate">
+            {notice.department || 'Academic Section'}
+          </p>
+          {(notice.image_url || notice.pdf_url) && (
+            <div className="flex items-center gap-1 text-academic-gold">
+              <FileText size={10} />
+              <span className="text-[9px] font-bold uppercase tracking-tighter">Attachment</span>
+            </div>
           )}
-          <Bell size={18} className="text-academic-gold/50 group-hover:text-academic-gold transition-colors duration-300" aria-hidden="true" />
         </div>
       </div>
 
-      {/* Premium Accent Line */}
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-academic-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+      <div className="self-center text-slate-300 group-hover:text-academic-gold group-hover:translate-x-1 transition-all">
+        <ArrowRight size={20} />
+      </div>
     </div>
   );
 }
