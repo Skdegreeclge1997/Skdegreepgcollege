@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { X, Maximize2, ZoomIn } from 'lucide-react';
+import { X, ZoomIn } from 'lucide-react';
 import { GalleryItem } from '@/lib/types';
 
 interface GalleryViewProps {

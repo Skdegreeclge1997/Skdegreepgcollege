@@ -123,12 +123,6 @@ export default function ParticleCanvas({
       });
     }
 
-    // Subtle connecting lines between nearby particles
-    const linesMaterial = new THREE.LineBasicMaterial({
-      color: accentColor,
-      transparent: true,
-      opacity: 0.06,
-    });
 
     // Mouse interaction
     const mouse = new THREE.Vector2(0, 0);

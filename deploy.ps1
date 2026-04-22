@@ -40,6 +40,6 @@ Write-Host "[5/5] Pushed to GitHub. Vercel will auto-deploy." -ForegroundColor G
 
 Write-Host "===============================================" -ForegroundColor Green
 Write-Host "DEPLOYMENT TRIGGERED!" -ForegroundColor Green
-Write-Host "Check status at: https://vercel.com/janakirao966-7597s-projects/sk-degree-college" -ForegroundColor Cyan
-Write-Host "Live site: https://sk-degree-college.vercel.app" -ForegroundColor Cyan
+Write-Host "Check status at: https://vercel.com/YOUR_TEAM/YOUR_PROJECT" -ForegroundColor Cyan
+Write-Host "Live site: https://skdegreecollege.edu.in" -ForegroundColor Cyan
 Write-Host "===============================================" -ForegroundColor Green

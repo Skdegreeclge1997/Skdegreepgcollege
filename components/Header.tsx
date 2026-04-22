@@ -11,7 +11,7 @@ import Image from 'next/image';
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useAuth();
+  useAuth();
 
   // Keyboard shortcut for search
   useEffect(() => {

@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2, Newspaper } from 'lucide-react';
+import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import NoticeCard from '@/components/NoticeCard';
 import noticesData from '@/lib/data/notices.json';
@@ -319,7 +319,6 @@ export default function LandingPage() {
               className="flex gap-6 w-max animate-marquee [--duration:50s] [--gap:1.5rem] hover:[animation-play-state:paused]"
             >
               {[...photoGallery, ...photoGallery, ...photoGallery].map((item, i) => {
-                const isVideo = false;
                 const thumbnailUrl = item.url;
 
                 return (

@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏫 S.K. Degree & P.G. College Official Portal
 
-## Getting Started
+A modern, high-performance web portal for **S.K. Degree & P.G. College**, Vizianagaram. Built with Next.js, Tailwind CSS, and Supabase to provide a seamless experience for students, faculty, and administration.
 
-First, run the development server:
+![Production Preview](https://skdegreecollege.edu.in/opengraph-image.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Live Demo
+**Production URL:** [https://skdegreecollege.edu.in](https://skdegreecollege.edu.in)
+
+---
+
+## 🛠️ Tech Stack
+
+*   **Framework:** [Next.js 16 (App Router)](https://nextjs.org/)
+*   **Language:** [TypeScript](https://www.typescriptlang.org/)
+*   **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
+*   **Animations:** [Framer Motion](https://www.framer.com/motion/) & [Three.js](https://threejs.org/)
+*   **Database & Auth:** [Supabase](https://supabase.com/)
+*   **Forms:** [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
+*   **Deployment:** [Vercel](https://vercel.com/)
+
+---
+
+## ✨ Key Features
+
+- **Dynamic Notice Board:** Real-time updates for students and staff.
+- **Online Admissions:** Integrated inquiry and application tracking system.
+- **Campus Gallery:** Interactive photo and video gallery.
+- **Admin Dashboard:** Secure panel for managing notices, admissions, and faculty.
+- **Responsive Design:** Optimized for mobile, tablet, and desktop viewing.
+- **SEO Optimized:** High Lighthouse scores and structured metadata for search engines.
+
+---
+
+## 📦 Installation & Local Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/sk-degree-college.git
+    cd sk-degree-college
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure Environment Variables:**
+    Create a `.env.local` file in the root directory and add your Supabase credentials:
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+    SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+    ```
+
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🏗️ Project Structure
+
+```text
+├── app/              # Next.js App Router routes & pages
+├── components/       # Reusable React components
+├── lib/              # Utilities, types, and database configurations
+├── public/           # Static assets (images, icons)
+├── supabase/         # Supabase migrations and schema (optional)
+└── .planning/        # Project roadmap and deployment plans
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 Deployment Guide
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is optimized for deployment on **Vercel**.
 
-## Learn More
+1.  Push your code to a GitHub repository.
+2.  Import the project into Vercel.
+3.  Add the environment variables in the Vercel Dashboard.
+4.  Connect your custom domain (`skdegreecollege.edu.in`).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
+This project is proprietary. All rights reserved by S.K. Degree & P.G. College.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👨‍💻 Developed By
+*Arunodaya Educational Society - IT Team*
