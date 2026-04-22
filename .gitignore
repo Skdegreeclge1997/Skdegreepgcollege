@@ -57,4 +57,12 @@ next-env.d.ts
 .cache/
 *.pem
 .eslintcache
-.stylelintcache
+# ---- Project Management & Handoff ----
+CLIENT_HANDOFF.md
+FINAL_DEPLOYMENT_PLAN.md
+deploy.ps1
+.planning/
+.code-review-graph/
+AGENTS.md
+CLAUDE.md
+naveenb.html
