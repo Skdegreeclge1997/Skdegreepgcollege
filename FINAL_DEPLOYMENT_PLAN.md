@@ -302,7 +302,7 @@ export default function RootLayout({ children }) {
 - [ ] Run Lighthouse audit: score > 80 on Performance, Accessibility, SEO
   ```bash
   # Run locally
-  npx lighthouse https://yourapp.vercel.app --view
+  npx lighthouse https://yourapp.pages.dev --view
   ```
 
 ### SEO & Metadata
@@ -334,8 +334,7 @@ git push origin main
 ```
 GitHub Repository:  https://github.com/your-username/project-name
 Live URL:           https://yourclientsite.com
-Vercel Dashboard:   https://vercel.com/your-team/project
-Supabase Dashboard: https://app.supabase.com/project/xxxx
+Cloudflare Dashboard: https://dash.cloudflare.com/
 Admin Login:        admin@client.com / [initial password]
 ```
 
@@ -428,7 +427,7 @@ Admin Login:        admin@client.com / [initial password]
 [ ] 7. Final code cleanup (remove console.logs, test data)
 [ ] 8. Add proper .gitignore and push to GitHub
 [ ] 9. Set all env variables in Vercel
-[ ] 10. Deploy on Vercel and connect domain
+[ ] 10. Deploy on Cloudflare and connect domain
 [ ] 11. Run Lighthouse audit — fix issues
 [ ] 12. Test all flows on production URL
 

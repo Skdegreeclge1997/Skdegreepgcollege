@@ -81,6 +81,10 @@ export default function Footer() {
 
         <div className="mt-16 pt-8 border-t border-white/5 text-center text-xs text-slate-400">
           <p>© {new Date().getFullYear()} S.K. Degree & P.G. College (17950). All rights reserved.</p>
+          <div className="mt-4 flex justify-center space-x-6">
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>
