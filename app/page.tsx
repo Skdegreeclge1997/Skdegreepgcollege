@@ -37,6 +37,7 @@ export default function LandingPage() {
   const [photoGallery, setPhotoGallery] = React.useState<GalleryItem[]>(initialPhotoGallery);
   const [videoGallery, setVideoGallery] = React.useState<GalleryItem[]>(initialVideoGallery);
   const [recentNotices, setRecentNotices] = React.useState<Notice[]>(initialNotices);
+  const [activeTab, setActiveTab] = React.useState<'text' | 'video'>('text');
 
   React.useEffect(() => {
     const fetchGallery = async () => {
@@ -342,56 +343,74 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="bg-slate-50 py-24 border-t border-slate-100"
+        className="bg-slate-50 py-24 border-t border-slate-100 overflow-hidden"
       >
-        <div className="container mx-auto px-4 pt-4 pb-20">
-          <div className="flex items-center justify-between mb-8">
-             <h2 className="text-3xl font-display font-bold text-academic-navy">Campus Gallery</h2>
+        <div className="container mx-auto px-4 mb-12">
+          <div className="flex items-center justify-between">
+             <div className="space-y-1">
+                <h2 className="text-3xl md:text-4xl font-display font-black text-academic-navy">Campus Gallery</h2>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">A Visual Journey Through S.K. Degree College</p>
+             </div>
              <Link 
                 href="/gallery" 
                 aria-label="View All Campus Gallery Photos"
-                className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
+                className="px-6 py-3 bg-white border border-slate-200 text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-academic-gold hover:text-white transition-all shadow-sm"
              >
                 View All <ArrowRight size={16} />
              </Link>
           </div>
-          <div className="relative overflow-hidden py-4 -mx-4 px-4">
-            <div 
-              className="flex gap-6 w-max animate-marquee [--duration:50s] [--gap:1.5rem] hover:[animation-play-state:paused]"
-            >
-              {[...photoGallery, ...photoGallery, ...photoGallery].map((item, i) => {
-                const thumbnailUrl = item.url;
+        </div>
 
-                return (
-                <Link 
-                  href="/gallery" 
-                  key={`${item.id}-${i}`} 
-                  className="w-[80vw] sm:w-[350px] aspect-[4/3] shrink-0 relative rounded-3xl overflow-hidden shadow-md group block"
-                >
-                  <Image 
-                    src={thumbnailUrl} 
-                    alt={item.caption} 
-                    fill
-                    sizes="(max-width: 768px) 80vw, 350px"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                  />
-                  
-                  <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 z-20">
-                     <p className="text-white font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{item.caption}</p>
-                     <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest mt-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{item.category}</span>
-                  </div>
-                </Link>
-              )})}
+        <div className="space-y-6">
+          {/* Row 1: Sliding Left */}
+          <div className="relative flex overflow-hidden py-2">
+            <div className="flex gap-6 animate-marquee [--duration:60s] [--gap:1.5rem] hover:[animation-play-state:paused]">
+              {[...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2))].map((item, i) => (
+                <div key={`row1-${item.id}-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 relative rounded-[2rem] overflow-hidden shadow-lg group">
+                   <Image 
+                     src={item.url} 
+                     alt={item.caption} 
+                     fill 
+                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+                      <p className="text-white font-bold text-sm">{item.caption}</p>
+                      <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest">{item.category}</span>
+                   </div>
+                </div>
+              ))}
             </div>
-            
-            {/* Edge Gradients */}
-            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-30 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-30 pointer-events-none" />
+            {/* Gradient Overlays for smooth edges */}
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10" />
+            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10" />
+          </div>
+
+          {/* Row 2: Sliding Right (Reverse) */}
+          <div className="relative flex overflow-hidden py-2">
+            <div className="flex gap-6 animate-marquee-reverse [--duration:50s] [--gap:1.5rem] hover:[animation-play-state:paused]">
+              {[...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2))].map((item, i) => (
+                <div key={`row2-${item.id}-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 relative rounded-[2rem] overflow-hidden shadow-lg group">
+                   <Image 
+                     src={item.url} 
+                     alt={item.caption} 
+                     fill 
+                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+                      <p className="text-white font-bold text-sm">{item.caption}</p>
+                      <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest">{item.category}</span>
+                   </div>
+                </div>
+              ))}
+            </div>
+            {/* Gradient Overlays for smooth edges */}
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10" />
+            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10" />
           </div>
         </div>
       </motion.section>
 
-      {/* 5B. Video Section */}
+      {/* 5B. Video Gallery Section (Improved Style) */}
       <motion.section 
         initial="hidden"
         whileInView="visible"
@@ -399,19 +418,21 @@ export default function LandingPage() {
         variants={fadeIn}
         className="bg-slate-100 py-24"
       >
-        <div className="container mx-auto px-4 pt-4 pb-20">
-          <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
-             <h2 className="text-3xl font-display font-bold text-academic-navy text-center md:text-left">Video Gallery</h2>
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4">
+             <div>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-academic-navy">Campus Life Videos</h2>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Experience S.K. Degree College in Motion</p>
+             </div>
              <Link 
                 href="/gallery" 
-                aria-label="Watch All Campus Videos"
-                className="text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-widest"
+                className="px-6 py-3 bg-white border border-slate-200 text-academic-gold font-bold flex items-center gap-2 text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-academic-gold hover:text-white transition-all shadow-sm"
              >
                 Watch All <ArrowRight size={16} />
              </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {videoGallery.length > 0 ? videoGallery.slice(0, 3).map((item, i) => {
               const getYoutubeId = (url: string) => {
                 const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -423,10 +444,23 @@ export default function LandingPage() {
               return (
                 <div 
                   key={`video-${item.id}-${i}`} 
-                  className="w-full aspect-video relative rounded-3xl overflow-hidden shadow-lg border-4 border-white bg-black"
+                  className="group relative w-full aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white bg-black transform transition-all duration-500 hover:-translate-y-2 hover:shadow-academic-navy/20"
                 >
                   {videoId ? (
-                    <YouTubeFacade videoId={videoId} title={item.caption} />
+                    <>
+                       <YouTubeFacade videoId={videoId} title={item.caption} />
+                       {/* Custom Play Button Overlay */}
+                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:scale-110 transition-transform duration-500">
+                          <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 shadow-2xl">
+                             <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[12px] border-l-white border-b-[8px] border-b-transparent ml-1" />
+                          </div>
+                       </div>
+                       <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
+                          <span className="px-3 py-1 bg-academic-gold text-academic-navy text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg">
+                             {item.caption}
+                          </span>
+                       </div>
+                    </>
                   ) : (
                     <div className="flex items-center justify-center h-full bg-slate-800 text-white">
                       <p>Invalid Video URL</p>
@@ -435,7 +469,7 @@ export default function LandingPage() {
                 </div>
               )
             }) : (
-              <div className="col-span-full aspect-video flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50">
+              <div className="col-span-full aspect-video flex flex-col items-center justify-center rounded-[2.5rem] border-2 border-dashed border-slate-300 bg-slate-50">
                 <p className="text-slate-600 font-bold mb-2">No videos available</p>
                 <p className="text-slate-600 text-sm">Add videos from the admin panel.</p>
               </div>
