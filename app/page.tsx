@@ -481,20 +481,44 @@ export default function LandingPage() {
                 View All <ArrowRight size={16} />
              </Link>
           </div>
-          <div className="relative overflow-hidden py-4 -mx-4 px-4">
-            <div 
-              className="flex gap-6 w-max animate-marquee [--duration:40s] [--gap:1.5rem] hover:[animation-play-state:paused]"
-            >
-              {[...recentNotices, ...recentNotices, ...recentNotices].map((notice, i) => (
-                <div key={`${notice.id}-${i}`} className="w-[85vw] max-w-[350px] shrink-0">
-                  <NoticeCard notice={notice} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Academic Notices Column */}
+            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+              <div className="bg-academic-navy text-white px-6 py-4 flex justify-between items-center">
+                <span className="font-display font-bold">Academic Notices</span>
+                <span className="text-[10px] text-white/50 uppercase tracking-widest">Recent Updates</span>
+              </div>
+              <div className="h-[400px] relative overflow-hidden bg-slate-50">
+                <div className="animate-marquee-vertical hover:[animation-play-state:paused] flex flex-col gap-4 p-4 [--duration:15s]">
+                  {[...recentNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.isPinned), ...recentNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.isPinned)].map((notice, i) => (
+                    <Link key={`${notice.id}-${i}`} href={`/notices#${notice.id}`}>
+                      <NoticeCard notice={notice} />
+                    </Link>
+                  ))}
                 </div>
-              ))}
+                <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-slate-50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-slate-50 to-transparent z-10 pointer-events-none" />
+              </div>
             </div>
-            
-            {/* Edge Gradients */}
-            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+            {/* Admission & Events Column */}
+            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+              <div className="bg-academic-navy text-white px-6 py-4 flex justify-between items-center">
+                <span className="font-display font-bold">Admission & Events</span>
+                <span className="text-[10px] text-white/50 uppercase tracking-widest">Campus Life</span>
+              </div>
+              <div className="h-[400px] relative overflow-hidden bg-slate-50">
+                <div className="animate-marquee-vertical hover:[animation-play-state:paused] flex flex-col gap-4 p-4 [--duration:20s]">
+                  {[...recentNotices.filter(n => ['Admission', 'Event', 'Holiday'].includes(n.category)), ...recentNotices.filter(n => ['Admission', 'Event', 'Holiday'].includes(n.category))].map((notice, i) => (
+                    <Link key={`${notice.id}-${i}`} href={`/notices#${notice.id}`}>
+                      <NoticeCard notice={notice} />
+                    </Link>
+                  ))}
+                </div>
+                <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-slate-50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-slate-50 to-transparent z-10 pointer-events-none" />
+              </div>
+            </div>
           </div>
         </div>
 

@@ -194,6 +194,28 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </Link>
               );
             })}
+
+            {/* Storage Debug Section */}
+            <div className="mt-8 pt-6 border-t border-white/5 px-2">
+               <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3">System Health</p>
+               <button 
+                onClick={async () => {
+                  const { data, error } = await supabase.storage.listBuckets();
+                  if (error) {
+                    alert("Storage Error: " + error.message);
+                  } else {
+                    const names = data.map(b => b.name);
+                    alert("✅ Found Buckets: " + (names.join(", ") || "NONE"));
+                    if (!names.includes('images')) alert("❌ Missing bucket: 'images'");
+                    if (!names.includes('notices')) alert("❌ Missing bucket: 'notices'");
+                  }
+                }}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[11px] font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+               >
+                 <ShieldCheck size={14} className="text-slate-500" />
+                 Check Storage Status
+               </button>
+            </div>
           </nav>
         </div>
       </aside>

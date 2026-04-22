@@ -45,7 +45,7 @@ export default function NoticeManager() {
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
-      const bucket = type === 'pdf' ? 'documents' : 'images';
+      const bucket = type === 'pdf' ? 'notices' : 'images';
       const filePath = `notices/${fileName}`;
       const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, file);
       if (uploadError) throw uploadError;

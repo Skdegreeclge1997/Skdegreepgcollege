@@ -27,7 +27,7 @@ export default function NoticeCard({ notice }: NoticeCardProps) {
   const month = date.toLocaleDateString('en-IN', { month: 'short' });
 
   return (
-    <div className="group flex items-start gap-5 p-5 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md">
+    <div id={notice.id} className="group flex items-start gap-5 p-5 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md">
       <div className="notice-date-box">
         <span className="notice-date-day">{day}</span>
         <span className="notice-date-month">{month}</span>

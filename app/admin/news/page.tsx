@@ -79,7 +79,7 @@ export default function NewsManager() {
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
-      const bucket = type === 'image' ? 'images' : 'documents';
+      const bucket = type === 'image' ? 'images' : 'notices';
       const filePath = `news/${fileName}`;
  
       const { error: uploadError } = await supabase.storage
