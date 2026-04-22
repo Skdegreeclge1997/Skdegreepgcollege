@@ -8,7 +8,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 const inter = Inter({ subsets: ["latin"], display: 'swap' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://skdegreecollege.edu.in'),
+  metadataBase: new URL('https://skdegreecollege.com'),
   title: {
     default: 'S.K. Degree & P.G. College | Vizianagaram',
     template: '%s | S.K. Degree College'
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'S.K. Degree & P.G. College | Vizianagaram',
     description: 'Empowering students through academic excellence. Admissions open for Honours programs.',
-    url: 'https://skdegreecollege.edu.in',
+    url: 'https://skdegreecollege.com',
     siteName: 'S.K. Degree & P.G. College',
     images: [
       {
