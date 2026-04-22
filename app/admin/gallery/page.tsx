@@ -13,7 +13,9 @@ import {
   Camera, 
   Save,
   Grid,
-  Calendar
+  Calendar,
+  CheckCircle2,
+  AlertCircle
 } from 'lucide-react';
 import Image from 'next/image';
  
@@ -23,13 +25,22 @@ interface GalleryImage {
   caption: string;
   category: string;
 }
+
+interface PendingUpload {
+  id: string;
+  file: File;
+  preview: string;
+  caption: string;
+  category: string;
+  status: 'pending' | 'uploading' | 'success' | 'error';
+  error?: string;
+}
  
 export default function GalleryManager() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
-  const [newImage, setNewImage] = useState<Partial<GalleryImage>>({ caption: '', category: 'Campus' });
-  const [uploading, setUploading] = useState(false);
+  const [pendingUploads, setPendingUploads] = useState<PendingUpload[]>([]);
   const [isSaving, setIsSaving] = useState(false);
  
   const fetchImages = React.useCallback(async () => {
@@ -45,75 +56,107 @@ export default function GalleryManager() {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchImages();
-    }, 0);
-    return () => clearTimeout(timer);
+    fetchImages();
   }, [fetchImages]);
  
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
- 
-    setUploading(true);
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `gallery/${fileName}`;
- 
-      const { error: uploadError } = await supabase.storage
-        .from('images')
-        .upload(filePath, file);
- 
-      if (uploadError) throw uploadError;
- 
-      const { data: { publicUrl } } = supabase.storage
-        .from('images')
-        .getPublicUrl(filePath);
- 
-      setNewImage(prev => ({ ...prev, url: publicUrl }));
-    } catch (error: unknown) {
-      const err = error as { message: string };
-      alert('Error uploading image: ' + err.message);
-    } finally {
-      setUploading(false);
-    }
+  const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    const newPending = files.map(file => ({
+      id: Math.random().toString(36).slice(2),
+      file,
+      preview: URL.createObjectURL(file),
+      caption: file.name.split('.')[0], // Default caption as filename
+      category: 'Campus',
+      status: 'pending' as const
+    }));
+
+    setPendingUploads(prev => [...prev, ...newPending]);
+    setIsAdding(true);
+    e.target.value = ''; // Reset input
   };
- 
-  const handleSave = async () => {
-    if (!newImage.url || !newImage.caption) {
-      alert('Image and Caption are required');
-      return;
-    }
- 
+
+  const removePending = (id: string) => {
+    setPendingUploads(prev => {
+      const filtered = prev.filter(p => p.id !== id);
+      const item = prev.find(p => p.id === id);
+      if (item) URL.revokeObjectURL(item.preview);
+      return filtered;
+    });
+  };
+
+  const updatePending = (id: string, updates: Partial<PendingUpload>) => {
+    setPendingUploads(prev => prev.map(p => p.id === id ? { ...p, ...updates } : p));
+  };
+  
+  const handleSaveAll = async () => {
+    if (pendingUploads.length === 0) return;
     setIsSaving(true);
+
     try {
-      const { error } = await supabase
-        .from('gallery')
-        .insert([newImage]);
-      
-      if (error) throw error;
-      
-      await fetchImages();
-      setIsAdding(false);
-      setNewImage({ caption: '', category: 'Campus' });
-    } catch (error: unknown) {
-      const err = error as { message: string };
-      alert('Error saving to gallery: ' + err.message);
+      for (const upload of pendingUploads) {
+        if (upload.status === 'success') continue;
+
+        updatePending(upload.id, { status: 'uploading' });
+
+        try {
+          // 1. Upload to Storage
+          const fileExt = upload.file.name.split('.').pop();
+          const fileName = `${Math.random()}.${fileExt}`;
+          const filePath = `gallery/${fileName}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from('images')
+            .upload(filePath, upload.file);
+
+          if (uploadError) throw uploadError;
+
+          const { data: { publicUrl } } = supabase.storage
+            .from('images')
+            .getPublicUrl(filePath);
+
+          // 2. Save to Database
+          const { error: dbError } = await supabase
+            .from('gallery')
+            .insert([{
+              url: publicUrl,
+              caption: upload.caption,
+              category: upload.category
+            }]);
+
+          if (dbError) throw dbError;
+
+          updatePending(upload.id, { status: 'success' });
+        } catch (err: any) {
+          updatePending(upload.id, { status: 'error', error: err.message });
+        }
+      }
+
+      // Check if all succeeded
+      const hasErrors = pendingUploads.some(p => p.status === 'error');
+      if (!hasErrors) {
+        setTimeout(() => {
+          setIsAdding(false);
+          setPendingUploads([]);
+          fetchImages();
+        }, 1000);
+      } else {
+        fetchImages();
+      }
     } finally {
       setIsSaving(false);
     }
   };
- 
+
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to remove this image from the gallery?')) return;
- 
+
     try {
       await supabase.from('gallery').delete().eq('id', id);
       await fetchImages();
-    } catch (error: unknown) {
-      const err = error as { message: string };
-      alert('Error deleting: ' + err.message);
+    } catch (error: any) {
+      alert('Error deleting: ' + error.message);
     }
   };
  
@@ -130,15 +173,13 @@ export default function GalleryManager() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-black text-academic-navy tracking-tight">Photo Gallery Manager</h1>
-          <p className="text-slate-500 font-medium">Curate the visual legacy of S.K. Degree College.</p>
+          <p className="text-slate-500 font-medium">Bulk upload and manage campus imagery.</p>
         </div>
-        <button 
-          onClick={() => setIsAdding(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:scale-95"
-        >
+        <label className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:scale-95 cursor-pointer">
           <Camera size={20} />
-          Upload New Photo
-        </button>
+          Bulk Upload Photos
+          <input type="file" multiple accept="image/*" className="hidden" onChange={handleFilesSelected} />
+        </label>
       </div>
  
       {isAdding && (
@@ -146,78 +187,92 @@ export default function GalleryManager() {
             <div className="flex items-center justify-between mb-8">
                <h2 className="text-xl font-black text-academic-navy flex items-center gap-3">
                   <UploadCloud className="text-blue-500" />
-                  Media Upload
+                  Batch Upload Queue ({pendingUploads.length} items)
                </h2>
-               <button onClick={() => setIsAdding(false)} className="p-2 hover:bg-slate-50 rounded-full transition-all">
-                  <X size={20} className="text-slate-400" />
-               </button>
+               <div className="flex gap-3">
+                  <button 
+                    onClick={handleSaveAll}
+                    disabled={isSaving || pendingUploads.length === 0}
+                    className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white font-black rounded-full hover:bg-blue-700 disabled:opacity-50 transition-all shadow-lg shadow-blue-500/20"
+                  >
+                    {isSaving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
+                    Save All
+                  </button>
+                  <button onClick={() => { setIsAdding(false); setPendingUploads([]); }} className="p-2 hover:bg-slate-50 rounded-full transition-all">
+                    <X size={20} className="text-slate-400" />
+                  </button>
+               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-               {/* Media Area */}
-               <div className="relative aspect-[4/3] bg-slate-50 rounded-[2rem] border-4 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 overflow-hidden group/upload">
-                    {newImage.url ? (
-                       <>
-                          <Image src={newImage.url} alt="Preview" fill className="object-cover" />
-                          <button 
-                             onClick={() => setNewImage(p => ({...p, url: undefined}))}
-                             className="absolute top-4 right-4 p-3 bg-red-500 text-white rounded-2xl shadow-lg hover:bg-red-600 transition-colors"
-                          >
-                             <Trash2 size={20} />
-                          </button>
-                       </>
-                    ) : (
-                       <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100 transition-all">
-                          {uploading ? <Loader2 className="animate-spin text-blue-500 mb-2" size={48} /> : <ImageIcon size={48} className="mb-2 opacity-20 text-blue-500" />}
-                          <p className="text-xs font-black uppercase tracking-widest text-slate-500">
-                             {uploading ? 'Processing File...' : 'Click to Upload Photo'}
-                          </p>
-                          <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} disabled={uploading} />
-                       </label>
+            <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
+              {pendingUploads.map((upload) => (
+                <div key={upload.id} className={`flex flex-col md:flex-row gap-6 p-4 rounded-3xl border transition-all ${
+                  upload.status === 'success' ? 'bg-green-50 border-green-100' : 
+                  upload.status === 'error' ? 'bg-red-50 border-red-100' : 'bg-slate-50 border-slate-100'
+                }`}>
+                  <div className="w-full md:w-32 aspect-square relative rounded-2xl overflow-hidden shrink-0 border-2 border-white shadow-sm">
+                    <Image src={upload.preview} alt="Preview" fill className="object-cover" />
+                    {upload.status === 'success' && (
+                      <div className="absolute inset-0 bg-green-500/20 flex items-center justify-center">
+                        <CheckCircle2 className="text-white fill-green-500" size={32} />
+                      </div>
                     )}
-               </div>
- 
-               <div className="space-y-6">
-                  <div className="space-y-2">
-                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Photo Caption</label>
-                     <input 
-                        type="text" 
-                        value={newImage.caption}
-                        onChange={(e) => setNewImage({...newImage, caption: e.target.value})}
-                        className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none font-bold text-academic-navy transition-all" 
-                        placeholder="e.g. Inauguration of New Computer Lab" 
-                     />
+                    {upload.status === 'uploading' && (
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <Loader2 className="animate-spin text-white" size={32} />
+                      </div>
+                    )}
                   </div>
-                  <div className="space-y-2">
-                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Category</label>
-                     <select 
-                        value={newImage.category}
-                        onChange={(e) => setNewImage({...newImage, category: e.target.value})}
-                        className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none font-bold text-slate-600 appearance-none bg-no-repeat bg-[right_1.25rem_center] bg-[length:1em_1em]"
-                     >
+
+                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Caption</label>
+                      <input 
+                        type="text" 
+                        value={upload.caption}
+                        onChange={(e) => updatePending(upload.id, { caption: e.target.value })}
+                        disabled={upload.status === 'success' || upload.status === 'uploading'}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-academic-gold outline-none font-bold text-academic-navy text-sm transition-all" 
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Category</label>
+                      <select 
+                        value={upload.category}
+                        onChange={(e) => updatePending(upload.id, { category: e.target.value })}
+                        disabled={upload.status === 'success' || upload.status === 'uploading'}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-academic-gold outline-none font-bold text-slate-600 text-sm appearance-none bg-no-repeat bg-[right_1rem_center] bg-[length:1em_1em]"
+                      >
                         <option>Campus</option>
                         <option>Events</option>
                         <option>Facilities</option>
                         <option>Students</option>
                         <option>NCC</option>
-                        <option>Video</option>
-                     </select>
+                      </select>
+                    </div>
+                    {upload.status === 'error' && (
+                      <div className="col-span-full flex items-center gap-2 text-red-600 text-[10px] font-bold uppercase tracking-tight">
+                        <AlertCircle size={14} />
+                        {upload.error}
+                      </div>
+                    )}
                   </div>
-                  <div className="pt-4 flex gap-4">
-                     <button 
-                        onClick={handleSave}
-                        disabled={isSaving || !newImage.url || !newImage.caption}
-                        className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2 shadow-xl shadow-academic-navy/20 disabled:opacity-50"
-                     >
-                        {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                        Save to Gallery
-                     </button>
+
+                  <div className="flex items-center justify-center px-2">
+                    <button 
+                      onClick={() => removePending(upload.id)}
+                      disabled={upload.status === 'uploading'}
+                      className="p-3 text-slate-400 hover:text-red-500 hover:bg-white rounded-xl transition-all"
+                    >
+                      <Trash2 size={20} />
+                    </button>
                   </div>
-               </div>
+                </div>
+              ))}
             </div>
          </div>
       )}
- 
+  
       {/* Gallery Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {images.length === 0 ? (
@@ -229,39 +284,15 @@ export default function GalleryManager() {
         ) : images.map((img) => (
           <div key={img.id} className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden group hover:shadow-2xl transition-all duration-500">
             <div className="aspect-[4/3] relative overflow-hidden">
-               {img.url.includes('youtube.com') || img.url.includes('youtu.be') ? (
-                 <Image 
-                   src={`https://img.youtube.com/vi/${(() => {
-                     const match = img.url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
-                     return match && match[2].length === 11 ? match[2] : '';
-                   })()}/hqdefault.jpg`} 
-                   alt={img.caption}
-                   fill
-                   unoptimized
-                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-                 />
-               ) : (
-                 <Image src={img.url} alt={img.caption} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-               )}
-               {(img.url.includes('youtube.com') || img.url.includes('youtu.be')) && (
-                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                   <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50">
-                     <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
-                   </div>
-                 </div>
-               )}
-               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                <Image src={img.url} alt={img.caption} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                   <button 
                     onClick={() => handleDelete(img.id)}
                     className="p-4 bg-red-500 text-white rounded-2xl shadow-xl hover:scale-110 active:scale-90 transition-all"
-                    title="Delete Photo"
                   >
                      <Trash2 size={24} />
                   </button>
-                  <button 
-                    className="p-4 bg-white text-academic-navy rounded-2xl shadow-xl hover:scale-110 active:scale-90 transition-all"
-                    title="View Fullscreen"
-                  >
+                  <button className="p-4 bg-white text-academic-navy rounded-2xl shadow-xl hover:scale-110 active:scale-90 transition-all">
                      <Maximize2 size={24} />
                   </button>
                </div>
@@ -284,3 +315,4 @@ export default function GalleryManager() {
     </div>
   );
 }
+

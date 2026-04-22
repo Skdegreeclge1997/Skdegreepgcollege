@@ -525,7 +525,7 @@ export default function LandingPage() {
       </motion.section>
 
       {/* 7. CTA + Footer Section */}
-      <section className="bg-slate-50 py-24 flex flex-col justify-between">
+      <section className="bg-slate-50 pt-24 pb-0 flex flex-col justify-between">
         <div className="container mx-auto px-4 mb-20">
            <div className="max-w-4xl mx-auto bg-white border border-slate-200 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />

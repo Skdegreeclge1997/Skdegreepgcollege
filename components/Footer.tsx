@@ -25,9 +25,7 @@ export default function Footer() {
                 <span className="text-[10px] text-academic-gold uppercase font-bold tracking-widest mt-1">& P.G. COLLEGE</span>
               </div>
             </div>
-            <p className="text-sm text-slate-400 leading-relaxed font-bold">
-              College Code: 17950
-            </p>
+
             <p className="text-sm text-slate-400 leading-relaxed">
               Part of Arunodaya Educational Society. Empowering students through academic excellence and holistic development.
             </p>
@@ -80,7 +78,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/5 text-center text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} S.K. Degree & P.G. College (17950). All rights reserved.</p>
+          <p>© {new Date().getFullYear()} S.K. Degree & P.G. College. All rights reserved.</p>
           <div className="mt-4 flex justify-center space-x-6">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
