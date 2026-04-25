@@ -1,5 +1,5 @@
 import React from 'react';
-import NoticeCard from '@/components/NoticeCard';
+import NoticeViewer from '@/components/NoticeViewer';
 import { Notice } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { Bell, GraduationCap, Calendar, Info } from 'lucide-react';
@@ -46,67 +46,19 @@ export default async function NoticeBoardPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* 1. Academic Notices Column */}
-          <div className="space-y-6">
-            <div className="flex items-center justify-between px-2">
-               <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-academic-navy rounded-xl flex items-center justify-center text-academic-gold shadow-lg shadow-academic-navy/10">
-                     <GraduationCap size={20} />
-                  </div>
-                  <div>
-                     <h2 className="text-xl font-black text-academic-navy leading-none">Academic Notices</h2>
-                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Exams & Curriculum</p>
-                  </div>
-               </div>
-               <span className="text-[10px] font-black text-slate-400 bg-slate-100 px-3 py-1 rounded-full uppercase tracking-widest">
-                  {academicNotices.length} Items
-               </span>
-            </div>
-
-            <div className="space-y-4">
-              {academicNotices.map((notice) => (
-                <div key={notice.id} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                   <NoticeCard notice={notice} />
-                </div>
-              ))}
-              {academicNotices.length === 0 && (
-                <div className="p-10 text-center bg-white rounded-3xl border border-dashed border-slate-200 text-slate-400 font-bold italic">
-                   No recent academic notices.
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* 2. Admission & Events Column */}
-          <div className="space-y-6">
-            <div className="flex items-center justify-between px-2">
-               <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-academic-navy rounded-xl flex items-center justify-center text-academic-gold shadow-lg shadow-academic-navy/10">
-                     <Calendar size={20} />
-                  </div>
-                  <div>
-                     <h2 className="text-xl font-black text-academic-navy leading-none">Admission & Events</h2>
-                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Campus Life & Updates</p>
-                  </div>
-               </div>
-               <span className="text-[10px] font-black text-slate-400 bg-slate-100 px-3 py-1 rounded-full uppercase tracking-widest">
-                  {admissionEvents.length} Items
-               </span>
-            </div>
-
-            <div className="space-y-4">
-              {admissionEvents.map((notice) => (
-                <div key={notice.id} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                   <NoticeCard notice={notice} />
-                </div>
-              ))}
-              {admissionEvents.length === 0 && (
-                <div className="p-10 text-center bg-white rounded-3xl border border-dashed border-slate-200 text-slate-400 font-bold italic">
-                   No recent admission or event updates.
-                </div>
-              )}
-            </div>
-          </div>
+          <NoticeViewer 
+            notices={academicNotices} 
+            title="Academic Notices" 
+            subtitle="Exams & Curriculum" 
+            icon={<GraduationCap size={20} />} 
+          />
+          
+          <NoticeViewer 
+            notices={admissionEvents} 
+            title="Admission & Events" 
+            subtitle="Campus Life & Updates" 
+            icon={<Calendar size={20} />} 
+          />
         </div>
 
         {/* Support Section */}

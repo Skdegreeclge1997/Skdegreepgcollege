@@ -4,6 +4,7 @@ import { Notice, NoticeCategory } from '@/lib/types';
 
 interface NoticeCardProps {
   notice: Notice;
+  onClick?: (notice: Notice) => void;
 }
 
 const getCategoryStyles = (category: NoticeCategory) => {
@@ -21,13 +22,17 @@ const getCategoryStyles = (category: NoticeCategory) => {
   }
 };
 
-export default function NoticeCard({ notice }: NoticeCardProps) {
+export default function NoticeCard({ notice, onClick }: NoticeCardProps) {
   const date = new Date(notice.date);
   const day = date.getDate();
   const month = date.toLocaleDateString('en-IN', { month: 'short' });
 
   return (
-    <div id={notice.id} className="group flex items-start gap-5 p-5 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md">
+    <div 
+      id={notice.id} 
+      onClick={() => onClick?.(notice)}
+      className="group flex items-start gap-5 p-5 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md active:scale-[0.98]"
+    >
       <div className="notice-date-box">
         <span className="notice-date-day">{day}</span>
         <span className="notice-date-month">{month}</span>
@@ -53,9 +58,9 @@ export default function NoticeCard({ notice }: NoticeCardProps) {
             Academic Section
           </p>
           {(notice.image_url || notice.pdf_url) && (
-            <div className="flex items-center gap-1 text-academic-gold">
+            <div className="flex items-center gap-1 text-academic-gold animate-pulse">
               <FileText size={10} />
-              <span className="text-[9px] font-bold uppercase tracking-tighter">Attachment</span>
+              <span className="text-[9px] font-black uppercase tracking-tighter">View Attachment</span>
             </div>
           )}
         </div>
