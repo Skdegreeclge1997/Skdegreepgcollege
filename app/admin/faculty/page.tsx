@@ -387,6 +387,7 @@ export default function FacultyManager() {
               </div>
            </div>
         </div>
+      )}
       {showCropper && tempImageUrl && (
         <ImageCropper 
           image={tempImageUrl} 

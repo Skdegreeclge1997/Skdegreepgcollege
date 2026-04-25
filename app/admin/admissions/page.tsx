@@ -174,7 +174,6 @@ export default function AdmissionsAdmin() {
           />
         </div>
       </div>
->
 
       {/* Content Area */}
       <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden min-h-[400px]">
@@ -401,9 +400,9 @@ export default function AdmissionsAdmin() {
                        Close Details
                     </button>
                  </div>
-              </div>
-           </div>
-        </div>
+               </div>
+            </div>
+         </div>
       )}
     </div>
   );
