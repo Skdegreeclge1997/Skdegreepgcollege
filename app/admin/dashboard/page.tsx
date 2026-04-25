@@ -165,19 +165,19 @@ export default function AdminOverview() {
            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 mix-blend-overlay" />
            <h3 className="text-xl font-black mb-8 relative z-10">Quick Actions</h3>
            <div className="grid grid-cols-2 gap-4 relative z-10">
-              <Link href="/admin/notices" className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all group backdrop-blur-sm active:scale-95">
+              <Link href="/admin/notices" className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all group backdrop-blur-sm active:opacity-80 active:translate-y-[1px]">
                  <Bell className="mb-4 text-blue-400 group-hover:scale-110 transition-transform drop-shadow-md" size={28} />
                  <p className="font-bold text-sm tracking-wide">Post Notice</p>
               </Link>
-              <Link href="/admin/faculty" className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all group backdrop-blur-sm active:scale-95">
+              <Link href="/admin/faculty" className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all group backdrop-blur-sm active:opacity-80 active:translate-y-[1px]">
                  <Users className="mb-4 text-purple-400 group-hover:scale-110 transition-transform drop-shadow-md" size={28} />
                  <p className="font-bold text-sm tracking-wide">Manage Staff</p>
               </Link>
-              <Link href="/" target="_blank" className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all group backdrop-blur-sm active:scale-95">
+              <Link href="/" target="_blank" className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all group backdrop-blur-sm active:opacity-80 active:translate-y-[1px]">
                  <Globe className="mb-4 text-emerald-400 group-hover:scale-110 transition-transform drop-shadow-md" size={28} />
                  <p className="font-bold text-sm tracking-wide">Live Website</p>
               </Link>
-              <Link href="/admin/videos" className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all group backdrop-blur-sm active:scale-95">
+              <Link href="/admin/videos" className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all group backdrop-blur-sm active:opacity-80 active:translate-y-[1px]">
                  <Clock className="mb-4 text-amber-400 group-hover:scale-110 transition-transform drop-shadow-md" size={28} />
                  <p className="font-bold text-sm tracking-wide">Add Video</p>
               </Link>

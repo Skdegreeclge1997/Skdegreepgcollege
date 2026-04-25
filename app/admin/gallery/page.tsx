@@ -175,7 +175,7 @@ export default function GalleryManager() {
           <h1 className="text-3xl font-black text-academic-navy tracking-tight">Photo Gallery Manager</h1>
           <p className="text-slate-500 font-medium">Bulk upload and manage campus imagery.</p>
         </div>
-        <label className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:scale-95 cursor-pointer">
+        <label className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:opacity-80 active:translate-y-[1px] cursor-pointer">
           <Camera size={20} />
           Bulk Upload Photos
           <input type="file" multiple accept="image/*" className="hidden" onChange={handleFilesSelected} />

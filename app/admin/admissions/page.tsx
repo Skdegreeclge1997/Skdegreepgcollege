@@ -22,6 +22,7 @@ export default function AdmissionsAdmin() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
 
   async function fetchInquiries(searchQuery: string = '') {
     setIsLoading(true);
@@ -78,18 +79,23 @@ export default function AdmissionsAdmin() {
   async function deleteInquiry(id: string) {
     if (!confirm('Are you sure you want to delete this inquiry?')) return;
     
+    setIsDeleting(id);
     try {
+      // Precise targeting for delete
       const { error } = await supabase
         .from('inquiries')
         .delete()
-        .eq('id', id);
+        .match({ id });
       
       if (error) throw error;
       
       setInquiries(prev => prev.filter(inq => inq.id !== id));
       setSelectedInquiry(null);
     } catch (err: any) {
-      alert(`Failed to delete inquiry: ${err.message}`);
+      console.error('Delete error:', err);
+      alert(`Failed to delete: ${err.message}`);
+    } finally {
+      setIsDeleting(null);
     }
   }
 
@@ -108,12 +114,12 @@ export default function AdmissionsAdmin() {
     XLSX.writeFile(workbook, "Student_Inquiries_SK_College.xlsx");
   };
 
-  const [activeTab, setActiveTab] = useState<'All' | 'Admissions' | 'Contact'>('All');
+  const [activeTab, setActiveTab] = useState<'Admissions' | 'Contact'>('Admissions');
 
   const filteredInquiries = inquiries.filter(inq => {
     if (activeTab === 'Admissions') return inq.course !== 'Contact Inquiry';
     if (activeTab === 'Contact') return inq.course === 'Contact Inquiry';
-    return true;
+    return false;
   });
 
   return (
@@ -129,14 +135,14 @@ export default function AdmissionsAdmin() {
         <div className="flex gap-2">
            <button 
              onClick={exportToExcel}
-             className="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 text-academic-navy font-black rounded-xl hover:bg-slate-50 transition-all active:scale-95"
+             className="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 text-academic-navy font-black rounded-xl hover:bg-slate-50 transition-all active:opacity-80 active:translate-y-[1px]"
            >
              <Download size={20} />
              Export
            </button>
            <button 
              onClick={() => fetchInquiries(searchTerm)}
-             className="flex items-center justify-center gap-2 px-6 py-3 bg-academic-gold text-academic-navy font-black rounded-xl hover:shadow-xl hover:shadow-academic-gold/20 transition-all active:scale-95"
+             className="flex items-center justify-center gap-2 px-6 py-3 bg-academic-gold text-academic-navy font-black rounded-xl hover:shadow-xl hover:shadow-academic-gold/20 transition-all active:opacity-80 active:translate-y-[1px]"
            >
              <Loader2 className={isLoading ? 'animate-spin' : ''} size={20} />
              Refresh
@@ -146,8 +152,8 @@ export default function AdmissionsAdmin() {
 
       {/* Tabs & Search */}
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="flex bg-slate-100 p-1 rounded-2xl md:w-fit">
-          {(['All', 'Admissions', 'Contact'] as const).map((tab) => (
+        <div className="flex bg-slate-100 p-1.5 rounded-2xl md:w-fit">
+          {(['Admissions', 'Contact'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -159,90 +165,84 @@ export default function AdmissionsAdmin() {
                 }
               `}
             >
-              {tab === 'Admissions' ? 'Applications' : tab === 'Contact' ? 'Messages' : 'All Entries'}
+              {tab === 'Admissions' ? 'Applications' : 'Messages'}
             </button>
           ))}
         </div>
         <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
           <input 
-            type="text" 
-            placeholder="Search by name, course, or content…"
+            type="text"
+            placeholder="Search by student name or course..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none transition-all shadow-sm text-sm"
+            className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-100 rounded-2xl focus:border-academic-gold outline-none shadow-sm transition-all font-medium"
           />
         </div>
       </div>
 
-      {/* Content Area */}
-      <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden min-h-[400px]">
+      {/* Data View */}
+      <div className="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden min-h-[400px]">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-40 gap-4">
-            <Loader2 className="animate-spin text-academic-navy" size={48} />
-            <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">Synchronizing Applications...</p>
+          <div className="flex flex-col items-center justify-center h-64 text-slate-400">
+            <Loader2 className="animate-spin mb-4" size={40} />
+            <p className="font-bold">Loading inquiries...</p>
           </div>
         ) : (
-          <div className="w-full">
-            {/* Desktop Table View */}
+          <>
+            {/* Desktop Table */}
             <div className="hidden lg:block overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-100">
-                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Student</th>
-                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Applied Course</th>
-                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Details (Group/Addr)</th>
-                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Contact Info</th>
-                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Status</th>
-                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
+                  <tr className="bg-slate-50/50 border-b border-slate-100">
+                    <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Student</th>
+                    <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Contact</th>
+                    <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Course/Inquiry</th>
+                    <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                    <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
                   {filteredInquiries.map((inq) => (
-                    <tr key={inq.id} className="hover:bg-slate-50/50 transition-colors group">
-                      <td className="px-6 py-6">
+                    <tr key={inq.id} className="hover:bg-slate-50/30 transition-colors group">
+                      <td className="px-8 py-5">
                         <div className="flex items-center gap-3">
-                           <div className="w-10 h-10 rounded-full bg-academic-navy text-white flex items-center justify-center text-sm font-black">
-                              {inq.name ? inq.name[0] : '?'}
-                           </div>
-                           <div>
-                              <p className="font-black text-academic-navy leading-none mb-1">{inq.name}</p>
-                              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{new Date(inq.created_at).toLocaleDateString()}</p>
-                           </div>
+                          <div className="w-10 h-10 rounded-full bg-academic-navy/5 flex items-center justify-center text-academic-navy font-bold">
+                            {inq.name[0]}
+                          </div>
+                          <span className="font-black text-academic-navy">{inq.name}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-6">
-                        <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-[10px] font-black uppercase">
+                      <td className="px-8 py-5">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2 text-sm text-slate-600 font-bold">
+                            <Mail size={14} className="text-academic-gold" />
+                            {inq.email}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-slate-500 font-bold">
+                            <Phone size={14} className="text-academic-gold" />
+                            {inq.phone}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-8 py-5">
+                        <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-[10px] font-black uppercase tracking-wider">
                           {inq.course}
                         </span>
                       </td>
-                      <td className="px-6 py-6 max-w-[250px]">
-                        <p className="text-xs text-slate-500 line-clamp-2 font-medium">
-                          {inq.message || '---'}
-                        </p>
-                      </td>
-                      <td className="px-6 py-6 space-y-1">
-                        <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
-                           <Mail size={14} className="text-slate-300" />
-                           {inq.email}
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
-                           <Phone size={14} className="text-slate-300" />
-                           {inq.phone}
-                        </div>
-                      </td>
-                      <td className="px-6 py-6">
-                        <div className={`
-                           inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
-                           ${inq.status === 'Processed' ? 'bg-slate-100 text-slate-600' : 'bg-green-500 text-white'}
+                      <td className="px-8 py-5">
+                        <span className={`
+                          px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider
+                          ${inq.status === 'Processed' ? 'bg-green-50 text-green-700' : 
+                            inq.status === 'Contacted' ? 'bg-orange-50 text-orange-700' : 'bg-slate-100 text-slate-600'}
                         `}>
-                           {inq.status || 'New'}
-                        </div>
+                          {inq.status || 'New'}
+                        </span>
                       </td>
-                      <td className="px-6 py-6 text-right">
+                      <td className="px-8 py-5 text-right">
                         <button 
                           onClick={() => setSelectedInquiry(inq)}
-                          className="px-4 py-2 bg-slate-50 text-academic-navy font-bold text-xs rounded-lg hover:bg-academic-navy hover:text-white transition-all shadow-sm"
+                          className="px-4 py-2 bg-slate-100 text-academic-navy font-black rounded-xl hover:bg-academic-navy hover:text-white transition-all text-xs uppercase tracking-widest active:opacity-80 active:translate-y-[1px]"
                         >
                           Details
                         </button>
@@ -253,49 +253,35 @@ export default function AdmissionsAdmin() {
               </table>
             </div>
 
-            {/* Mobile Card View */}
+            {/* Mobile Cards */}
             <div className="lg:hidden divide-y divide-slate-100">
               {filteredInquiries.map((inq) => (
-                <div key={inq.id} className="p-6 space-y-4 active:bg-slate-50 transition-colors">
-                  <div className="flex items-center justify-between">
+                <div key={inq.id} className="p-6 space-y-4 hover:bg-slate-50/30 transition-all">
+                  <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-academic-navy text-white flex items-center justify-center text-sm font-black">
-                        {inq.name ? inq.name[0] : '?'}
+                      <div className="w-10 h-10 rounded-full bg-academic-navy/5 flex items-center justify-center text-academic-navy font-bold">
+                        {inq.name[0]}
                       </div>
                       <div>
-                        <p className="font-black text-academic-navy leading-none mb-1">{inq.name}</p>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{new Date(inq.created_at).toLocaleDateString()}</p>
+                        <h3 className="font-black text-academic-navy">{inq.name}</h3>
+                        <p className="text-xs text-slate-400 font-bold uppercase">{inq.status || 'New'}</p>
                       </div>
                     </div>
-                    <div className={`
-                      inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
-                      ${inq.status === 'Processed' ? 'bg-slate-100 text-slate-600' : 'bg-green-500 text-white'}
-                    `}>
-                      {inq.status || 'New'}
-                    </div>
+                    <button 
+                      onClick={() => setSelectedInquiry(inq)}
+                      className="p-2 bg-slate-100 rounded-xl text-academic-navy active:opacity-80 active:translate-y-[1px]"
+                    >
+                      <Filter size={18} />
+                    </button>
                   </div>
-
-                  <div className="space-y-2">
-                     <div className="flex items-center gap-2 text-slate-600 font-bold text-sm bg-slate-50 p-2 rounded-lg">
-                        <GraduationCap size={16} className="text-academic-gold" />
-                        {inq.course}
-                     </div>
-                     <div className="grid grid-cols-2 gap-2 mt-4">
-                        <a href={`tel:${inq.phone}`} className="flex items-center justify-center gap-2 p-3 bg-white border border-slate-200 rounded-xl text-slate-600 font-bold text-xs">
-                           <Phone size={14} /> Call
-                        </a>
-                        <button 
-                          onClick={() => setSelectedInquiry(inq)}
-                          className="flex items-center justify-center gap-2 p-3 bg-academic-navy text-white rounded-xl font-bold text-xs"
-                        >
-                           Details
-                        </button>
-                     </div>
+                  <div className="flex items-center gap-4 text-xs font-bold text-slate-500">
+                    <span className="flex items-center gap-1.5"><Mail size={12}/> {inq.email}</span>
+                    <span className="flex items-center gap-1.5"><GraduationCap size={12}/> {inq.course}</span>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </>
         )}
 
         {!isLoading && filteredInquiries.length === 0 && (
@@ -320,7 +306,7 @@ export default function AdmissionsAdmin() {
                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Application Details</p>
                     </div>
                  </div>
-                 <button onClick={() => setSelectedInquiry(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                 <button onClick={() => setSelectedInquiry(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors active:opacity-80">
                     <X size={24} />
                  </button>
               </div>
@@ -388,14 +374,15 @@ export default function AdmissionsAdmin() {
                  <div className="flex gap-4">
                     <button 
                        onClick={() => deleteInquiry(selectedInquiry.id)}
-                       className="px-6 py-4 bg-red-50 text-red-600 font-black rounded-2xl border border-red-100 hover:bg-red-100 transition-all flex items-center gap-2"
+                       disabled={isDeleting === selectedInquiry.id}
+                       className="px-6 py-4 bg-red-50 text-red-600 font-black rounded-2xl border border-red-100 hover:bg-red-100 transition-all flex items-center gap-2 disabled:opacity-50 active:opacity-80 active:translate-y-[1px]"
                     >
-                       <Trash2 size={20} />
-                       Delete Inquiry
+                       {isDeleting === selectedInquiry.id ? <Loader2 size={20} className="animate-spin" /> : <Trash2 size={20} />}
+                       {isDeleting === selectedInquiry.id ? 'Deleting...' : 'Delete Inquiry'}
                     </button>
                     <button 
                        onClick={() => setSelectedInquiry(null)}
-                       className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-academic-navy/20"
+                       className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-academic-navy/20 active:opacity-80 active:translate-y-[1px]"
                     >
                        Close Details
                     </button>

@@ -167,7 +167,7 @@ export default function NoticeManager() {
         {!isModalOpen && (
           <button 
             onClick={() => handleOpenModal()}
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl hover:shadow-academic-navy/20 active:scale-95"
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl hover:shadow-academic-navy/20 active:opacity-80 active:translate-y-[1px]"
           >
             <Megaphone size={20} />
             New Announcement

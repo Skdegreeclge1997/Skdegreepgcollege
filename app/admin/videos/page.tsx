@@ -104,7 +104,7 @@ export default function GalleryManager() {
         </div>
         <button 
           onClick={() => setIsAdding(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:scale-95"
+          className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:opacity-80 active:translate-y-[1px]"
         >
           <Camera size={20} />
           Add YouTube Video
@@ -179,7 +179,7 @@ export default function GalleryManager() {
                      <button 
                         onClick={handleSave}
                         disabled={isSaving || !newImage.url || !newImage.caption}
-                        className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2 shadow-xl shadow-academic-navy/20 disabled:opacity-50"
+                        className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all active:opacity-80 active:translate-y-[1px] flex items-center justify-center gap-2 shadow-xl shadow-academic-navy/20 disabled:opacity-50"
                      >
                         {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
                         Save Video

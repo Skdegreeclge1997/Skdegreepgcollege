@@ -185,7 +185,7 @@ export default function FacultyManager() {
         </div>
         <button 
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl hover:shadow-academic-navy/20 active:scale-95"
+          className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl hover:shadow-academic-navy/20 active:opacity-80 active:translate-y-[1px]"
         >
           <UserPlus size={20} />
           Add Faculty
