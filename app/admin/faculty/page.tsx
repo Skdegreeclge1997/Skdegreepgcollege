@@ -39,17 +39,29 @@ export default function FacultyManager() {
   const [uploadingImage, setUploadingImage] = useState(false);
  
   const fetchFaculty = React.useCallback(async () => {
+    setIsLoading(true);
     const { data, error } = await supabase
       .from('faculty')
       .select('*')
-      .order('name');
-    
+      .order('id', { ascending: true });
+
+    const getRank = (designation: string = '') => {
+      const d = designation.toLowerCase();
+      if (d.includes('principal')) return 1;
+      if (d.includes('founder')) return 2;
+      if (d.includes('head of') || d.includes('hod')) return 3;
+      if (d.includes('senior')) return 4;
+      if (d.includes('faculty')) return 5;
+      return 6;
+    };
+
     if (!error && data) {
-      setFaculty(data);
+      const sortedData = [...data].sort((a, b) => getRank(a.designation) - getRank(b.designation));
+      setFaculty(sortedData);
     }
     setIsLoading(false);
   }, []);
-
+ 
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchFaculty();

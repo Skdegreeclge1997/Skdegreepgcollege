@@ -27,10 +27,22 @@ export default function FacultyPage() {
       .select('*')
       .order('id', { ascending: true });
 
+    const getRank = (designation: string = '') => {
+      const d = designation.toLowerCase();
+      if (d.includes('principal')) return 1;
+      if (d.includes('founder')) return 2;
+      if (d.includes('head of') || d.includes('hod')) return 3;
+      if (d.includes('senior')) return 4;
+      if (d.includes('faculty')) return 5;
+      return 6;
+    };
+
     if (!error && data && data.length > 0) {
-      setFaculty(data);
+      const sortedData = [...data].sort((a, b) => getRank(a.designation) - getRank(b.designation));
+      setFaculty(sortedData);
     } else {
-      setFaculty(initialFacultyData as Faculty[]);
+      const sortedInitial = [...(initialFacultyData as Faculty[])].sort((a, b) => getRank(a.designation) - getRank(b.designation));
+      setFaculty(sortedInitial);
     }
     setLoading(false);
   }
