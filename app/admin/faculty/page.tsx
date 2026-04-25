@@ -293,10 +293,29 @@ export default function FacultyManager() {
                           )}
                           <label className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/img:opacity-100 cursor-pointer transition-opacity">
                              {uploadingImage ? <Loader2 className="animate-spin text-white" /> : <Camera className="text-white" />}
-                             <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} disabled={uploadingImage} />
+                             <input type="file" id="faculty-image-input" className="hidden" accept="image/*" onChange={handleImageUpload} disabled={uploadingImage} />
                           </label>
                        </div>
-                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Profile Photo</p>
+                       <div className="flex gap-4">
+                          <button 
+                            type="button"
+                            onClick={() => document.getElementById('faculty-image-input')?.click()}
+                            className="text-[10px] font-black text-academic-navy hover:text-academic-gold uppercase tracking-widest transition-colors flex items-center gap-1.5"
+                          >
+                            <Camera size={14} />
+                            Update Image
+                          </button>
+                          {editingFaculty?.image_url && (
+                            <button 
+                              type="button"
+                              onClick={() => setEditingFaculty(p => ({...p!, image_url: ''}))}
+                              className="text-[10px] font-black text-red-500 hover:text-red-700 uppercase tracking-widest transition-colors flex items-center gap-1.5"
+                            >
+                              <Trash2 size={14} />
+                              Remove
+                            </button>
+                          )}
+                       </div>
                     </div>
  
                     <div className="space-y-2">
