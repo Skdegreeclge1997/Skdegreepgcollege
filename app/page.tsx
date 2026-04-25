@@ -132,13 +132,13 @@ export default function LandingPage() {
         variants={fadeIn}
         className="snap-section bg-white justify-center"
       >
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center mb-10">
+        <div className="container mx-auto px-4 py-4">
+          <div className="text-center mb-6">
             <p className="text-slate-600 font-bold uppercase tracking-[0.2em] text-xs mb-1">Part of</p>
             <h2 className="text-2xl font-black text-academic-navy">Arunodaya Educational Society</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {[
               { label: 'Placements', value: '123+', icon: <Users size={24} />, color: 'bg-blue-50 text-blue-600' },
               { label: 'Faculty', value: '85+', icon: <Award size={24} />, color: 'bg-academic-gold/10 text-academic-gold' },
@@ -159,12 +159,12 @@ export default function LandingPage() {
           </div>
 
           <div className="text-center">
-             <h3 className="text-xl font-bold text-academic-navy mb-8">Our Students Placed At</h3>
+             <h3 className="text-xl font-bold text-academic-navy mb-4">Our Students Placed At</h3>
              <BrandScroller />
           </div>
 
           {/* Quick Navigation Links for SEO & UX */}
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link 
               href="/about" 
               className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl hover:bg-academic-gold/10 transition-all group"
@@ -243,7 +243,7 @@ export default function LandingPage() {
                 Explore NCC Program <ArrowRight size={16} />
               </Link>
             </div>
-            <div className="relative h-[450px] grid grid-cols-2 grid-rows-2 gap-4">
+            <div className="relative h-[380px] grid grid-cols-2 grid-rows-2 gap-4">
               <motion.div 
                 whileHover={{ scale: 1.02, zIndex: 10 }}
                 className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden shadow-2xl border border-white/10"
