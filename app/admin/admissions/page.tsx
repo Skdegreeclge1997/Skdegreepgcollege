@@ -22,10 +22,15 @@ export default function AdmissionsAdmin() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
+  const [isLive, setIsLive] = useState(false);
 
   async function fetchInquiries(searchQuery: string = '') {
     setIsLoading(true);
     try {
+      // Check if Supabase is actually configured
+      const isConfigured = !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      setIsLive(isConfigured);
+
       let query = supabase
         .from('inquiries')
         .select('*')
@@ -40,6 +45,8 @@ export default function AdmissionsAdmin() {
       
       if (!error && data) {
         setInquiries(data);
+      } else if (error) {
+        console.error('Supabase query error:', error);
       }
     } catch (err) {
       console.error('Failed to fetch inquiries:', err);
@@ -109,16 +116,30 @@ export default function AdmissionsAdmin() {
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-academic-navy tracking-tight">Student Inquiries</h1>
+          <div className="flex items-center gap-3 mb-1">
+            <h1 className="text-3xl font-black text-academic-navy tracking-tight">Student Inquiries</h1>
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${isLive ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'}`}>
+               {isLive ? '● Live System' : '○ Mock Mode'}
+            </span>
+          </div>
           <p className="text-slate-500 font-medium">Manage and track new admission applications.</p>
         </div>
-        <button 
-          onClick={exportToExcel}
-          className="flex items-center justify-center gap-2 px-6 py-3 bg-academic-gold text-academic-navy font-black rounded-xl hover:shadow-xl hover:shadow-academic-gold/20 transition-all active:scale-95"
-        >
-          <Download size={20} />
-          Export to Excel
-        </button>
+        <div className="flex gap-2">
+           <button 
+             onClick={exportToExcel}
+             className="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 text-academic-navy font-black rounded-xl hover:bg-slate-50 transition-all active:scale-95"
+           >
+             <Download size={20} />
+             Export
+           </button>
+           <button 
+             onClick={() => fetchInquiries(searchTerm)}
+             className="flex items-center justify-center gap-2 px-6 py-3 bg-academic-gold text-academic-navy font-black rounded-xl hover:shadow-xl hover:shadow-academic-gold/20 transition-all active:scale-95"
+           >
+             <Loader2 className={isLoading ? 'animate-spin' : ''} size={20} />
+             Refresh
+           </button>
+        </div>
       </div>
 
       {/* Filters & Search */}
@@ -138,9 +159,6 @@ export default function AdmissionsAdmin() {
                <Filter size={18} />
                Filter
             </button>
-            <button onClick={() => fetchInquiries(searchTerm)} className="px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all active:scale-95">
-              Refresh
-           </button>
         </div>
       </div>
 
@@ -160,8 +178,8 @@ export default function AdmissionsAdmin() {
                   <tr className="bg-slate-50 border-b border-slate-100">
                     <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Student</th>
                     <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Applied Course</th>
+                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Details (Group/Addr)</th>
                     <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Contact Info</th>
-                    <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Date</th>
                     <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Status</th>
                     <th className="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
                   </tr>
@@ -176,7 +194,7 @@ export default function AdmissionsAdmin() {
                            </div>
                            <div>
                               <p className="font-black text-academic-navy leading-none mb-1">{inq.name}</p>
-                              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">ID: #INQ-{inq.id.slice(0, 4)}</p>
+                              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{new Date(inq.created_at).toLocaleDateString()}</p>
                            </div>
                         </div>
                       </td>
@@ -184,6 +202,11 @@ export default function AdmissionsAdmin() {
                         <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-[10px] font-black uppercase">
                           {inq.course}
                         </span>
+                      </td>
+                      <td className="px-6 py-6 max-w-[250px]">
+                        <p className="text-xs text-slate-500 line-clamp-2 font-medium">
+                          {inq.message || '---'}
+                        </p>
                       </td>
                       <td className="px-6 py-6 space-y-1">
                         <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
@@ -196,17 +219,10 @@ export default function AdmissionsAdmin() {
                         </div>
                       </td>
                       <td className="px-6 py-6">
-                        <div className="flex items-center gap-2 text-slate-500 text-xs font-medium">
-                           <Calendar size={14} className="text-slate-300" />
-                           {new Date(inq.created_at).toLocaleDateString()}
-                        </div>
-                      </td>
-                      <td className="px-6 py-6">
                         <div className={`
                            inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
                            ${inq.status === 'Processed' ? 'bg-slate-100 text-slate-600' : 'bg-green-500 text-white'}
                         `}>
-                           <div className={`w-1 h-1 rounded-full ${inq.status === 'Processed' ? 'bg-slate-400' : 'bg-white'}`} />
                            {inq.status || 'New'}
                         </div>
                       </td>
@@ -235,7 +251,7 @@ export default function AdmissionsAdmin() {
                       </div>
                       <div>
                         <p className="font-black text-academic-navy leading-none mb-1">{inq.name}</p>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">ID: #INQ-{inq.id.slice(0, 4)}</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{new Date(inq.created_at).toLocaleDateString()}</p>
                       </div>
                     </div>
                     <div className={`
@@ -284,7 +300,7 @@ export default function AdmissionsAdmin() {
               <div className="bg-academic-navy p-8 text-white flex justify-between items-start">
                  <div className="flex items-center gap-4">
                     <div className="w-16 h-16 rounded-2xl bg-academic-gold/20 border border-academic-gold/30 flex items-center justify-center text-academic-gold text-2xl font-black">
-                       {selectedInquiry.name[0]}
+                       {selectedInquiry.name ? selectedInquiry.name[0] : '?'}
                     </div>
                     <div>
                        <h2 className="text-2xl font-black tracking-tight">{selectedInquiry.name}</h2>
