@@ -31,7 +31,7 @@ export default function Navbar({ isOpen, setIsOpen }: NavbarProps) {
           <Link
             key={link.name}
             href={link.href}
-            className="text-[13px] font-bold tracking-tight transition-colors hover:text-academic-gold text-white whitespace-nowrap"
+            className="text-[15px] font-semibold tracking-tight transition-colors hover:text-academic-gold text-white whitespace-nowrap"
           >
             {link.name}
           </Link>
@@ -42,19 +42,19 @@ export default function Navbar({ isOpen, setIsOpen }: NavbarProps) {
       <div 
         id="mobile-menu"
         className={`
-          fixed inset-0 bg-academic-navy z-[100] transition-all duration-500 md:hidden
+          fixed inset-0 bg-academic-navy z-[100] transition-all duration-500 lg:hidden
           ${isOpen ? 'opacity-100 pointer-events-auto translate-x-0' : 'opacity-0 pointer-events-none translate-x-full'}
         `}
       >
-        <div className="flex flex-col h-full p-8 pt-24">
-          <nav className="flex flex-col space-y-6">
+        <div className="flex flex-col h-full p-8 pt-32">
+          <nav className="flex flex-col space-y-8">
             {navLinks.map((link, i) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  text-xl font-bold text-white hover:text-academic-gold transition-all
+                  text-3xl font-display font-bold text-white hover:text-academic-gold transition-all
                   ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
                 `}
                 style={{ transitionDelay: `${i * 50}ms` }}

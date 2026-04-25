@@ -210,10 +210,10 @@ export default function FacultyManager() {
           <table className="w-full text-left">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100">
-                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">Faculty Member</th>
-                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">Department</th>
-                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">Experience</th>
-                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
+                <th className="px-6 py-5 text-[11px] font-black text-slate-400 uppercase tracking-widest">Faculty Member</th>
+                <th className="px-6 py-5 text-[11px] font-black text-slate-400 uppercase tracking-widest">Department</th>
+                <th className="px-6 py-5 text-[11px] font-black text-slate-400 uppercase tracking-widest">Experience</th>
+                <th className="px-6 py-5 text-[11px] font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">

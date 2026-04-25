@@ -178,7 +178,7 @@ export default function AdmissionsAdmin() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`
-                px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2
+                px-6 py-2.5 rounded-xl text-[13px] font-black uppercase tracking-widest transition-all flex items-center gap-2
                 ${activeTab === tab 
                   ? 'bg-white text-academic-navy shadow-sm' 
                   : 'text-slate-500 hover:text-slate-700'
@@ -187,7 +187,7 @@ export default function AdmissionsAdmin() {
             >
               {tab === 'Admissions' ? 'Applications' : 'Messages'}
               <span className={`
-                px-2 py-0.5 rounded-full text-[10px]
+                px-2 py-0.5 rounded-full text-[11px]
                 ${activeTab === tab ? 'bg-academic-navy text-white' : 'bg-slate-200 text-slate-500'}
               `}>
                 {tab === 'Admissions' ? admissionsCount : contactCount}
@@ -276,7 +276,7 @@ export default function AdmissionsAdmin() {
                       <td className="px-8 py-5 text-right">
                         <button 
                           onClick={() => setSelectedInquiry(inq)}
-                          className="px-4 py-2 bg-slate-100 text-academic-navy font-black rounded-xl hover:bg-academic-navy hover:text-white transition-all text-xs uppercase tracking-widest active:opacity-80 active:translate-y-[1px]"
+                          className="px-4 py-2 bg-slate-100 text-academic-navy font-black rounded-xl hover:bg-academic-navy hover:text-white transition-all text-[13px] uppercase tracking-widest active:opacity-80 active:translate-y-[1px]"
                         >
                           Details
                         </button>
