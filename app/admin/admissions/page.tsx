@@ -126,10 +126,46 @@ export default function AdmissionsAdmin() {
   }, [searchTerm]);
 
   const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(inquiries);
+    // 1. Prepare the data with professional headers
+    const reportData = inquiries.map((inq, index) => ({
+      'S.No': index + 1,
+      'Student Name': inq.name,
+      "Father's Name": inq.father_name || 'N/A',
+      'Email': inq.email,
+      'Phone': inq.phone,
+      'Course Applied': inq.course,
+      'Group': inq.message.split('|')[0].replace('Group: ', '').trim(),
+      'Status': inq.status || 'New',
+      'Applied Date': new Date(inq.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+      'Address': inq.message.split('|')[1]?.replace('Address: ', '').trim() || 'N/A',
+      'Application ID': inq.id.substring(0, 8).toUpperCase()
+    }));
+
+    // 2. Create worksheet
+    const worksheet = XLSX.utils.json_to_sheet(reportData, { origin: 'A8' });
+
+    // 3. Add Custom Branding Headers (Rows 1-7)
+    XLSX.utils.sheet_add_aoa(worksheet, [
+      ['S.K. DEGREE COLLEGE & PG COLLEGE'],
+      ['Affiliated to Andhra University | Established in 2005'],
+      ['School Nagar, Ayyannapet Junction, Vizianagaram, Andhra Pradesh'],
+      ['Ph: 94412 53163 | Email: arunodayaes@yahoo.com | www.skdegreecollege.com'],
+      [''], // Divider
+      ['ONLINE APPLICATION LIST – ADMISSIONS 2026-27'],
+      [`Report Generated: ${new Date().toLocaleString('en-IN')}`]
+    ], { origin: 'A1' });
+
+    // 4. Create workbook and save
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Inquiries");
-    XLSX.writeFile(workbook, "Student_Inquiries_SK_College.xlsx");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Admission_Report");
+    
+    // Auto-size columns (basic)
+    const wscols = [
+      {wch: 6}, {wch: 25}, {wch: 25}, {wch: 30}, {wch: 15}, {wch: 25}, {wch: 12}, {wch: 12}, {wch: 15}, {wch: 40}, {wch: 15}
+    ];
+    worksheet['!cols'] = wscols;
+
+    XLSX.writeFile(workbook, `SK_College_Admission_Report_${new Date().getFullYear()}.xlsx`);
   };
 
   const [activeTab, setActiveTab] = useState<'Admissions' | 'Contact'>('Admissions');
