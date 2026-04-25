@@ -519,7 +519,7 @@ export default function LandingPage() {
               </div>
               <div className="h-[400px] relative overflow-hidden bg-slate-50">
                 <div className="animate-marquee-vertical hover:[animation-play-state:paused] flex flex-col gap-4 p-4 [--duration:15s]">
-                  {[...recentNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.isPinned), ...recentNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.isPinned)].map((notice, i) => (
+                  {[...recentNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.is_pinned), ...recentNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.is_pinned)].map((notice, i) => (
                     <Link key={`${notice.id}-${i}`} href={`/notices#${notice.id}`}>
                       <NoticeCard notice={notice} />
                     </Link>
