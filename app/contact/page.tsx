@@ -31,35 +31,40 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (formData.phone.length < 10) {
+      setErrorMsg('Please enter a valid 10-digit mobile number');
+      return;
+    }
+
     setStatus('loading');
     setErrorMsg('');
-
-    // Removed Gmail-only restriction
 
     try {
       const { error } = await supabase.from('inquiries').insert([
         { 
           name: formData.name, 
           email: formData.email, 
+          phone: formData.phone,
           message: formData.message,
-          course: 'Contact Inquiry' // Default for general contact
+          course: 'Contact Inquiry' 
         }
       ]);
 
       if (error) throw error;
       
       setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (err) {
       console.error('Contact form error:', err);
-      setErrorMsg('Something went wrong. Please try again later.');
+      setErrorMsg('Something went wrong. Please check your connection and try again.');
       setStatus('error');
     }
   };
@@ -241,10 +246,27 @@ export default function ContactPage() {
                             onFocus={() => setFocusedField('email')}
                             onBlur={() => setFocusedField(null)}
                             placeholder="yourname@example.com"
-                            className={`w-full bg-white/5 border rounded-xl px-4 py-3 outline-none transition-all ${errorMsg ? 'border-red-500' : 'border-white/10 focus:border-academic-gold'}`}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-academic-gold transition-all"
                             animate={{
-                              borderColor: errorMsg ? '#ef4444' : focusedField === 'email' ? '#D4AF37' : 'rgba(255,255,255,0.1)',
+                              borderColor: focusedField === 'email' ? '#D4AF37' : 'rgba(255,255,255,0.1)',
                               boxShadow: focusedField === 'email' ? '0 0 20px rgba(212,175,55,0.1)' : '0 0 0px transparent',
+                            }}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Mobile Number</label>
+                          <motion.input 
+                            required
+                            type="tel" 
+                            value={formData.phone}
+                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                            onFocus={() => setFocusedField('phone')}
+                            onBlur={() => setFocusedField(null)}
+                            placeholder="10-digit number"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-academic-gold transition-all"
+                            animate={{
+                              borderColor: focusedField === 'phone' ? '#D4AF37' : 'rgba(255,255,255,0.1)',
+                              boxShadow: focusedField === 'phone' ? '0 0 20px rgba(212,175,55,0.1)' : '0 0 0px transparent',
                             }}
                           />
                         </div>

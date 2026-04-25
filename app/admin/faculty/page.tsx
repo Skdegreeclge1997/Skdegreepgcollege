@@ -17,6 +17,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import Image from 'next/image';
+import ImageCropper from '@/components/ImageCropper';
  
 interface Faculty {
   id: string;
@@ -74,32 +75,47 @@ export default function FacultyManager() {
     setEditingFaculty(null);
   };
  
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [tempImageUrl, setTempImageUrl] = useState<string | null>(null);
+  const [showCropper, setShowCropper] = useState(false);
+ 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
- 
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+      setTempImageUrl(reader.result as string);
+      setShowCropper(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCropComplete = async (croppedBlob: Blob) => {
+    setShowCropper(false);
     setUploadingImage(true);
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
+      const fileName = `faculty-${Date.now()}.jpg`;
       const filePath = `faculty/${fileName}`;
- 
+
       const { error: uploadError } = await supabase.storage
         .from('images')
-        .upload(filePath, file);
- 
+        .upload(filePath, croppedBlob, {
+          contentType: 'image/jpeg'
+        });
+
       if (uploadError) throw uploadError;
- 
+
       const { data: { publicUrl } } = supabase.storage
         .from('images')
         .getPublicUrl(filePath);
- 
+
       setEditingFaculty(prev => prev ? { ...prev, image_url: publicUrl } : null);
     } catch (error) {
       const err = error as { message: string };
-      alert('Error uploading image: ' + err.message);
+      alert('Error uploading cropped image: ' + err.message);
     } finally {
       setUploadingImage(false);
+      setTempImageUrl(null);
     }
   };
  
@@ -371,6 +387,16 @@ export default function FacultyManager() {
               </div>
            </div>
         </div>
+      {showCropper && tempImageUrl && (
+        <ImageCropper 
+          image={tempImageUrl} 
+          onCropComplete={handleCropComplete} 
+          onCancel={() => {
+            setShowCropper(false);
+            setTempImageUrl(null);
+          }}
+          aspect={1}
+        />
       )}
     </div>
   );

@@ -108,7 +108,13 @@ export default function AdmissionsAdmin() {
     XLSX.writeFile(workbook, "Student_Inquiries_SK_College.xlsx");
   };
 
-  const filteredInquiries = inquiries;
+  const [activeTab, setActiveTab] = useState<'All' | 'Admissions' | 'Contact'>('All');
+
+  const filteredInquiries = inquiries.filter(inq => {
+    if (activeTab === 'Admissions') return inq.course !== 'Contact Inquiry';
+    if (activeTab === 'Contact') return inq.course === 'Contact Inquiry';
+    return true;
+  });
 
   return (
     <div className="space-y-8 relative">
@@ -118,7 +124,7 @@ export default function AdmissionsAdmin() {
           <div className="flex items-center gap-3 mb-1">
             <h1 className="text-3xl font-black text-academic-navy tracking-tight">Student Inquiries</h1>
           </div>
-          <p className="text-slate-500 font-medium">Manage and track new admission applications.</p>
+          <p className="text-slate-500 font-medium">Manage applications and contact messages.</p>
         </div>
         <div className="flex gap-2">
            <button 
@@ -138,25 +144,37 @@ export default function AdmissionsAdmin() {
         </div>
       </div>
 
-      {/* Filters & Search */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="relative col-span-2">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+      {/* Tabs & Search */}
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex bg-slate-100 p-1 rounded-2xl md:w-fit">
+          {(['All', 'Admissions', 'Contact'] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`
+                px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all
+                ${activeTab === tab 
+                  ? 'bg-white text-academic-navy shadow-sm' 
+                  : 'text-slate-500 hover:text-slate-700'
+                }
+              `}
+            >
+              {tab === 'Admissions' ? 'Applications' : tab === 'Contact' ? 'Messages' : 'All Entries'}
+            </button>
+          ))}
+        </div>
+        <div className="relative flex-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input 
             type="text" 
-            placeholder="Search by name or course…"
+            placeholder="Search by name, course, or content…"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none transition-all shadow-sm"
+            className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-slate-200 focus:border-academic-gold outline-none transition-all shadow-sm text-sm"
           />
         </div>
-         <div className="flex gap-2">
-            <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all active:scale-95">
-               <Filter size={18} />
-               Filter
-            </button>
-        </div>
       </div>
+>
 
       {/* Content Area */}
       <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden min-h-[400px]">

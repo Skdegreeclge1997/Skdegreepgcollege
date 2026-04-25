@@ -77,11 +77,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-white/5 text-center text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} S.K. Degree & P.G. College. All rights reserved.</p>
-          <div className="mt-4 flex justify-center space-x-6">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+        <div className="mt-8 pt-8 border-t border-white/10 text-center text-[10px] md:text-xs text-slate-300">
+          <p className="font-medium">© {new Date().getFullYear()} S.K. Degree & P.G. College. All rights reserved.</p>
+          <div className="mt-2 flex justify-center space-x-6">
+            <Link href="/privacy" className="hover:text-academic-gold transition-colors font-bold uppercase tracking-widest">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-academic-gold transition-colors font-bold uppercase tracking-widest">Terms of Service</Link>
           </div>
         </div>
       </div>
