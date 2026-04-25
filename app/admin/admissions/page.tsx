@@ -74,6 +74,17 @@ export default function AdmissionsAdmin() {
 
       if (data) {
         setInquiries(data);
+        
+        // If 0 rows are returned, check if it's because of RLS permissions
+        if (data.length === 0) {
+          const { count, error: countError } = await supabase
+            .from('inquiries')
+            .select('*', { count: 'exact', head: true });
+            
+          if (!countError && count !== null && count > 0) {
+            alert(`⚠️ PERMISSION ISSUE DETECTED\n\nYour database has ${count} inquiries, but the Admin Portal is not allowed to see them.\n\nFIX: Go to your Supabase SQL Editor and run this:\n\nALTER TABLE inquiries ENABLE ROW LEVEL SECURITY;\nCREATE POLICY "Allow admin select" ON inquiries FOR SELECT USING (true);`);
+          }
+        }
       }
     } catch (err: any) {
       console.error('Failed to fetch inquiries:', err);
