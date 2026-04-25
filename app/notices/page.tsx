@@ -5,6 +5,9 @@ import { Notice } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { Bell, GraduationCap, Calendar, Info } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata = {
   title: 'Notice Board | S.K. Degree & P.G. College',
   description: 'Stay updated with the latest news, events, and academic announcements from S.K. Degree & P.G. College.',
@@ -19,7 +22,8 @@ export default async function NoticeBoardPage() {
     .order('date', { ascending: false });
 
   // Use DB data if available, otherwise fallback to local JSON
-  const allNotices = (dbNotices && dbNotices.length > 0) 
+  const isLiveData = dbNotices && dbNotices.length > 0;
+  const allNotices = isLiveData
     ? (dbNotices as Notice[]) 
     : (noticesData as Notice[]);
 
@@ -43,6 +47,11 @@ export default async function NoticeBoardPage() {
             Stay informed with the latest academic schedules, admission updates, and campus events. 
             All official announcements are posted here in real-time.
           </p>
+          <div className="flex justify-center mt-4">
+             <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border ${isLiveData ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-amber-50 text-amber-600 border-amber-100'}`}>
+                {isLiveData ? '● Live Feed Connected' : '○ Demo Archive Mode'}
+             </span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">

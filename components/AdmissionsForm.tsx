@@ -17,10 +17,12 @@ const courses = [
   "B.Sc. Honours (Comp. Science)",
   "B.Sc. Honours (Physics)",
   "B.Sc. Honours (Chemistry)",
+  "B.Sc. Honours (Mathematics)",
   "B.Sc. Honours (Botany)",
   "B.Sc. Honours (Zoology)",
   "B.Com. Honours (Comp. Applications)",
-  "B.A. Honours (Political Science)"
+  "B.A. Honours (Political Science)",
+  "M.Sc. Organic Chemistry"
 ];
 
 export default function AdmissionsForm() {

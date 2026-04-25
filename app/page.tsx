@@ -38,6 +38,7 @@ export default function LandingPage() {
   const [videoGallery, setVideoGallery] = React.useState<GalleryItem[]>(initialVideoGallery);
   const [recentNotices, setRecentNotices] = React.useState<Notice[]>(initialNotices);
   const [activeTab, setActiveTab] = React.useState<'text' | 'video'>('text');
+  const [isNoticesLive, setIsNoticesLive] = React.useState(false);
 
   React.useEffect(() => {
     const fetchGallery = async () => {
@@ -62,6 +63,7 @@ export default function LandingPage() {
       
       if (!error && data && data.length > 0) {
         setRecentNotices(data as Notice[]);
+        setIsNoticesLive(true);
       }
     };
 
@@ -506,7 +508,10 @@ export default function LandingPage() {
       >
         <div className="container mx-auto px-4 pt-4 pb-12">
           <div className="flex items-center justify-between mb-8">
-             <h2 className="text-3xl font-display font-bold text-academic-navy">Notice Board</h2>
+             <h2 className="text-3xl font-display font-bold text-academic-navy flex items-center gap-3">
+                Notice Board
+                <span className={`w-2 h-2 rounded-full ${isNoticesLive ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-slate-300'}`} title={isNoticesLive ? 'Live Updates Active' : 'Offline/Fallback Mode'} />
+             </h2>
              <Link 
                 href="/notices" 
                 aria-label="View All Official Notices and Board Updates"

@@ -8,7 +8,8 @@
     "duration": "3 Years",
     "description": "A comprehensive study of computer hardware, software, and systems, preparing students for the dynamic tech industry.",
     "eligibility": "Intermediate (10+2) with MPC (Maths, Physics, Chemistry) or equivalent.",
-    "careerProspects": "Software Developer, IT Consultant, Systems Analyst, Data Engineer."
+    "careerProspects": "Software Developer, IT Consultant, Systems Analyst, Data Engineer.",
+    "seats": 125
   },
   {
     "id": "2",
@@ -19,7 +20,8 @@
     "duration": "3 Years",
     "description": "Deep dive into the fundamental laws of nature, from quantum mechanics to astrophysics.",
     "eligibility": "Intermediate (10+2) with Physics and Maths.",
-    "careerProspects": "Research Scientist, Lab Technician, Academician, Technical Writer."
+    "careerProspects": "Research Scientist, Lab Technician, Academician, Technical Writer.",
+    "seats": 25
   },
   {
     "id": "3",
@@ -30,7 +32,8 @@
     "duration": "3 Years",
     "description": "Exploration of matter and its changes, focusing on organic, inorganic, and physical chemistry.",
     "eligibility": "Intermediate (10+2) with Chemistry.",
-    "careerProspects": "Chemical Engineer, Pharmacist, Forensic Scientist, Research Associate."
+    "careerProspects": "Chemical Engineer, Pharmacist, Forensic Scientist, Research Associate.",
+    "seats": 225
   },
   {
     "id": "4",
@@ -41,7 +44,8 @@
     "duration": "3 Years",
     "description": "The study of plant life, ecology, and biology, crucial for environmental science and agriculture.",
     "eligibility": "Intermediate (10+2) with Bi.P.C (Biology, Physics, Chemistry).",
-    "careerProspects": "Botanist, Environmental Consultant, Plant Breeder, Ecologist."
+    "careerProspects": "Botanist, Environmental Consultant, Plant Breeder, Ecologist.",
+    "seats": 25
   },
   {
     "id": "5",
@@ -52,7 +56,20 @@
     "duration": "3 Years",
     "description": "Understanding animal biology, physiology, and evolution.",
     "eligibility": "Intermediate (10+2) with Bi.P.C (Biology, Physics, Chemistry).",
-    "careerProspects": "Zoologist, Wildlife Biologist, Veterinarian, Marine Biologist."
+    "careerProspects": "Zoologist, Wildlife Biologist, Veterinarian, Marine Biologist.",
+    "seats": 25
+  },
+  {
+    "id": "8",
+    "slug": "bsc-mathematics",
+    "title": "B.Sc. Honours in Mathematics",
+    "department": "Science",
+    "degree": "UG",
+    "duration": "3 Years",
+    "description": "Mastering logical reasoning, abstract structures, and mathematical modeling.",
+    "eligibility": "Intermediate (10+2) with Mathematics.",
+    "careerProspects": "Statistician, Actuary, Data Scientist, Research Scholar.",
+    "seats": 25
   },
   {
     "id": "6",
@@ -63,7 +80,8 @@
     "duration": "3 Years",
     "description": "Blending traditional commerce and accounting with modern computer software applications.",
     "eligibility": "Intermediate (10+2) in any stream.",
-    "careerProspects": "Accountant, Business Analyst, E-commerce Specialist, Finance Manager."
+    "careerProspects": "Accountant, Business Analyst, E-commerce Specialist, Finance Manager.",
+    "seats": 60
   },
   {
     "id": "7",
@@ -74,6 +92,19 @@
     "duration": "3 Years",
     "description": "Analytical study of political systems, theory, and international relations.",
     "eligibility": "Intermediate (10+2) in any stream.",
-    "careerProspects": "Policy Analyst, Civil Servant, Public Relations Officer, Journalist."
+    "careerProspects": "Policy Analyst, Civil Servant, Public Relations Officer, Journalist.",
+    "seats": 30
+  },
+  {
+    "id": "9",
+    "slug": "msc-organic-chemistry",
+    "title": "M.Sc. Organic Chemistry",
+    "department": "Science",
+    "degree": "PG",
+    "duration": "2 Years",
+    "description": "Advanced specialization in organic synthesis, reaction mechanisms, and molecular design.",
+    "eligibility": "B.Sc. with Chemistry as a major subject.",
+    "careerProspects": "Pharmaceutical Scientist, Research Chemist, Quality Control Analyst, Academician.",
+    "seats": 30
   }
 ]

@@ -21,6 +21,7 @@ export interface Course {
   description: string;
   eligibility: string;
   careerProspects: string;
+  seats: number;
 }
 
 export interface Faculty {

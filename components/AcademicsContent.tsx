@@ -151,9 +151,15 @@ export default function AcademicsContent() {
                                  {course.title}
                               </h4>
                               <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-50">
-                                 <div className="flex items-center gap-2 text-xs text-slate-600 font-bold">
-                                    <Clock size={14} className="text-academic-gold" />
-                                    {course.duration}
+                                 <div className="flex flex-col gap-1">
+                                    <div className="flex items-center gap-2 text-xs text-slate-600 font-bold">
+                                       <Clock size={14} className="text-academic-gold" />
+                                       {course.duration}
+                                    </div>
+                                    <div className="flex items-center gap-2 text-[10px] text-slate-400 font-black uppercase tracking-wider">
+                                       <Users size={12} className="text-academic-navy/30" />
+                                       {course.seats} Seats
+                                    </div>
                                  </div>
                                  <ArrowRight size={18} className="text-slate-200 group-hover:text-academic-gold group-hover:translate-x-2 transition-all" />
                               </div>
