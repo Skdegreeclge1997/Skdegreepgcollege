@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Download, Search, Filter, Mail, Phone, Calendar, User, GraduationCap, Loader2, X, Trash2 } from 'lucide-react';
-import * as XLSX from 'xlsx';
+import XLSX from 'xlsx-js-style';
 
 interface Inquiry {
   id: string;
@@ -126,47 +126,225 @@ export default function AdmissionsAdmin() {
   }, [searchTerm]);
 
   const exportToExcel = () => {
-    // 1. Prepare the data with professional headers
-    const reportData = inquiries.map((inq, index) => ({
-      'S.No': index + 1,
-      'Student Name': inq.name,
-      "Father's Name": inq.father_name || 'N/A',
-      'Email': inq.email,
-      'Phone': inq.phone,
-      'Course Applied': inq.course,
-      'Group': inq.message.split('|')[0].replace('Group: ', '').trim(),
-      'Status': inq.status || 'New',
-      'Applied Date': new Date(inq.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }),
-      'Address': inq.message.split('|')[1]?.replace('Address: ', '').trim() || 'N/A',
-      'Application ID': inq.id.substring(0, 8).toUpperCase()
-    }));
+    // ── Color Palette ──
+    const DARK_GREEN  = "1B5E20";
+    const MED_GREEN   = "2E7D32";
+    const LIGHT_GREEN = "E8F5E9";
+    const HDR_GREEN   = "388E3C";
+    const GOLD        = "F9A825";
+    const ROW_ALT     = "F1F8E9";
+    const GREY        = "757575";
 
-    // 2. Create worksheet and add data starting from row 8
-    const worksheet = XLSX.utils.aoa_to_sheet([[]]);
-    XLSX.utils.sheet_add_json(worksheet, reportData, { origin: 'A8' });
+    const thinBorder = {
+      top:    { style: "thin", color: { rgb: "CCCCCC" } },
+      bottom: { style: "thin", color: { rgb: "CCCCCC" } },
+      left:   { style: "thin", color: { rgb: "CCCCCC" } },
+      right:  { style: "thin", color: { rgb: "CCCCCC" } },
+    };
 
-    // 3. Add Custom Branding Headers (Rows 1-7)
-    XLSX.utils.sheet_add_aoa(worksheet, [
-      ['S.K. DEGREE COLLEGE & PG COLLEGE'],
-      ['Affiliated to Andhra University | Established in 2005'],
-      ['School Nagar, Ayyannapet Junction, Vizianagaram, Andhra Pradesh'],
-      ['Ph: 94412 53163 | Email: arunodayaes@yahoo.com | www.skdegreecollege.com'],
-      [''], // Divider
-      ['ONLINE APPLICATION LIST – ADMISSIONS 2026-27'],
-      [`Report Generated: ${new Date().toLocaleString('en-IN')}`]
-    ], { origin: 'A1' });
+    const hdrBorder = {
+      top:    { style: "thin", color: { rgb: MED_GREEN } },
+      bottom: { style: "thin", color: { rgb: MED_GREEN } },
+      left:   { style: "thin", color: { rgb: MED_GREEN } },
+      right:  { style: "thin", color: { rgb: MED_GREEN } },
+    };
 
-    // 4. Create workbook and save
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Admission_Report");
-    
-    // Auto-size columns (basic)
-    const wscols = [
-      {wch: 6}, {wch: 25}, {wch: 25}, {wch: 30}, {wch: 15}, {wch: 25}, {wch: 12}, {wch: 12}, {wch: 15}, {wch: 40}, {wch: 15}
+    // ── Prepare Data ──
+    const headers = ["S.No", "Student Name", "Father's Name", "Email", "Phone", "Course Applied", "Group", "Status", "Applied Date", "Address", "Application ID"];
+    const totalCols = headers.length; // 11 = A..K
+
+    const dataRows = inquiries.map((inq, i) => [
+      i + 1,
+      inq.name,
+      inq.father_name || "N/A",
+      inq.email,
+      inq.phone,
+      inq.course,
+      inq.message.split("|")[0].replace("Group: ", "").trim(),
+      inq.status || "New",
+      new Date(inq.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" }),
+      inq.message.split("|")[1]?.replace("Address: ", "").trim() || "N/A",
+      inq.id.substring(0, 8).toUpperCase(),
+    ]);
+
+    // ── Build AOA (array of arrays) ──
+    const now = new Date();
+    const dateStr = now.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }) + " | " + now.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true });
+
+    const aoa: any[][] = [
+      /* Row 1 */ ["", "S.K. DEGREE COLLEGE & PG COLLEGE", ...Array(totalCols - 2).fill("")],
+      /* Row 2 */ ["Affiliated to Andhra University | Established in 2005", ...Array(totalCols - 1).fill("")],
+      /* Row 3 */ ["School Nagar, Ayyannapet Junction, Vizianagaram, Andhra Pradesh", ...Array(totalCols - 1).fill("")],
+      /* Row 4 */ ["Ph: 94412 53163 | Email: arunodayaes@yahoo.com | www.skdegreecollege.com", ...Array(totalCols - 1).fill("")],
+      /* Row 5 */ Array(totalCols).fill(""),
+      /* Row 6 */ ["\u00A0\u00A0ONLINE APPLICATION LIST \u2013 ADMISSIONS 2026-27", ...Array(totalCols - 1).fill("")],
+      /* Row 7 */ [`Date of Printing: ${dateStr}`, ...Array(totalCols - 1).fill("")],
+      /* Row 8 */ headers,
+      ...dataRows,
+      /* Summary */ [`Total Applications Received: ${dataRows.length}`, ...Array(totalCols - 1).fill("")],
+      /* blank */  Array(totalCols).fill(""),
+      /* Footer */ ["This is a computer-generated report from the S.K. Degree College online admission portal. For queries, contact the college administration.", ...Array(totalCols - 1).fill("")],
     ];
-    worksheet['!cols'] = wscols;
 
-    XLSX.writeFile(workbook, `SK_College_Admission_Report_${new Date().getFullYear()}.xlsx`);
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+
+    // ── Merges ──
+    const lastCol = totalCols - 1;
+    ws["!merges"] = [
+      { s: { r: 0, c: 1 }, e: { r: 0, c: lastCol } },   // Row 1: B1:K1
+      { s: { r: 1, c: 0 }, e: { r: 1, c: lastCol } },   // Row 2
+      { s: { r: 2, c: 0 }, e: { r: 2, c: lastCol } },   // Row 3
+      { s: { r: 3, c: 0 }, e: { r: 3, c: lastCol } },   // Row 4
+      { s: { r: 4, c: 0 }, e: { r: 4, c: lastCol } },   // Row 5 divider
+      { s: { r: 5, c: 0 }, e: { r: 5, c: lastCol } },   // Row 6
+      { s: { r: 6, c: 0 }, e: { r: 6, c: lastCol } },   // Row 7
+      // Summary row
+      { s: { r: 8 + dataRows.length, c: 0 }, e: { r: 8 + dataRows.length, c: lastCol } },
+      // Footer row
+      { s: { r: 10 + dataRows.length, c: 0 }, e: { r: 10 + dataRows.length, c: lastCol } },
+    ];
+
+    // ── Column Widths ──
+    ws["!cols"] = [
+      { wch: 5 }, { wch: 22 }, { wch: 20 }, { wch: 28 }, { wch: 14 },
+      { wch: 30 }, { wch: 12 }, { wch: 12 }, { wch: 22 }, { wch: 40 }, { wch: 20 },
+    ];
+
+    // ── Row Heights ──
+    ws["!rows"] = [
+      { hpt: 50 },  // Row 1
+      { hpt: 22 },  // Row 2
+      { hpt: 18 },  // Row 3
+      { hpt: 16 },  // Row 4
+      { hpt: 8 },   // Row 5 divider
+      { hpt: 24 },  // Row 6
+      { hpt: 16 },  // Row 7
+      { hpt: 30 },  // Row 8 headers
+    ];
+
+    // ── Helper: apply style to every cell in a row ──
+    const fillRow = (row: number, style: any) => {
+      for (let c = 0; c < totalCols; c++) {
+        const addr = XLSX.utils.encode_cell({ r: row, c });
+        if (!ws[addr]) ws[addr] = { v: "", t: "s" };
+        ws[addr].s = { ...ws[addr].s, ...style };
+      }
+    };
+
+    // ── Row 1: Dark green, white bold 20 ──
+    fillRow(0, {
+      fill: { fgColor: { rgb: DARK_GREEN } },
+      font: { name: "Arial", sz: 20, bold: true, color: { rgb: "FFFFFF" } },
+      alignment: { horizontal: "center", vertical: "center" },
+    });
+
+    // ── Row 2: Medium green ──
+    fillRow(1, {
+      fill: { fgColor: { rgb: MED_GREEN } },
+      font: { name: "Arial", sz: 12, bold: true, color: { rgb: "FFFFFF" } },
+      alignment: { horizontal: "center", vertical: "center" },
+    });
+
+    // ── Row 3: Address ──
+    fillRow(2, {
+      font: { name: "Arial", sz: 10, color: { rgb: DARK_GREEN } },
+      alignment: { horizontal: "center", vertical: "center" },
+    });
+
+    // ── Row 4: Contact ──
+    fillRow(3, {
+      font: { name: "Arial", sz: 9, italic: true, color: { rgb: GREY } },
+      alignment: { horizontal: "center", vertical: "center" },
+    });
+
+    // ── Row 5: Gold divider ──
+    fillRow(4, {
+      fill: { fgColor: { rgb: GOLD } },
+    });
+
+    // ── Row 6: Report title ──
+    fillRow(5, {
+      fill: { fgColor: { rgb: LIGHT_GREEN } },
+      font: { name: "Arial", sz: 13, bold: true, color: { rgb: DARK_GREEN } },
+      alignment: { horizontal: "center", vertical: "center" },
+    });
+
+    // ── Row 7: Date ──
+    fillRow(6, {
+      font: { name: "Arial", sz: 9, italic: true, color: { rgb: GREY } },
+      alignment: { horizontal: "right", vertical: "center" },
+    });
+
+    // ── Row 8: Column headers ──
+    fillRow(7, {
+      fill: { fgColor: { rgb: HDR_GREEN } },
+      font: { name: "Arial", sz: 10, bold: true, color: { rgb: "FFFFFF" } },
+      alignment: { horizontal: "center", vertical: "center" },
+      border: hdrBorder,
+    });
+
+    // ── Data rows (row index 8+) ──
+    const STATUS_COLORS: Record<string, { bg: string; fg: string }> = {
+      "New":       { bg: "E3F2FD", fg: "1565C0" },
+      "Contacted": { bg: "FFF3E0", fg: "E65100" },
+      "Confirmed": { bg: "E8F5E9", fg: "2E7D32" },
+      "Processed": { bg: "E8F5E9", fg: "2E7D32" },
+      "Rejected":  { bg: "FFEBEE", fg: "C62828" },
+    };
+
+    for (let r = 0; r < dataRows.length; r++) {
+      const rowIdx = 8 + r;
+      const isEven = r % 2 === 1;
+
+      for (let c = 0; c < totalCols; c++) {
+        const addr = XLSX.utils.encode_cell({ r: rowIdx, c });
+        if (!ws[addr]) ws[addr] = { v: "", t: "s" };
+
+        const cellStyle: any = {
+          font: { name: "Arial", sz: 9 },
+          alignment: { vertical: "center", wrapText: c === 9 },
+          border: thinBorder,
+        };
+
+        // Alternating row fill
+        if (isEven) {
+          cellStyle.fill = { fgColor: { rgb: ROW_ALT } };
+        }
+
+        // Status column (index 7) — color badge
+        if (c === 7) {
+          const status = String(dataRows[r][7]);
+          const sc = STATUS_COLORS[status];
+          if (sc) {
+            cellStyle.fill = { fgColor: { rgb: sc.bg } };
+            cellStyle.font = { name: "Arial", sz: 9, bold: true, color: { rgb: sc.fg } };
+            cellStyle.alignment = { horizontal: "center", vertical: "center" };
+          }
+        }
+
+        ws[addr].s = cellStyle;
+      }
+    }
+
+    // ── Summary row ──
+    const summaryRowIdx = 8 + dataRows.length;
+    fillRow(summaryRowIdx, {
+      fill: { fgColor: { rgb: DARK_GREEN } },
+      font: { name: "Arial", sz: 10, bold: true, color: { rgb: "FFFFFF" } },
+      alignment: { horizontal: "center", vertical: "center" },
+    });
+
+    // ── Footer row ──
+    const footerRowIdx = 10 + dataRows.length;
+    fillRow(footerRowIdx, {
+      font: { name: "Arial", sz: 8, italic: true, color: { rgb: GREY } },
+      alignment: { horizontal: "center", vertical: "center" },
+    });
+
+    // ── Write file ──
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Admission Report");
+    XLSX.writeFile(wb, `SK_College_Admission_Report_${now.getFullYear()}.xlsx`);
   };
 
   const [activeTab, setActiveTab] = useState<'Admissions' | 'Contact'>('Admissions');
