@@ -41,11 +41,10 @@ STATUS_STYLES = {
 # Column config
 HEADERS = [
     "S.No", "Student Name", "Father's Name", "Email", "Phone",
-    "Course Applied", "Group", "Status", "Applied Date", "Address",
-    "Application ID"
+    "Course Applied", "Group", "Status", "Applied Date", "Address"
 ]
-COL_WIDTHS = [5, 22, 20, 28, 14, 30, 12, 12, 22, 40, 20]
-TOTAL_COLS = len(HEADERS)  # 11 columns (A–K)
+COL_WIDTHS = [5, 22, 20, 28, 14, 30, 12, 12, 22, 40]
+TOTAL_COLS = len(HEADERS)  # 10 columns (A-J)
 
 # Thin grey border for data cells
 THIN_BORDER = Border(
@@ -116,7 +115,6 @@ def generate_report():
             "Status":          r.get("status", "New") or "New",
             "Applied Date":    applied,
             "Address":         address,
-            "Application ID":  str(r.get("id", ""))[:8].upper(),
         })
 
     # ── 2. Create workbook ───────────────────────────────────────────────
@@ -130,10 +128,17 @@ def generate_report():
 
     # ── 3. HEADER SECTION (rows 1-7) ────────────────────────────────────
 
-    # Row 1 — College Name (dark green, white text, size 20)
+    # Row 1 — Logo in A1, College Name in B1:J1 (beside logo)
     ws.row_dimensions[1].height = 60
-    style_header_row(ws, 1, "S.K. DEGREE COLLEGE & PG COLLEGE",
-                     color=DARK_GREEN, font_color=WHITE, size=20, bold=True)
+    last_col = get_column_letter(TOTAL_COLS)
+    # Fill the entire row dark green
+    fill_row(ws, 1, DARK_GREEN)
+    # Merge B1:J1 for the college name (A1 is reserved for logo)
+    ws.merge_cells(f"B1:{last_col}1")
+    title_cell = ws.cell(row=1, column=2)  # B1
+    title_cell.value = "S.K. DEGREE COLLEGE & PG COLLEGE"
+    title_cell.font = Font(name="Arial", size=20, bold=True, color=WHITE)
+    title_cell.alignment = Alignment(horizontal="center", vertical="center")
 
     # Row 2 — Affiliation (medium green, white text, size 12)
     ws.row_dimensions[2].height = 22

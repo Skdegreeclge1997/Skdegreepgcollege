@@ -150,8 +150,8 @@ export default function AdmissionsAdmin() {
     };
 
     // ── Prepare Data ──
-    const headers = ["S.No", "Student Name", "Father's Name", "Email", "Phone", "Course Applied", "Group", "Status", "Applied Date", "Address", "Application ID"];
-    const totalCols = headers.length; // 11 = A..K
+    const headers = ["S.No", "Student Name", "Father's Name", "Email", "Phone", "Course Applied", "Group", "Status", "Applied Date", "Address"];
+    const totalCols = headers.length; // 10 = A..J
 
     const dataRows = inquiries.map((inq, i) => [
       i + 1,
@@ -164,7 +164,6 @@ export default function AdmissionsAdmin() {
       inq.status || "New",
       new Date(inq.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" }),
       inq.message.split("|")[1]?.replace("Address: ", "").trim() || "N/A",
-      inq.id.substring(0, 8).toUpperCase(),
     ]);
 
     // ── Build AOA (array of arrays) ──
@@ -207,7 +206,7 @@ export default function AdmissionsAdmin() {
     // ── Column Widths ──
     ws["!cols"] = [
       { wch: 5 }, { wch: 22 }, { wch: 20 }, { wch: 28 }, { wch: 14 },
-      { wch: 30 }, { wch: 12 }, { wch: 12 }, { wch: 22 }, { wch: 40 }, { wch: 20 },
+      { wch: 30 }, { wch: 12 }, { wch: 12 }, { wch: 22 }, { wch: 40 },
     ];
 
     // ── Row Heights ──
