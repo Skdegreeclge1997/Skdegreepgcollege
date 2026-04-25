@@ -141,8 +141,9 @@ export default function AdmissionsAdmin() {
       'Application ID': inq.id.substring(0, 8).toUpperCase()
     }));
 
-    // 2. Create worksheet
-    const worksheet = XLSX.utils.json_to_sheet(reportData, { origin: 'A8' });
+    // 2. Create worksheet and add data starting from row 8
+    const worksheet = XLSX.utils.aoa_to_sheet([[]]);
+    XLSX.utils.sheet_add_json(worksheet, reportData, { origin: 'A8' });
 
     // 3. Add Custom Branding Headers (Rows 1-7)
     XLSX.utils.sheet_add_aoa(worksheet, [
