@@ -81,19 +81,31 @@ export default function AdmissionsAdmin() {
     
     setIsDeleting(id);
     try {
-      // Precise targeting for delete
-      const { error } = await supabase
+      console.log('Attempting to delete inquiry:', id);
+      
+      const { error, data } = await supabase
         .from('inquiries')
         .delete()
-        .match({ id });
+        .eq('id', id)
+        .select();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Delete error from Supabase:', error);
+        throw error;
+      }
       
+      console.log('Delete successful, response data:', data);
+      
+      // Update local state
       setInquiries(prev => prev.filter(inq => inq.id !== id));
       setSelectedInquiry(null);
+      
+      // Force a silent refresh of the data from the server to ensure synchronization
+      await fetchInquiries(searchTerm);
+      
     } catch (err: any) {
-      console.error('Delete error:', err);
-      alert(`Failed to delete: ${err.message}`);
+      console.error('Final Delete catch:', err);
+      alert(`Delete failed: ${err.message || 'Unknown error'}`);
     } finally {
       setIsDeleting(null);
     }
@@ -115,6 +127,9 @@ export default function AdmissionsAdmin() {
   };
 
   const [activeTab, setActiveTab] = useState<'Admissions' | 'Contact'>('Admissions');
+
+  const admissionsCount = inquiries.filter(inq => inq.course !== 'Contact Inquiry').length;
+  const contactCount = inquiries.filter(inq => inq.course === 'Contact Inquiry').length;
 
   const filteredInquiries = inquiries.filter(inq => {
     if (activeTab === 'Admissions') return inq.course !== 'Contact Inquiry';
@@ -158,7 +173,7 @@ export default function AdmissionsAdmin() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`
-                px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all
+                px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2
                 ${activeTab === tab 
                   ? 'bg-white text-academic-navy shadow-sm' 
                   : 'text-slate-500 hover:text-slate-700'
@@ -166,6 +181,12 @@ export default function AdmissionsAdmin() {
               `}
             >
               {tab === 'Admissions' ? 'Applications' : 'Messages'}
+              <span className={`
+                px-2 py-0.5 rounded-full text-[10px]
+                ${activeTab === tab ? 'bg-academic-navy text-white' : 'bg-slate-200 text-slate-500'}
+              `}>
+                {tab === 'Admissions' ? admissionsCount : contactCount}
+              </span>
             </button>
           ))}
         </div>
@@ -176,8 +197,16 @@ export default function AdmissionsAdmin() {
             placeholder="Search by student name or course..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-100 rounded-2xl focus:border-academic-gold outline-none shadow-sm transition-all font-medium"
+            className="w-full pl-12 pr-12 py-3.5 bg-white border border-slate-100 rounded-2xl focus:border-academic-gold outline-none shadow-sm transition-all font-medium"
           />
+          {searchTerm && (
+            <button 
+              onClick={() => setSearchTerm('')}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-100 rounded-full transition-colors text-slate-400 hover:text-academic-navy"
+            >
+              <X size={16} />
+            </button>
+          )}
         </div>
       </div>
 

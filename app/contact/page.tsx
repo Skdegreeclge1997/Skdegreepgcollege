@@ -48,23 +48,29 @@ export default function ContactPage() {
     setErrorMsg('');
 
     try {
-      const { error } = await supabase.from('inquiries').insert([
+      console.log('Sending contact inquiry...', formData);
+      const { error, data } = await supabase.from('inquiries').insert([
         { 
-          name: formData.name, 
-          email: formData.email, 
-          phone: formData.phone,
-          message: formData.message,
-          course: 'Contact Inquiry' 
+          name: formData.name.trim(), 
+          email: formData.email.trim().toLowerCase(), 
+          phone: formData.phone.trim(),
+          message: formData.message.trim(),
+          course: 'Contact Inquiry',
+          status: 'New'
         }
-      ]);
-
-      if (error) throw error;
+      ]).select();
       
+      if (error) {
+        console.error('Supabase insert error details:', error);
+        throw error;
+      }
+      
+      console.log('Inquiry sent successfully:', data);
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
-    } catch (err) {
-      console.error('Contact form error:', err);
-      setErrorMsg('Something went wrong. Please check your connection and try again.');
+    } catch (err: any) {
+      console.error('Full catch error in contact form:', err);
+      setErrorMsg(err.message || 'Something went wrong. Please check your connection and try again.');
       setStatus('error');
     }
   };
