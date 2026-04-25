@@ -24,6 +24,8 @@ export default function AdmissionsAdmin() {
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
 
+  const isMockMode = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
   async function fetchInquiries(searchQuery: string = '') {
     setIsLoading(true);
     try {
@@ -83,9 +85,9 @@ export default function AdmissionsAdmin() {
     try {
       console.log('Attempting to delete inquiry:', id);
       
-      const { error, data } = await supabase
+      const { error, data, count } = await supabase
         .from('inquiries')
-        .delete()
+        .delete({ count: 'exact' })
         .eq('id', id)
         .select();
       
@@ -94,7 +96,12 @@ export default function AdmissionsAdmin() {
         throw error;
       }
       
-      console.log('Delete successful, response data:', data);
+      if (count === 0) {
+        alert('Database reported 0 rows deleted. The record may have already been removed, or your account lacks permission to delete it. Please check RLS policies.');
+        return;
+      }
+      
+      console.log(`Delete successful, ${count} rows affected. data:`, data);
       
       // Update local state
       setInquiries(prev => prev.filter(inq => inq.id !== id));
@@ -139,6 +146,13 @@ export default function AdmissionsAdmin() {
 
   return (
     <div className="space-y-8 relative">
+      {isMockMode && (
+        <div className="p-4 bg-orange-50 border border-orange-200 text-orange-700 rounded-2xl font-bold text-sm flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full bg-orange-500 animate-ping" />
+          System running in MOCK MODE. Changes will not be saved to the database. Check your environment variables.
+        </div>
+      )}
+
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
@@ -332,7 +346,10 @@ export default function AdmissionsAdmin() {
                     </div>
                     <div>
                        <h2 className="text-2xl font-black tracking-tight">{selectedInquiry.name}</h2>
-                       <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Application Details</p>
+                       <div className="flex items-center gap-2 mt-1">
+                          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Application Details</p>
+                          <span className="text-[8px] px-1.5 py-0.5 bg-white/10 rounded text-slate-500 font-mono">ID: {selectedInquiry.id}</span>
+                       </div>
                     </div>
                  </div>
                  <button onClick={() => setSelectedInquiry(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors active:opacity-80">
