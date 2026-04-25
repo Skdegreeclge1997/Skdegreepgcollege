@@ -70,6 +70,7 @@ export default function AdmissionsForm() {
       const { error } = await supabase.from('inquiries').insert([
         { 
           name: data.name.trim(), 
+          father_name: data.father_name.trim(),
           email: email, 
           phone: phone,
           course: data.courseInterest,
@@ -115,16 +116,30 @@ export default function AdmissionsForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Full Name */}
         <div className="space-y-2">
-          <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
+          <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Student Name</label>
           <input
             {...register('name')}
             className={cn(
               "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
               errors.name ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
             )}
-            placeholder="Enter your full name"
+            placeholder="Enter student full name"
           />
           {errors.name && <p className="text-xs text-red-500 font-medium">{errors.name.message}</p>}
+        </div>
+
+        {/* Father's Name */}
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Father&apos;s Name</label>
+          <input
+            {...register('father_name')}
+            className={cn(
+              "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
+              errors.father_name ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
+            )}
+            placeholder="Enter father's name"
+          />
+          {errors.father_name && <p className="text-xs text-red-500 font-medium">{errors.father_name.message}</p>}
         </div>
 
         {/* Email */}

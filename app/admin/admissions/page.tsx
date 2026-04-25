@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 interface Inquiry {
   id: string;
   name: string;
+  father_name?: string;
   email: string;
   phone: string;
   course: string;
@@ -35,7 +36,7 @@ export default function AdmissionsAdmin() {
         .limit(100);
         
       if (searchQuery) {
-        query = query.or(`name.ilike.%${searchQuery}%,course.ilike.%${searchQuery}%`);
+        query = query.or(`name.ilike.%${searchQuery}%,course.ilike.%${searchQuery}%,father_name.ilike.%${searchQuery}%`);
       }
       
       const { data, error } = await query;
@@ -361,6 +362,13 @@ export default function AdmissionsAdmin() {
                              </div>
                           </div>
                        </div>
+                        <div>
+                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Father&apos;s Name</p>
+                           <div className="flex items-center gap-3 text-slate-600 font-bold">
+                              <User size={16} className="text-academic-gold" />
+                              {selectedInquiry.father_name || 'Not Provided'}
+                           </div>
+                        </div>
                        <div>
                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Interested Course</p>
                           <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl font-black text-sm uppercase">
