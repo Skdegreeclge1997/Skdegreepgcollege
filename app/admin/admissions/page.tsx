@@ -197,17 +197,17 @@ export default function AdmissionsAdmin() {
 
     // ── ROW 1: Logo + College Name ──
     ws.getRow(1).height = 55;
-    ws.mergeCells("B1:J1");
+    ws.mergeCells("A1:J1");
     fillRow(1, solidFill(DARK_GREEN),
       { name: "Arial", size: 20, bold: true, color: { argb: "FFFFFFFF" } },
       { horizontal: "center", vertical: "middle" }
     );
-    ws.getCell("B1").value = "S.K. DEGREE COLLEGE & PG COLLEGE";
+    ws.getCell("A1").value = "S.K. DEGREE COLLEGE & PG COLLEGE";
 
-    // Insert logo image in A1
+    // Insert logo image at column D (index 3)
     const logoId = wb.addImage({ base64: COLLEGE_LOGO_BASE64, extension: "jpeg" });
     ws.addImage(logoId, {
-      tl: { col: 0, row: 0 },
+      tl: { col: 3, row: 0 },
       ext: { width: 70, height: 50 },
     });
 
@@ -220,44 +220,37 @@ export default function AdmissionsAdmin() {
     );
     ws.getCell("A2").value = "Affiliated to Andhra University | Established in 2005";
 
-    // ── ROW 3: Address ──
-    ws.getRow(3).height = 18;
+    // ── ROW 3: Contact (Address row removed) ──
+    ws.getRow(3).height = 16;
     ws.mergeCells("A3:J3");
-    ws.getCell("A3").value = "School Nagar, Ayyannapet Junction, Vizianagaram, Andhra Pradesh";
-    ws.getCell("A3").font = { name: "Arial", size: 10, color: { argb: "FF" + DARK_GREEN } };
+    ws.getCell("A3").value = "Ph: 94412 53163 | Email: arunodayaes@yahoo.com | www.skdegreecollege.com";
+    ws.getCell("A3").font = { name: "Arial", size: 9, italic: true, color: { argb: "FF" + GREY_HEX } };
     ws.getCell("A3").alignment = { horizontal: "center", vertical: "middle" };
 
-    // ── ROW 4: Contact ──
-    ws.getRow(4).height = 16;
+    // ── ROW 4: Gold divider ──
+    ws.getRow(4).height = 8;
     ws.mergeCells("A4:J4");
-    ws.getCell("A4").value = "Ph: 94412 53163 | Email: arunodayaes@yahoo.com | www.skdegreecollege.com";
-    ws.getCell("A4").font = { name: "Arial", size: 9, italic: true, color: { argb: "FF" + GREY_HEX } };
-    ws.getCell("A4").alignment = { horizontal: "center", vertical: "middle" };
+    fillRow(4, solidFill(GOLD), {}, {});
 
-    // ── ROW 5: Gold divider ──
-    ws.getRow(5).height = 8;
+    // ── ROW 5: Report title ──
+    ws.getRow(5).height = 24;
     ws.mergeCells("A5:J5");
-    fillRow(5, solidFill(GOLD), {}, {});
-
-    // ── ROW 6: Report title ──
-    ws.getRow(6).height = 24;
-    ws.mergeCells("A6:J6");
-    fillRow(6, solidFill(LIGHT_GREEN),
+    fillRow(5, solidFill(LIGHT_GREEN),
       { name: "Arial", size: 13, bold: true, color: { argb: "FF" + DARK_GREEN } },
       { horizontal: "center", vertical: "middle" }
     );
-    ws.getCell("A6").value = "ONLINE APPLICATION LIST \u2013 ADMISSIONS 2026-27";
+    ws.getCell("A5").value = "ONLINE APPLICATION LIST \u2013 ADMISSIONS 2026-27";
 
-    // ── ROW 7: Date/Time ──
-    ws.getRow(7).height = 16;
-    ws.mergeCells("A7:J7");
-    ws.getCell("A7").value = `Date of Printing: ${dateStr}`;
-    ws.getCell("A7").font = { name: "Arial", size: 9, italic: true, color: { argb: "FF" + GREY_HEX } };
-    ws.getCell("A7").alignment = { horizontal: "right", vertical: "middle" };
+    // ── ROW 6: Date/Time ──
+    ws.getRow(6).height = 16;
+    ws.mergeCells("A6:J6");
+    ws.getCell("A6").value = `Date of Printing: ${dateStr}`;
+    ws.getCell("A6").font = { name: "Arial", size: 9, italic: true, color: { argb: "FF" + GREY_HEX } };
+    ws.getCell("A6").alignment = { horizontal: "right", vertical: "middle" };
 
-    // ── ROW 8: Column Headers ──
-    ws.getRow(8).height = 30;
-    const headerRow = ws.getRow(8);
+    // ── ROW 7: Column Headers ──
+    ws.getRow(7).height = 30;
+    const headerRow = ws.getRow(7);
     headers.forEach((h, i) => {
       const cell = headerRow.getCell(i + 1);
       cell.value = h;
@@ -277,7 +270,7 @@ export default function AdmissionsAdmin() {
     };
 
     dataRows.forEach((rowData, idx) => {
-      const rowNum = 9 + idx;
+      const rowNum = 8 + idx;
       const row = ws.getRow(rowNum);
       row.height = 20;
       const isEven = idx % 2 === 1;
@@ -306,7 +299,7 @@ export default function AdmissionsAdmin() {
     });
 
     // ── SUMMARY ROW ──
-    const summaryRowNum = 9 + dataRows.length;
+    const summaryRowNum = 8 + dataRows.length;
     ws.mergeCells(`A${summaryRowNum}:J${summaryRowNum}`);
     ws.getRow(summaryRowNum).height = 25;
     fillRow(summaryRowNum, solidFill(DARK_GREEN),
@@ -323,10 +316,10 @@ export default function AdmissionsAdmin() {
     ws.getCell(`A${footerRowNum}`).alignment = { horizontal: "center", vertical: "middle" };
 
     // ── FREEZE PANES ──
-    ws.views = [{ state: "frozen", ySplit: 8 }];
+    ws.views = [{ state: "frozen", ySplit: 7 }];
 
     // ── PRINT TITLE ROWS ──
-    ws.pageSetup.printTitlesRow = "1:8";
+    ws.pageSetup.printTitlesRow = "1:7";
 
     // ── DOWNLOAD ──
     const buffer = await wb.xlsx.writeBuffer();

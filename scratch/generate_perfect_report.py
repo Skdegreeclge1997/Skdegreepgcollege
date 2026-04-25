@@ -128,14 +128,12 @@ def generate_report():
 
     # ── 3. HEADER SECTION (rows 1-7) ────────────────────────────────────
 
-    # Row 1 — Logo in A1, College Name in B1:J1 (beside logo)
+    # Row 1 — Logo in D1, College Name centered across A1:J1
     ws.row_dimensions[1].height = 60
     last_col = get_column_letter(TOTAL_COLS)
-    # Fill the entire row dark green
     fill_row(ws, 1, DARK_GREEN)
-    # Merge B1:J1 for the college name (A1 is reserved for logo)
-    ws.merge_cells(f"B1:{last_col}1")
-    title_cell = ws.cell(row=1, column=2)  # B1
+    ws.merge_cells(f"A1:{last_col}1")
+    title_cell = ws.cell(row=1, column=1)
     title_cell.value = "S.K. DEGREE COLLEGE & PG COLLEGE"
     title_cell.font = Font(name="Arial", size=20, bold=True, color=WHITE)
     title_cell.alignment = Alignment(horizontal="center", vertical="center")
@@ -145,44 +143,35 @@ def generate_report():
     style_header_row(ws, 2, "Affiliated to Andhra University | Established in 2005",
                      color=MEDIUM_GREEN, font_color=WHITE, size=12, bold=True)
 
-    # Row 3 — Address (no fill, dark green text, size 10)
-    ws.row_dimensions[3].height = 18
-    last_col = get_column_letter(TOTAL_COLS)
+    # Row 3 — Contact (no fill, grey italic, size 9)
+    ws.row_dimensions[3].height = 16
     ws.merge_cells(f"A3:{last_col}3")
     c3 = ws.cell(row=3, column=1)
-    c3.value = "School Nagar, Ayyannapet Junction, Vizianagaram, Andhra Pradesh"
-    c3.font = Font(name="Arial", size=10, color=DARK_GREEN)
+    c3.value = "Ph: 94412 53163 | Email: arunodayaes@yahoo.com | www.skdegreecollege.com"
+    c3.font = Font(name="Arial", size=9, italic=True, color=GREY)
     c3.alignment = Alignment(horizontal="center", vertical="center")
 
-    # Row 4 — Contact (no fill, grey italic, size 9)
-    ws.row_dimensions[4].height = 16
+    # Row 4 — Gold divider
+    ws.row_dimensions[4].height = 8
     ws.merge_cells(f"A4:{last_col}4")
-    c4 = ws.cell(row=4, column=1)
-    c4.value = "Ph: 94412 53163 | Email: arunodayaes@yahoo.com | www.skdegreecollege.com"
-    c4.font = Font(name="Arial", size=9, italic=True, color=GREY)
-    c4.alignment = Alignment(horizontal="center", vertical="center")
+    fill_row(ws, 4, GOLD)
 
-    # Row 5 — Gold divider
-    ws.row_dimensions[5].height = 8
-    ws.merge_cells(f"A5:{last_col}5")
-    fill_row(ws, 5, GOLD)
-
-    # Row 6 — Report title (light green bg, dark green text, size 13)
-    ws.row_dimensions[6].height = 24
-    style_header_row(ws, 6, "ONLINE APPLICATION LIST – ADMISSIONS 2026-27",
+    # Row 5 — Report title (light green bg, dark green text, size 13)
+    ws.row_dimensions[5].height = 24
+    style_header_row(ws, 5, "ONLINE APPLICATION LIST – ADMISSIONS 2026-27",
                      color=LIGHT_GREEN, font_color=DARK_GREEN, size=13, bold=True)
 
-    # Row 7 — Timestamp (right-aligned, grey italic)
-    ws.row_dimensions[7].height = 16
-    ws.merge_cells(f"A7:{last_col}7")
-    c7 = ws.cell(row=7, column=1)
+    # Row 6 — Timestamp (right-aligned, grey italic)
+    ws.row_dimensions[6].height = 16
+    ws.merge_cells(f"A6:{last_col}6")
+    c6 = ws.cell(row=6, column=1)
     now_str = datetime.now().strftime("%d %B %Y | %I:%M %p")
-    c7.value = f"Date of Printing: {now_str}"
-    c7.font = Font(name="Arial", size=9, italic=True, color=GREY)
-    c7.alignment = Alignment(horizontal="right", vertical="center")
+    c6.value = f"Date of Printing: {now_str}"
+    c6.font = Font(name="Arial", size=9, italic=True, color=GREY)
+    c6.alignment = Alignment(horizontal="right", vertical="center")
 
-    # ── 4. COLUMN HEADERS (row 8) ───────────────────────────────────────
-    ws.row_dimensions[8].height = 30
+    # ── 4. COLUMN HEADERS (row 7) ───────────────────────────────────────
+    ws.row_dimensions[7].height = 30
     hdr_fill = PatternFill(start_color=HDR_GREEN, end_color=HDR_GREEN, fill_type="solid")
     hdr_font = Font(name="Arial", size=10, bold=True, color=WHITE)
     hdr_align = Alignment(horizontal="center", vertical="center")
@@ -193,7 +182,7 @@ def generate_report():
         bottom=Side(style="thin", color=MEDIUM_GREEN),
     )
     for col_num, h in enumerate(HEADERS, 1):
-        cell = ws.cell(row=8, column=col_num)
+        cell = ws.cell(row=7, column=col_num)
         cell.value = h
         cell.fill = hdr_fill
         cell.font = hdr_font
@@ -204,7 +193,7 @@ def generate_report():
     data_font = Font(name="Arial", size=9)
     alt_fill  = PatternFill(start_color=ROW_ALT, end_color=ROW_ALT, fill_type="solid")
 
-    current_row = 9
+    current_row = 8
     for idx, record in enumerate(rows):
         ws.row_dimensions[current_row].height = 20
         is_even = idx % 2 == 1  # alternate starting from second row
@@ -273,17 +262,17 @@ def generate_report():
                 img = XLImage(logo_path)
                 img.height = 75
                 img.width  = 75
-            ws.add_image(img, "A1")
+            ws.add_image(img, "D1")
         except Exception as e:
             print(f"[WARN] Logo insertion skipped: {e}")
 
     # ── 9. PRINT & FREEZE SETTINGS ──────────────────────────────────────
-    ws.freeze_panes = "A9"
+    ws.freeze_panes = "A8"
     ws.sheet_properties.pageSetUpPr.fitToPage = True
     ws.page_setup.orientation = ws.ORIENTATION_LANDSCAPE
     ws.page_setup.fitToWidth  = 1
     ws.page_setup.fitToHeight = 0
-    ws.print_title_rows = "1:8"
+    ws.print_title_rows = "1:7"
 
     # ── Save ─────────────────────────────────────────────────────────────
     wb.save(output_file)
