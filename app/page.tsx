@@ -302,7 +302,7 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: false, amount: 0.1 }}
         variants={fadeIn}
-        className="bg-slate-50 py-24"
+        className="bg-slate-50 py-16"
       >
         <div className="container mx-auto px-4 pt-4 pb-20">
           <div className="flex flex-col md:flex-row items-end justify-between mb-8 gap-6">
@@ -336,9 +336,9 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="bg-slate-50 py-24 border-t border-slate-100 overflow-hidden"
+        className="bg-slate-50 py-16 border-t border-slate-100 overflow-hidden"
       >
-        <div className="container mx-auto px-4 mb-12">
+        <div className="container mx-auto px-4 mb-8">
           <div className="flex items-center justify-between">
              <div className="space-y-1">
                 <h2 className="text-3xl md:text-4xl font-display font-black text-academic-navy">Campus Gallery</h2>
@@ -409,7 +409,7 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="bg-slate-100 py-24"
+        className="bg-slate-100 py-16"
       >
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4">
@@ -477,10 +477,10 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="bg-white py-24"
+        className="bg-white py-16"
       >
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10">
             <div className="text-academic-gold text-xs font-black uppercase tracking-[0.3em] mb-4">Student Voices</div>
             <h2 className="text-4xl md:text-5xl font-display font-bold text-academic-navy mb-6">What Our Alumni Say</h2>
             <p className="text-slate-500 text-sm md:text-base">Thousands of graduates are out there making a difference. Here&apos;s what some of them have to say about their journey.</p>
@@ -495,9 +495,9 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="bg-white py-24"
+        className="bg-white py-16"
       >
-        <div className="container mx-auto px-4 pt-4 pb-12">
+        <div className="container mx-auto px-4 pt-4 pb-8">
           <div className="flex items-center justify-between mb-8">
              <h2 className="text-3xl font-display font-bold text-academic-navy flex items-center gap-3">
                 Notice Board
@@ -554,8 +554,8 @@ export default function LandingPage() {
       </motion.section>
 
       {/* 7. CTA + Footer Section */}
-      <section className="bg-slate-50 pt-24 pb-0 flex flex-col justify-between">
-        <div className="container mx-auto px-4 mb-12">
+      <section className="bg-slate-50 pt-16 pb-0 flex flex-col justify-between">
+        <div className="container mx-auto px-4 mb-10">
            <div className="max-w-4xl mx-auto bg-white border border-slate-200 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-academic-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <div className="text-center md:text-left relative z-10">
