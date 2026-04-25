@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
-import { Download, Search, Filter, Mail, Phone, Calendar, User, GraduationCap, Loader2, X, Trash2, ShieldCheck } from 'lucide-react';
+import { Download, Search, Filter, Mail, Phone, Calendar, User, GraduationCap, Loader2, X, Trash2 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
 interface Inquiry {
@@ -24,30 +24,6 @@ export default function AdmissionsAdmin() {
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [isLive, setIsLive] = useState(false);
 
-  async function submitTestInquiry() {
-    setIsLoading(true);
-    try {
-      const { error } = await supabase.from('inquiries').insert([
-        {
-          name: 'SYSTEM TEST',
-          email: 'test@example.com',
-          phone: '0000000000',
-          course: 'System Test',
-          message: 'Testing database connection from Admin module...',
-          status: 'Processed'
-        }
-      ]);
-
-      if (error) throw error;
-      alert('✅ Test inquiry submitted successfully! Refreshing list...');
-      fetchInquiries();
-    } catch (err: any) {
-      alert(`❌ TEST FAILED\nError: ${err.message || 'Unknown error'}\n\nThis usually means the 'inquiries' table is missing or RLS is blocking the insert.`);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   async function fetchInquiries(searchQuery: string = '') {
     setIsLoading(true);
     try {
@@ -68,27 +44,15 @@ export default function AdmissionsAdmin() {
       const { data, error } = await query;
       
       if (error) {
-        alert(`🚨 DATABASE ERROR\n${error.message}\n\nPlease check if the 'inquiries' table exists in your Supabase dashboard.`);
+        console.error('Supabase query error:', error);
         return;
       }
 
       if (data) {
         setInquiries(data);
-        
-        // If 0 rows are returned, check if it's because of RLS permissions
-        if (data.length === 0) {
-          const { count, error: countError } = await supabase
-            .from('inquiries')
-            .select('*', { count: 'exact', head: true });
-            
-          if (!countError && count !== null && count > 0) {
-            alert(`⚠️ PERMISSION ISSUE DETECTED\n\nYour database has ${count} inquiries, but the Admin Portal is not allowed to see them.\n\nFIX: Go to your Supabase SQL Editor and run this:\n\nALTER TABLE inquiries ENABLE ROW LEVEL SECURITY;\nCREATE POLICY "Allow admin select" ON inquiries FOR SELECT USING (true);`);
-          }
-        }
       }
     } catch (err: any) {
       console.error('Failed to fetch inquiries:', err);
-      alert(`🚨 CRITICAL ERROR\n${err.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -128,8 +92,8 @@ export default function AdmissionsAdmin() {
       
       setInquiries(prev => prev.filter(inq => inq.id !== id));
       setSelectedInquiry(null);
-    } catch (err) {
-      alert('Failed to delete inquiry');
+    } catch (err: any) {
+      alert(`Failed to delete inquiry: ${err.message}`);
     }
   }
 
@@ -170,14 +134,6 @@ export default function AdmissionsAdmin() {
            >
              <Download size={20} />
              Export
-           </button>
-           <button 
-             onClick={submitTestInquiry}
-             className="flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 font-bold rounded-xl border border-red-100 hover:bg-red-100 transition-all active:scale-95 text-xs"
-             title="Run a database write/read test"
-           >
-             <ShieldCheck size={18} />
-             Test DB
            </button>
            <button 
              onClick={() => fetchInquiries(searchTerm)}
