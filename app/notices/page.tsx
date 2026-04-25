@@ -1,6 +1,5 @@
 import React from 'react';
 import NoticeCard from '@/components/NoticeCard';
-import noticesData from '@/lib/data/notices.json';
 import { Notice } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { Bell, GraduationCap, Calendar, Info } from 'lucide-react';
@@ -18,17 +17,14 @@ export default async function NoticeBoardPage() {
   const { data: dbNotices } = await supabase
     .from('notices')
     .select('*')
-    .order('isPinned', { ascending: false })
+    .order('is_pinned', { ascending: false })
     .order('date', { ascending: false });
 
-  // Use DB data if available, otherwise fallback to local JSON
-  const isLiveData = dbNotices && dbNotices.length > 0;
-  const allNotices = isLiveData
-    ? (dbNotices as Notice[]) 
-    : (noticesData as Notice[]);
+  // Only use live DB data
+  const allNotices = (dbNotices || []) as Notice[];
 
   // Split notices into categories matching home page
-  const academicNotices = allNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.isPinned);
+  const academicNotices = allNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.is_pinned);
   const admissionEvents = allNotices.filter(n => ['Admission', 'Event', 'Holiday'].includes(n.category));
 
   return (
@@ -47,11 +43,6 @@ export default async function NoticeBoardPage() {
             Stay informed with the latest academic schedules, admission updates, and campus events. 
             All official announcements are posted here in real-time.
           </p>
-          <div className="flex justify-center mt-4">
-             <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border ${isLiveData ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-amber-50 text-amber-600 border-amber-100'}`}>
-                {isLiveData ? '● Live Feed Connected' : '○ Demo Archive Mode'}
-             </span>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">

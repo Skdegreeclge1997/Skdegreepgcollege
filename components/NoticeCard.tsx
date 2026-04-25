@@ -38,14 +38,14 @@ export default function NoticeCard({ notice }: NoticeCardProps) {
           <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${getCategoryStyles(notice.category)}`}>
             {notice.category}
           </span>
-          {notice.isPinned && (
+          {notice.is_pinned && (
             <Pin size={12} className="text-academic-gold fill-current" />
           )}
         </div>
 
         <h3 className="text-sm md:text-base font-bold text-academic-navy leading-snug group-hover:text-academic-gold transition-colors duration-300 line-clamp-2">
           {notice.title}
-          {notice.isPinned && <span className="new-badge ml-2">URGENT</span>}
+          {notice.is_pinned && <span className="new-badge ml-2">URGENT</span>}
         </h3>
 
         <div className="flex items-center gap-3 mt-2">

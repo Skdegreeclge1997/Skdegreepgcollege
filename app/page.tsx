@@ -6,9 +6,7 @@ import Link from 'next/link';
 import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import NoticeCard from '@/components/NoticeCard';
-import noticesData from '@/lib/data/notices.json';
 import { Notice, GalleryItem } from '@/lib/types';
-import initialGalleryData from '@/lib/data/gallery.json';
 import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
 import YouTubeFacade from '@/components/YouTubeFacade';
@@ -23,22 +21,16 @@ const ThreeBackground = dynamic(() => import('@/components/Visuals').then(mod =>
 
 import { supabase } from '@/lib/supabase';
 
-const initialNotices = (noticesData as Notice[]).slice(0, 3);
-const initialAllGallery = initialGalleryData as GalleryItem[];
-const initialPhotoGallery = initialAllGallery.filter(item => item.category !== 'Video').slice(0, 6);
-const initialVideoGallery = initialAllGallery.filter(item => item.category === 'Video').slice(0, 3);
-
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } }
 };
 
 export default function LandingPage() {
-  const [photoGallery, setPhotoGallery] = React.useState<GalleryItem[]>(initialPhotoGallery);
-  const [videoGallery, setVideoGallery] = React.useState<GalleryItem[]>(initialVideoGallery);
-  const [recentNotices, setRecentNotices] = React.useState<Notice[]>(initialNotices);
+  const [photoGallery, setPhotoGallery] = React.useState<GalleryItem[]>([]);
+  const [videoGallery, setVideoGallery] = React.useState<GalleryItem[]>([]);
+  const [recentNotices, setRecentNotices] = React.useState<Notice[]>([]);
   const [activeTab, setActiveTab] = React.useState<'text' | 'video'>('text');
-  const [isNoticesLive, setIsNoticesLive] = React.useState(false);
 
   React.useEffect(() => {
     const fetchGallery = async () => {
@@ -57,13 +49,12 @@ export default function LandingPage() {
       const { data, error } = await supabase
         .from('notices')
         .select('*')
-        .order('isPinned', { ascending: false })
+        .order('is_pinned', { ascending: false })
         .order('date', { ascending: false })
         .limit(3);
       
-      if (!error && data && data.length > 0) {
+      if (!error && data) {
         setRecentNotices(data as Notice[]);
-        setIsNoticesLive(true);
       }
     };
 
@@ -510,7 +501,6 @@ export default function LandingPage() {
           <div className="flex items-center justify-between mb-8">
              <h2 className="text-3xl font-display font-bold text-academic-navy flex items-center gap-3">
                 Notice Board
-                <span className={`w-2 h-2 rounded-full ${isNoticesLive ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-slate-300'}`} title={isNoticesLive ? 'Live Updates Active' : 'Offline/Fallback Mode'} />
              </h2>
              <Link 
                 href="/notices" 

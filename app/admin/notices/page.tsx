@@ -25,7 +25,7 @@ interface Notice {
   date: string;
   category: string;
   content: string;
-  isPinned: boolean;
+  is_pinned: boolean;
   pdf_url?: string;
   image_url?: string;
 }
@@ -51,9 +51,8 @@ export default function NoticeManager() {
       if (uploadError) throw uploadError;
       const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(filePath);
       setEditingNotice(prev => prev ? { ...prev, [type === 'pdf' ? 'pdf_url' : 'image_url']: publicUrl } : null);
-    } catch (error: unknown) {
-      const err = error as { message: string };
-      alert(`Error uploading ${type}: ` + err.message);
+    } catch (error: any) {
+      alert(`Error uploading ${type}: ` + error.message);
     } finally {
       setIsUploading(null);
     }
@@ -63,6 +62,7 @@ export default function NoticeManager() {
     const { data, error } = await supabase
       .from('notices')
       .select('*')
+      .order('is_pinned', { ascending: false })
       .order('date', { ascending: false });
     
     if (!error && data) {
@@ -72,10 +72,7 @@ export default function NoticeManager() {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchNotices();
-    }, 0);
-    return () => clearTimeout(timer);
+    fetchNotices();
   }, [fetchNotices]);
  
   const handleOpenModal = (item?: Notice) => {
@@ -84,7 +81,7 @@ export default function NoticeManager() {
       category: 'General',
       content: '',
       date: new Date().toISOString().split('T')[0],
-      isPinned: false
+      is_pinned: false
     });
     setIsModalOpen(true);
   };
@@ -102,26 +99,35 @@ export default function NoticeManager() {
  
     setIsSaving(true);
     try {
+      const payload = {
+        title: editingNotice.title,
+        content: editingNotice.content,
+        category: editingNotice.category,
+        date: editingNotice.date,
+        is_pinned: !!editingNotice.is_pinned,
+        pdf_url: editingNotice.pdf_url,
+        image_url: editingNotice.image_url
+      };
+
       if (editingNotice.id) {
         // Update
         const { error } = await supabase
           .from('notices')
-          .update(editingNotice)
+          .update(payload)
           .eq('id', editingNotice.id);
         if (error) throw error;
       } else {
         // Insert
         const { error } = await supabase
           .from('notices')
-          .insert([editingNotice]);
+          .insert([payload]);
         if (error) throw error;
       }
       
       await fetchNotices();
       handleCloseModal();
-    } catch (error: unknown) {
-      const err = error as { message: string };
-      alert('Error saving notice: ' + err.message);
+    } catch (error: any) {
+      alert('Error saving notice: ' + error.message);
     } finally {
       setIsSaving(false);
     }
@@ -178,8 +184,8 @@ export default function NoticeManager() {
             </div>
           ) : notices.map((notice) => (
             <div key={notice.id} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col md:flex-row items-start md:items-center gap-6 group hover:shadow-md transition-all">
-               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${notice.isPinned ? 'bg-academic-gold text-academic-navy' : 'bg-slate-50 text-slate-400'}`}>
-                  {notice.isPinned ? <Pin size={24} /> : <Bell size={24} />}
+               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${notice.is_pinned ? 'bg-academic-gold text-academic-navy' : 'bg-slate-50 text-slate-400'}`}>
+                  {notice.is_pinned ? <Pin size={24} /> : <Bell size={24} />}
                </div>
                <div className="flex-1 min-w-0 w-full">
                   <div className="flex items-center gap-3 mb-2">
@@ -292,16 +298,16 @@ export default function NoticeManager() {
                  </div>
               </div>
 
-              <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                 <input 
-                    type="checkbox" 
-                    id="isPinned"
-                    checked={editingNotice?.isPinned || false}
-                    onChange={e => setEditingNotice(p => ({...p!, isPinned: e.target.checked}))}
-                    className="w-5 h-5 rounded border-slate-300 text-academic-navy focus:ring-academic-navy cursor-pointer" 
-                 />
-                 <label htmlFor="isPinned" className="text-sm font-bold text-slate-600 cursor-pointer">Pin this notice to the top</label>
-              </div>
+               <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                  <input 
+                     type="checkbox" 
+                     id="is_pinned"
+                     checked={editingNotice?.is_pinned || false}
+                     onChange={e => setEditingNotice(p => ({...p!, is_pinned: e.target.checked}))}
+                     className="w-5 h-5 rounded border-slate-300 text-academic-navy focus:ring-academic-navy cursor-pointer" 
+                  />
+                  <label htmlFor="is_pinned" className="text-sm font-bold text-slate-600 cursor-pointer">Pin this notice to the top</label>
+               </div>
           </div>
 
           <div className="p-6 md:p-8 bg-slate-50 flex flex-col md:flex-row gap-4">

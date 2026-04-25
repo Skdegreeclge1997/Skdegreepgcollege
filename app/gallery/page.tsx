@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import GalleryView from '@/components/GalleryView';
 import MotionSection, { TextReveal } from '@/components/motion/MotionSection';
 import ParticleCanvas from '@/components/ParticleCanvas';
-import initialGalleryData from '@/lib/data/gallery.json';
 import { GalleryItem } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { Loader2, Camera, ImageIcon } from 'lucide-react';
@@ -21,10 +20,8 @@ export default function GalleryPage() {
         .select('*')
         .order('created_at', { ascending: false });
       
-      if (!error && data && data.length > 0) {
+      if (!error && data) {
         setItems(data);
-      } else {
-        setItems(initialGalleryData as GalleryItem[]);
       }
       setLoading(false);
     };

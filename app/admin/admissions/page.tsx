@@ -22,14 +22,10 @@ export default function AdmissionsAdmin() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
-  const [isLive, setIsLive] = useState(false);
 
   async function fetchInquiries(searchQuery: string = '') {
     setIsLoading(true);
     try {
-      // Check if Supabase is actually configured
-      const isConfigured = !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
-      setIsLive(isConfigured);
 
       let query = supabase
         .from('inquiries')
@@ -121,9 +117,6 @@ export default function AdmissionsAdmin() {
         <div>
           <div className="flex items-center gap-3 mb-1">
             <h1 className="text-3xl font-black text-academic-navy tracking-tight">Student Inquiries</h1>
-            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${isLive ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'}`}>
-               {isLive ? '● Live System' : '○ Mock Mode'}
-            </span>
           </div>
           <p className="text-slate-500 font-medium">Manage and track new admission applications.</p>
         </div>
