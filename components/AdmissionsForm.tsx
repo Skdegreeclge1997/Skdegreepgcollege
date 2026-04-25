@@ -44,14 +44,21 @@ export default function AdmissionsForm() {
   const onSubmit = async (data: InquiryFormValues) => {
     setIsSubmitting(true);
     try {
+      const email = data.email.trim().toLowerCase();
+      const phone = data.phone.trim();
+
       // 1. Check for duplicates (same email or phone)
+      // We use quotes around the values to handle special characters in emails
       const { data: existing, error: checkError } = await supabase
         .from('inquiries')
         .select('id')
-        .or(`email.eq.${data.email},phone.eq.${data.phone}`)
+        .or(`email.eq."${email}",phone.eq."${phone}"`)
         .maybeSingle();
 
-      if (checkError) throw checkError;
+      if (checkError) {
+        console.error('Duplicate check error:', checkError);
+        // We don't throw here to allow submission if the check fails for some reason
+      }
 
       if (existing) {
         alert('An application with this email or phone number already exists. Our team will contact you shortly!');
@@ -62,9 +69,9 @@ export default function AdmissionsForm() {
       // 2. Insert new inquiry
       const { error } = await supabase.from('inquiries').insert([
         { 
-          name: data.name, 
-          email: data.email, 
-          phone: data.phone,
+          name: data.name.trim(), 
+          email: email, 
+          phone: phone,
           course: data.courseInterest,
           message: `Group: ${data.intermediateGroup} | Address: ${data.address}`
         }
