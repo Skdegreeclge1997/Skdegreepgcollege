@@ -63,6 +63,8 @@ FINAL_DEPLOYMENT_PLAN.md
 deploy.ps1
 .planning/
 .code-review-graph/
+graphify-out/
+.agents/
 AGENTS.md
 CLAUDE.md
 naveenb.html
