@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Lato } from "next/font/google";
+import { EB_Garamond, Open_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/components/AuthProvider";
 
-const playfair = Playfair_Display({ weight: ['400', '500', '600', '700', '800', '900'], subsets: ["latin"], display: 'swap', variable: '--font-display' });
-const lato = Lato({ weight: ['100', '300', '400', '700', '900'], subsets: ["latin"], display: 'swap', variable: '--font-body' });
+const ebGaramond = EB_Garamond({ weight: ['400', '500', '600', '700', '800'], subsets: ["latin"], display: 'swap', variable: '--font-display' });
+const openSans = Open_Sans({ subsets: ["latin"], display: 'swap', variable: '--font-body' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://skdegreecollege.com'),
@@ -91,7 +91,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${lato.variable} ${playfair.variable} font-body min-h-screen flex flex-col`}>
+      <body className={`${openSans.variable} ${ebGaramond.variable} font-body min-h-screen flex flex-col`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
