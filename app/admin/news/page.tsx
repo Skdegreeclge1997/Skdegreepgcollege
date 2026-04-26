@@ -152,15 +152,30 @@ export default function NewsManager() {
     <div className="space-y-8 pb-20">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-black text-academic-navy tracking-tight">News Management</h1>
-          <p className="text-slate-500 font-medium">Create and manage college news with images and PDF reports.</p>
+          <h1 className="text-3xl font-black text-academic-navy tracking-tight flex items-center gap-3">
+            News Management
+            <span className={`text-xs px-3 py-1 rounded-full ${news.length >= 10 ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'}`}>
+              {news.length}/10 Stories Used
+            </span>
+          </h1>
+          <p className="text-slate-500 font-medium">Create and manage college news. Limited to 10 latest events.</p>
         </div>
         <button 
-          onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:opacity-80 active:translate-y-[1px]"
+          onClick={() => {
+            if (news.length >= 10) {
+              alert('Events limit reached (10). Please remove an old event before adding a new one.');
+              return;
+            }
+            handleOpenModal();
+          }}
+          className={`flex items-center gap-2 px-6 py-3 font-black rounded-xl transition-all shadow-xl active:translate-y-[1px] ${
+            news.length >= 10 
+            ? 'bg-slate-200 text-slate-500 cursor-not-allowed opacity-70' 
+            : 'bg-academic-navy text-white hover:bg-slate-800'
+          }`}
         >
           <Plus size={20} />
-          Create News Story
+          {news.length >= 10 ? 'Limit Reached' : 'Create News Story'}
         </button>
       </div>
  
