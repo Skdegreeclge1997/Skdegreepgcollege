@@ -14,13 +14,19 @@ export default function PWAInstallPrompt() {
       e.preventDefault();
       // Stash the event so it can be triggered later.
       setInstallPrompt(e);
-      // Show our custom prompt
-      setIsVisible(true);
+      
+      // Check if user previously dismissed it
+      const hasDismissed = localStorage.getItem('pwa_prompt_dismissed') === 'true';
+      
+      if (!hasDismissed && !window.matchMedia('(display-mode: standalone)').matches) {
+        // Show our custom prompt only if not dismissed and not already installed
+        setIsVisible(true);
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-    // Check if app is already installed
+    // Check if app is already installed natively
     if (window.matchMedia('(display-mode: standalone)').matches) {
       setIsVisible(false);
     }
@@ -83,7 +89,10 @@ export default function PWAInstallPrompt() {
               </div>
 
               <button 
-                onClick={() => setIsVisible(false)}
+                onClick={() => {
+                  localStorage.setItem('pwa_prompt_dismissed', 'true');
+                  setIsVisible(false);
+                }}
                 className="absolute -top-1 -right-1 p-1 text-slate-500 hover:text-white transition-colors"
               >
                 <X size={16} />
