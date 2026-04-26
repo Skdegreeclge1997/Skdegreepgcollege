@@ -16,7 +16,7 @@ export default function NewsSection() {
   const pauseTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { amount: 0.3 });
+  const isInView = useInView(sectionRef, { amount: 0.1 });
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -148,7 +148,7 @@ export default function NewsSection() {
                       {/* Content */}
                       <div className="flex-1 min-w-0">
                          <div className="flex items-center gap-4 mb-1.5">
-                            <span className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-academic-gold">
+                            <span className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-academic-gold">
                                <Tag size={10} />
                                {newsItems[idx].category}
                             </span>
@@ -176,10 +176,10 @@ export default function NewsSection() {
           
           {newsItems.length >= 5 && (
             <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
-               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                   Showing {listIndices.length} items · {newsItems.length} Total News
                </p>
-               <Link href="/news" className="text-[10px] font-black text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors underline underline-offset-4">
+               <Link href="/news" className="text-[10px] font-bold text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors underline underline-offset-4">
                   View Full Archive
                </Link>
             </div>
@@ -219,7 +219,7 @@ function SpotlightCard({ event, activeIndex, total, isPaused }: { event: News, a
         )}
 
         <div className="absolute top-6 left-6 z-10 flex gap-2">
-          <span className="px-4 py-1.5 bg-academic-gold text-academic-navy text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
+          <span className="px-4 py-1.5 bg-academic-gold text-academic-navy text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
             Featured Spotlight
           </span>
         </div>
@@ -228,7 +228,7 @@ function SpotlightCard({ event, activeIndex, total, isPaused }: { event: News, a
       {/* Content */}
       <div className="p-8 flex-1 flex flex-col">
         <div className="flex items-center gap-3 mb-4">
-           <div className="flex items-center gap-1.5 text-academic-gold font-black text-[10px] uppercase tracking-widest">
+           <div className="flex items-center gap-1.5 text-academic-gold font-bold text-[10px] uppercase tracking-widest">
               <Calendar size={12} />
               {new Date(event.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
            </div>
@@ -245,14 +245,14 @@ function SpotlightCard({ event, activeIndex, total, isPaused }: { event: News, a
         </p>
 
         <div className="mt-auto">
-          <Link href="/news" className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-academic-navy text-white font-black text-xs uppercase tracking-widest rounded-2xl hover:bg-academic-gold hover:text-academic-navy transition-all shadow-xl active:translate-y-0.5">
+          <Link href="/news" className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-academic-navy text-white font-bold text-xs uppercase tracking-widest rounded-2xl hover:bg-academic-gold hover:text-academic-navy transition-all shadow-xl active:translate-y-0.5">
             Read Full Story
           </Link>
         </div>
       </div>
 
       {/* Subtle index indicator */}
-      <div className="absolute bottom-8 right-8 text-[4rem] font-black text-slate-50 pointer-events-none select-none leading-none opacity-50 italic">
+      <div className="absolute bottom-8 right-8 text-[4rem] font-bold text-slate-50 pointer-events-none select-none leading-none opacity-50 italic">
         #{activeIndex + 1}
       </div>
     </div>
