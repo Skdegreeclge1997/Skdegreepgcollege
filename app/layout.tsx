@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/components/AuthProvider";
 
-const playfair = Playfair_Display({ subsets: ["latin"], display: 'swap', variable: '--font-display' });
+const playfair = Playfair_Display({ weight: ['400', '500', '600', '700', '800', '900'], subsets: ["latin"], display: 'swap', variable: '--font-display' });
 const lato = Lato({ weight: ['100', '300', '400', '700', '900'], subsets: ["latin"], display: 'swap', variable: '--font-body' });
 
 export const metadata: Metadata = {
