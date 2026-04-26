@@ -40,10 +40,6 @@ export default function NewsSection() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
-        // Reset to first if we scroll away
-        if (!entry.isIntersecting) {
-          setActiveIndex(0);
-        }
       },
       { threshold: 0.1 }
     );
@@ -57,6 +53,7 @@ export default function NewsSection() {
 
   // Auto-cycle logic (4 seconds)
   useEffect(() => {
+    // Only run if visible, not paused, and we have items
     if (!isVisible || isPaused || newsItems.length <= 1) return;
 
     const interval = setInterval(() => {
@@ -266,7 +263,7 @@ function SpotlightCard({ event, activeIndex, total, isPaused }: { event: News, a
       </div>
 
       {/* Subtle index indicator */}
-      <div className="absolute bottom-8 right-8 text-[4rem] font-bold text-slate-50 pointer-events-none select-none leading-none opacity-50 italic">
+      <div className="absolute bottom-8 right-8 text-[4rem] font-bold text-slate-50 pointer-events-none select-none leading-none opacity-50">
         #{activeIndex + 1}
       </div>
     </div>
