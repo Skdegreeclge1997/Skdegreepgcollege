@@ -19,7 +19,8 @@ import {
   Newspaper,
   Video,
   KeyRound,
-  UserCircle
+  UserCircle,
+  FileText
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -32,6 +33,7 @@ const navItems = [
   { name: 'Faculty', href: '/admin/faculty', icon: Users },
   { name: 'Photo Gallery', href: '/admin/gallery', icon: ImageIcon },
   { name: 'Video Gallery', href: '/admin/videos', icon: Video },
+  { name: 'NIRF Documents', href: '/admin/nirf', icon: FileText },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
