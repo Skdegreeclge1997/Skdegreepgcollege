@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
@@ -15,8 +15,25 @@ export default function NewsSection() {
   const [isPaused, setIsPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const pauseTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
+  // Callback ref — attaches observer the instant the DOM node appears
+  const sectionRef = useCallback((node: HTMLDivElement | null) => {
+    // Disconnect old observer
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    if (node) {
+      observerRef.current = new IntersectionObserver(
+        ([entry]) => setIsVisible(entry.isIntersecting),
+        { threshold: 0.1 }
+      );
+      observerRef.current.observe(node);
+    }
+  }, []);
+
+  // Fetch news data
   useEffect(() => {
     const fetchNews = async () => {
       const { data, error } = await supabase
@@ -35,25 +52,8 @@ export default function NewsSection() {
     fetchNews();
   }, []);
 
-  // Robust Visibility Detection
+  // Auto-cycle: runs every 4 seconds when visible & not paused
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Auto-cycle logic (4 seconds)
-  useEffect(() => {
-    // Only run if visible, not paused, and we have items
     if (!isVisible || isPaused || newsItems.length <= 1) return;
 
     const interval = setInterval(() => {
@@ -63,7 +63,14 @@ export default function NewsSection() {
     return () => clearInterval(interval);
   }, [isVisible, isPaused, newsItems.length]);
 
-  // Click handler (8-second pause)
+  // Cleanup pause timer on unmount
+  useEffect(() => {
+    return () => {
+      if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    };
+  }, []);
+
+  // Click handler — pauses auto-cycle for 8 seconds
   const handleItemClick = (index: number) => {
     setActiveIndex(index);
     setIsPaused(true);
@@ -85,7 +92,7 @@ export default function NewsSection() {
 
   if (newsItems.length === 0) return null;
 
-  // Edge Case: 1 item
+  // Edge Case: 1 item — no ticker needed
   if (newsItems.length === 1) {
     return (
       <div className="max-w-4xl mx-auto">
@@ -94,8 +101,8 @@ export default function NewsSection() {
     );
   }
 
-  // Determine list items (next items after active, up to 4)
-  const listIndices = [];
+  // Build the list of indices shown in the right-side ticker
+  const listIndices: number[] = [];
   const itemsToShow = Math.min(newsItems.length - 1, 4);
   for (let i = 1; i <= itemsToShow; i++) {
     listIndices.push((activeIndex + i) % newsItems.length);
@@ -141,7 +148,7 @@ export default function NewsSection() {
         <div className="flex-1 flex flex-col">
           <div className="relative space-y-3">
              <AnimatePresence mode="popLayout" initial={false}>
-                {listIndices.map((idx, order) => (
+                {listIndices.map((idx) => (
                   <motion.div
                     key={newsItems[idx].id}
                     layout
@@ -201,7 +208,7 @@ export default function NewsSection() {
   );
 }
 
-function SpotlightCard({ event, activeIndex, total, isPaused }: { event: News, activeIndex: number, total: number, isPaused: boolean }) {
+function SpotlightCard({ event, activeIndex, total, isPaused }: { event: News; activeIndex: number; total: number; isPaused: boolean }) {
   return (
     <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100 h-full flex flex-col group relative">
       {/* Hero Image */}
