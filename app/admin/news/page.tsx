@@ -185,8 +185,15 @@ export default function NewsManager() {
           <div className="col-span-full bg-white p-12 text-center rounded-3xl border border-slate-100 text-slate-400">
              No news stories found. Publish your first story.
           </div>
-        ) : news.map((item) => (
-          <div key={item.id} className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden group hover:shadow-xl transition-all duration-500 flex flex-col">
+        ) : news.map((item, index) => (
+          <div key={item.id} className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden group hover:shadow-xl transition-all duration-500 flex flex-col relative">
+             {index === news.length - 1 && news.length >= 10 && (
+               <div className="absolute top-4 right-4 z-10 animate-pulse">
+                 <span className="px-3 py-1 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
+                   Oldest - Consider Removing
+                 </span>
+               </div>
+             )}
              <div className="relative h-48">
                 <Image src={item.image_url} alt={item.title} fill className="object-cover" />
                 <div className="absolute top-4 left-4">
