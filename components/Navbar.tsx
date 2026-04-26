@@ -14,6 +14,7 @@ const navLinks = [
   { name: 'Gallery', href: '/gallery' },
   { name: 'Events', href: '/news' },
   { name: 'Notice Board', href: '/notices' },
+  { name: 'Nirf Rank', href: '/nirf' },
   { name: 'Contact', href: '/contact' },
 ];
 

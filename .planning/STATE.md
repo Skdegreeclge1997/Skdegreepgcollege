@@ -62,6 +62,7 @@ Progress: [██████████] 100% (Core) + [███████�
 
 ### Roadmap Evolution
 
+- Phase 02.1 inserted after Phase 2: NIRF Documents Portal (URGENT)
 - Phase 7 added: Final Project Deployment
 
 ### Decisions

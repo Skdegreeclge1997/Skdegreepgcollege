@@ -44,6 +44,16 @@ Plans:
 - [ ] 02-02: Implement Academics and Course Detail pages.
 - [ ] 02-03: Implement About and Faculty Directory pages.
 
+### Phase 02.1: NIRF Documents Portal (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 2
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 02.1 to break down)
+
 ### Phase 3: Dynamic Updates
 **Goal**: Bring the site alive with dynamic notice boards and media galleries.
 **Depends on**: Phase 2
