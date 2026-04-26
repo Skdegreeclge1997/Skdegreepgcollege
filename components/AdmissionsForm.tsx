@@ -25,6 +25,8 @@ const courses = [
   "M.Sc. Organic Chemistry"
 ];
 
+const intermediateGroups = ["MPC", "BiPC", "CEC", "HEC", "MEC", "Other"];
+
 export default function AdmissionsForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -32,14 +34,19 @@ export default function AdmissionsForm() {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
     reset
   } = useForm<InquiryFormValues>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
-      gender: "Male"
+      gender: "Male",
+      intermediateGroup: ""
     }
   });
+
+  const selectedGroup = watch('intermediateGroup');
 
   const onSubmit = async (data: InquiryFormValues) => {
     setIsSubmitting(true);
@@ -67,6 +74,8 @@ export default function AdmissionsForm() {
       }
 
       // 2. Insert new inquiry
+      const finalGroup = data.intermediateGroup === 'Other' ? (data.otherGroup || 'Other') : data.intermediateGroup;
+      
       const { error } = await supabase.from('inquiries').insert([
         { 
           name: data.name.trim(), 
@@ -74,7 +83,7 @@ export default function AdmissionsForm() {
           email: email, 
           phone: phone,
           course: data.courseInterest,
-          message: `Group: ${data.intermediateGroup} | Address: ${data.address}`
+          message: `Group: ${finalGroup} | Address: ${data.address}`
         }
       ]);
 
@@ -186,19 +195,46 @@ export default function AdmissionsForm() {
           </select>
         </div>
 
-        {/* Intermediate Group */}
-        <div className="space-y-2">
-          <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Intermediate Group (MPC/BiPC/etc)</label>
-          <input
-            {...register('intermediateGroup')}
-            className={cn(
-              "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
-              errors.intermediateGroup ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
-            )}
-            placeholder="e.g. MPC"
-          />
+        {/* Intermediate Group Filters */}
+        <div className="col-span-full space-y-3">
+          <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Intermediate Group</label>
+          <div className="flex flex-wrap gap-2">
+            {intermediateGroups.map(group => (
+              <button
+                key={group}
+                type="button"
+                onClick={() => setValue('intermediateGroup', group)}
+                className={cn(
+                  "px-4 py-2 rounded-full text-sm font-bold border transition-all duration-300",
+                  selectedGroup === group 
+                    ? "bg-academic-gold text-academic-navy border-academic-gold shadow-md" 
+                    : "bg-white text-slate-600 border-slate-200 hover:border-academic-gold/50"
+                )}
+              >
+                {group}
+              </button>
+            ))}
+          </div>
+          <input type="hidden" {...register('intermediateGroup')} />
           {errors.intermediateGroup && <p className="text-xs text-red-500 font-medium">{errors.intermediateGroup.message}</p>}
         </div>
+
+        {/* Other Group (Conditional) */}
+        {selectedGroup === 'Other' && (
+          <div className="col-span-full space-y-2 animate-in slide-in-from-top-2 duration-300">
+            <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Specify Your Group</label>
+            <input
+              {...register('otherGroup')}
+              autoFocus
+              className={cn(
+                "w-full px-3 py-2.5 text-sm rounded-lg border transition-all focus:ring-2 focus:ring-academic-gold/20 outline-none",
+                errors.otherGroup ? "border-red-300 bg-red-50" : "border-slate-200 focus:border-academic-gold"
+              )}
+              placeholder="Type your group name here..."
+            />
+            {errors.otherGroup && <p className="text-xs text-red-500 font-medium">{errors.otherGroup.message}</p>}
+          </div>
+        )}
 
         {/* Course Interest */}
         <div className="space-y-2">
