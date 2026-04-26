@@ -47,15 +47,15 @@ export default function Navbar({ isOpen, setIsOpen }: NavbarProps) {
           ${isOpen ? 'opacity-100 pointer-events-auto translate-x-0' : 'opacity-0 pointer-events-none translate-x-full'}
         `}
       >
-        <div className="flex flex-col h-full p-8 pt-32">
-          <nav className="flex flex-col space-y-5">
+        <div className="flex flex-col h-full p-6 pt-24 pb-6 overflow-y-auto">
+          <nav className="flex flex-col space-y-4">
             {navLinks.map((link, i) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  text-2xl md:text-3xl font-display font-bold text-white hover:text-academic-gold transition-all
+                  text-xl md:text-3xl font-display font-bold text-white hover:text-academic-gold transition-all
                   ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
                 `}
                 style={{ transitionDelay: `${i * 50}ms` }}
@@ -69,22 +69,22 @@ export default function Navbar({ isOpen, setIsOpen }: NavbarProps) {
                 window.dispatchEvent(new CustomEvent('open-search'));
               }}
               className={`
-                flex items-center gap-4 text-xl font-bold text-academic-gold transition-all
+                flex items-center gap-4 text-lg font-bold text-academic-gold transition-all
                 ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
               `}
               style={{ transitionDelay: `${navLinks.length * 50}ms` }}
             >
-              <Search size={32} />
+              <Search size={24} />
               Search
             </button>
           </nav>
 
-          <div className="mt-auto pt-8 border-t border-white/10">
-            <p className="text-academic-gold font-bold uppercase tracking-widest text-xs mb-4">Admissions 2026-27</p>
+          <div className="mt-8 pt-6 border-t border-white/10 shrink-0">
+            <p className="text-academic-gold font-bold uppercase tracking-widest text-xs mb-3">Admissions 2026-27</p>
             <Link 
               href="/admissions"
               onClick={() => setIsOpen(false)}
-              className="block w-full py-4 bg-academic-gold text-academic-navy text-center font-black rounded-2xl"
+              className="block w-full py-3 bg-academic-gold text-academic-navy text-center font-black rounded-2xl text-sm"
             >
               Apply Now
             </Link>
