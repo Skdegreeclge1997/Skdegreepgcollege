@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { News } from '@/lib/types';
@@ -13,10 +13,9 @@ export default function NewsSection() {
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const pauseTimerRef = useRef<NodeJS.Timeout | null>(null);
-  
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { amount: 0.1 });
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -36,16 +35,36 @@ export default function NewsSection() {
     fetchNews();
   }, []);
 
+  // Robust Visibility Detection
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        // Reset to first if we scroll away
+        if (!entry.isIntersecting) {
+          setActiveIndex(0);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   // Auto-cycle logic (4 seconds)
   useEffect(() => {
-    if (!isInView || isPaused || newsItems.length <= 1) return;
+    if (!isVisible || isPaused || newsItems.length <= 1) return;
 
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % newsItems.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isInView, isPaused, newsItems.length]);
+  }, [isVisible, isPaused, newsItems.length]);
 
   // Click handler (8-second pause)
   const handleItemClick = (index: number) => {
@@ -102,7 +121,7 @@ export default function NewsSection() {
               event={newsItems[activeIndex]} 
               activeIndex={activeIndex} 
               total={newsItems.length}
-              isPaused={isPaused || !isInView || newsItems.length <= 1}
+              isPaused={isPaused || !isVisible || newsItems.length <= 1}
             />
           </motion.div>
         </AnimatePresence>
@@ -174,13 +193,11 @@ export default function NewsSection() {
              </AnimatePresence>
           </div>
           
-          {newsItems.length >= 5 && (
-            <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-end">
-               <Link href="/news" className="text-[10px] font-bold text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors underline underline-offset-4">
-                  View Full Archive
-               </Link>
-            </div>
-          )}
+          <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-end">
+             <Link href="/news" className="text-[10px] font-bold text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors underline underline-offset-4">
+                View Full Archive
+             </Link>
+          </div>
         </div>
       </div>
     </div>
