@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import { FileText, Download, ExternalLink, ArrowRight, Eye } from 'lucide-react';
+import { FileText, ExternalLink, ArrowRight, Eye } from 'lucide-react';
 import Link from 'next/link';
 
 export const revalidate = 60;
@@ -83,23 +83,15 @@ export default async function NirfPage() {
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-3 mt-auto">
+                    <div className="mt-auto">
                       <a
                         href={doc.file_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 py-3 px-4 bg-academic-navy/5 hover:bg-academic-navy text-academic-navy hover:text-white font-bold rounded-2xl transition-colors duration-300 text-sm"
+                        className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-academic-navy/5 hover:bg-academic-navy text-academic-navy hover:text-white font-bold rounded-2xl transition-colors duration-300 text-sm"
                       >
                         <Eye size={18} />
                         View PDF
-                      </a>
-                      <a
-                        href={`${doc.file_url}?download`}
-                        download
-                        className="flex items-center justify-center gap-2 py-3 px-4 bg-academic-gold/10 hover:bg-academic-gold text-academic-gold hover:text-white font-bold rounded-2xl transition-colors duration-300 text-sm"
-                      >
-                        <Download size={18} />
-                        Download
                       </a>
                     </div>
                   </div>
