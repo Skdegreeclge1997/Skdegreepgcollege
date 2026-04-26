@@ -94,7 +94,7 @@ export default function LandingPage() {
           </motion.div>
           
           <motion.h1 
-            className="text-4xl sm:text-5xl md:text-8xl font-black mb-6 leading-tight tracking-tight"
+            className="text-4xl sm:text-5xl md:text-8xl font-body font-black mb-6 leading-tight tracking-tight"
             variants={fadeIn}
           >
             <span className="text-white">S.K. DEGREE</span> <span className="text-academic-gold">&</span> <br />
