@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, DM_Sans } from "next/font/google";
+import { Playfair_Display, Lato } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/components/AuthProvider";
 
-const inter = Inter({ subsets: ["latin"], display: 'swap', variable: '--font-inter' });
 const playfair = Playfair_Display({ subsets: ["latin"], display: 'swap', variable: '--font-display' });
-const dmSans = DM_Sans({ subsets: ["latin"], display: 'swap', variable: '--font-body' });
+const lato = Lato({ weight: ['100', '300', '400', '700', '900'], subsets: ["latin"], display: 'swap', variable: '--font-body' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://skdegreecollege.com'),
@@ -92,7 +91,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${inter.variable} ${playfair.variable} ${dmSans.variable} font-sans min-h-screen flex flex-col`}>
+      <body className={`${lato.variable} ${playfair.variable} font-body min-h-screen flex flex-col`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

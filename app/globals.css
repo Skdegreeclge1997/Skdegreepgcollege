@@ -5,9 +5,9 @@
   --color-academic-gold: #C5A028;
   --color-academic-gold-dark: #A68010;
   
-  --font-inter: var(--font-inter), sans-serif;
+  --font-inter: var(--font-body), sans-serif;
   --font-display: var(--font-display), "Playfair Display", serif;
-  --font-body: var(--font-body), "DM Sans", sans-serif;
+  --font-body: var(--font-body), "Lato", sans-serif;
   
   --color-cream: #F9F5EE;
 
@@ -54,7 +54,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @layer base {
   body {
-    @apply bg-[#FDFDFF] text-slate-600 font-sans antialiased text-base md:text-lg;
+    @apply bg-[#FDFDFF] text-slate-600 font-body antialiased text-base md:text-lg;
   }
   
   h1 { @apply text-4xl md:text-5xl lg:text-6xl font-black text-academic-navy tracking-tight leading-[1.1] text-balance; }
