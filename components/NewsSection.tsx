@@ -175,10 +175,7 @@ export default function NewsSection() {
           </div>
           
           {newsItems.length >= 5 && (
-            <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
-               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                  Showing {listIndices.length} items · {newsItems.length} Total News
-               </p>
+            <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-end">
                <Link href="/news" className="text-[10px] font-bold text-academic-navy uppercase tracking-widest hover:text-academic-gold transition-colors underline underline-offset-4">
                   View Full Archive
                </Link>
