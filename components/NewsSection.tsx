@@ -38,7 +38,7 @@ export default function NewsSection() {
 
   // Auto-cycle logic (4 seconds)
   useEffect(() => {
-    if (!isInView || isPaused || newsItems.length < 5) return;
+    if (!isInView || isPaused || newsItems.length <= 1) return;
 
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % newsItems.length);
@@ -78,17 +78,11 @@ export default function NewsSection() {
     );
   }
 
-  // Determine list items (next 4 items after active)
+  // Determine list items (next items after active, up to 4)
   const listIndices = [];
-  if (newsItems.length >= 5) {
-    for (let i = 1; i <= 4; i++) {
-      listIndices.push((activeIndex + i) % newsItems.length);
-    }
-  } else {
-    // Edge case: 2-4 items (Static list, no auto-scroll)
-    for (let i = 0; i < newsItems.length; i++) {
-      if (i !== activeIndex) listIndices.push(i);
-    }
+  const itemsToShow = Math.min(newsItems.length - 1, 4);
+  for (let i = 1; i <= itemsToShow; i++) {
+    listIndices.push((activeIndex + i) % newsItems.length);
   }
 
   return (
@@ -108,7 +102,7 @@ export default function NewsSection() {
               event={newsItems[activeIndex]} 
               activeIndex={activeIndex} 
               total={newsItems.length}
-              isPaused={isPaused || !isInView || newsItems.length < 5}
+              isPaused={isPaused || !isInView || newsItems.length <= 1}
             />
           </motion.div>
         </AnimatePresence>
@@ -117,7 +111,7 @@ export default function NewsSection() {
       {/* 2. Recent Activities Ticker (Right) */}
       <div className="lg:col-span-7 flex flex-col pt-2">
         <div className="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
-          <h4 className="font-display font-black text-xl text-academic-navy tracking-tight">Recent Activities</h4>
+          <h4 className="font-display font-bold text-xl text-academic-navy tracking-tight">Recent Activities</h4>
           <div className="flex gap-1">
              {Array.from({ length: Math.min(newsItems.length, 10) }).map((_, i) => (
                <div 
@@ -162,7 +156,7 @@ export default function NewsSection() {
                                {new Date(newsItems[idx].date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                             </span>
                          </div>
-                         <h5 className={`font-black text-lg transition-colors truncate ${
+                         <h5 className={`font-bold text-lg transition-colors truncate ${
                            activeIndex === idx ? 'text-academic-navy' : 'text-slate-700 group-hover:text-academic-navy'
                          }`}>
                            {newsItems[idx].title}
@@ -242,12 +236,12 @@ function SpotlightCard({ event, activeIndex, total, isPaused }: { event: News, a
            <div className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">{event.category}</div>
         </div>
 
-        <h3 className="text-2xl md:text-3xl font-display font-black text-academic-navy mb-4 leading-[1.1] tracking-tight group-hover:text-academic-navy/80 transition-colors">
+        <h3 className="text-2xl md:text-3xl font-display font-bold text-academic-navy mb-4 leading-[1.1] tracking-tight group-hover:text-academic-navy/80 transition-colors">
           {event.title}
         </h3>
         
-        <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-8 font-medium italic">
-          &quot;{event.description}&quot;
+        <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-8 font-medium">
+          {event.description}
         </p>
 
         <div className="mt-auto">

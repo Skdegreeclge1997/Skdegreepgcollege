@@ -315,15 +315,6 @@ export default function LandingPage() {
                 Stay informed with the latest happenings, achievements, and events from our vibrant campus community.
               </p>
             </div>
-            
-            <Link 
-              href="/news" 
-              aria-label="Explore Events Archive"
-              className="group flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-bold rounded-xl hover:bg-academic-gold hover:text-academic-navy transition-all duration-300 shadow-lg text-sm"
-            >
-              Explore Events Archive
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
           </div>
           
           <NewsSection />
