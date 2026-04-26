@@ -196,7 +196,7 @@ export default function AdmissionsForm() {
         </div>
 
         {/* Intermediate Group Filters */}
-        <div className="col-span-full space-y-3">
+        <div className="space-y-3">
           <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Intermediate Group</label>
           <div className="flex flex-wrap gap-2">
             {intermediateGroups.map(group => (
