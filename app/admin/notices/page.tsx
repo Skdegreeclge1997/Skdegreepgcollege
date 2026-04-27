@@ -73,11 +73,7 @@ export default function NoticeManager() {
   }, []);
 
   useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      fetchNotices();
-    }
-    return () => { isMounted = false; };
+    Promise.resolve().then(() => fetchNotices());
   }, [fetchNotices]);
  
   const handleOpenModal = (item?: Notice) => {

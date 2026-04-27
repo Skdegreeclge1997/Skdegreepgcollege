@@ -50,7 +50,7 @@ export default function AdmissionsAdmin() {
       if (data) {
         setInquiries(data);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch inquiries:', err);
     } finally {
       setIsLoading(false);
@@ -71,8 +71,9 @@ export default function AdmissionsAdmin() {
       if (selectedInquiry?.id === id) {
         setSelectedInquiry(prev => prev ? { ...prev, status: newStatus } : null);
       }
-    } catch (err: any) {
-      alert(`Failed to update status: ${err.message}`);
+    } catch (err: unknown) {
+      const error = err as Error;
+      alert(`Failed to update status: ${error.message}`);
     } finally {
       setIsUpdating(null);
     }
@@ -110,9 +111,10 @@ export default function AdmissionsAdmin() {
       // Force a silent refresh of the data from the server to ensure synchronization
       await fetchInquiries(searchTerm);
       
-    } catch (err: any) {
-      console.error('Final Delete catch:', err);
-      alert(`Delete failed: ${err.message || 'Unknown error'}`);
+    } catch (err: unknown) {
+      const error = err as Error;
+      console.error('Final Delete catch:', error);
+      alert(`Delete failed: ${error.message || 'Unknown error'}`);
     } finally {
       setIsDeleting(null);
     }

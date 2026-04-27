@@ -56,7 +56,7 @@ export default function GalleryManager() {
   }, []);
 
   useEffect(() => {
-    fetchImages();
+    Promise.resolve().then(() => fetchImages());
   }, [fetchImages]);
  
   const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,8 +128,9 @@ export default function GalleryManager() {
           if (dbError) throw dbError;
 
           updatePending(upload.id, { status: 'success' });
-        } catch (err: any) {
-          updatePending(upload.id, { status: 'error', error: err.message });
+        } catch (err: unknown) {
+          const error = err as Error;
+          updatePending(upload.id, { status: 'error', error: error.message });
         }
       }
 
@@ -155,8 +156,9 @@ export default function GalleryManager() {
     try {
       await supabase.from('gallery').delete().eq('id', id);
       await fetchImages();
-    } catch (error: any) {
-      alert('Error deleting: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as Error;
+      alert('Error deleting: ' + err.message);
     }
   };
  

@@ -51,11 +51,7 @@ export default function NirfManager() {
   }, []);
 
   useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      fetchDocuments();
-    }
-    return () => { isMounted = false; };
+    Promise.resolve().then(() => fetchDocuments());
   }, [fetchDocuments]);
  
   const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {

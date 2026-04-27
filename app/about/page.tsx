@@ -232,7 +232,7 @@ export default function AboutPage() {
                   </div>
 
                   <div className="relative">
-                    <span className="absolute -top-4 -left-2 text-6xl text-[#c9a84c]/20 font-serif leading-none">"</span>
+                    <span className="absolute -top-4 -left-2 text-6xl text-[#c9a84c]/20 font-serif leading-none">&quot;</span>
                     <p className="text-slate-600 italic leading-relaxed text-lg pl-6 relative z-10">
                       {person.message}
                     </p>
