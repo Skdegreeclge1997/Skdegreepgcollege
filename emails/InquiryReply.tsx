@@ -116,7 +116,7 @@ export const InquiryReplyEmail = ({
               www.skdegreecollege.com
             </a>
           </Text>
-          <Text style={footerNote}>
+          <Text style={footerNoteHidden}>
             Ref ID: {referenceId} • {new Date().getFullYear()} S.K. Degree & P.G. College
           </Text>
           <Text style={footerNote}>
@@ -337,4 +337,15 @@ const footerNote = {
   color: "#bbbbbb",
   margin: "0",
   fontFamily: 'Arial, sans-serif',
+};
+
+const footerNoteHidden = {
+  display: "none",
+  fontSize: "1px",
+  color: "#ffffff",
+  lineHeight: "1px",
+  maxHeight: "0px",
+  maxWidth: "0px",
+  opacity: 0,
+  overflow: "hidden",
 };
