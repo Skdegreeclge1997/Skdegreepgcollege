@@ -30,7 +30,7 @@ export async function submitContactMessage(formData: ContactFormValues) {
     const { data, error: emailError } = await resend.emails.send({
       from: 'admin@skdegreecollege.com',
       to: email,
-      reply_to: 'admin@skdegreecollege.com',
+      replyTo: 'admin@skdegreecollege.com',
       subject: 'Thank you for contacting SK Degree & PG College',
       react: InquiryReplyEmail({
         studentName: validatedData.name,
@@ -97,7 +97,7 @@ export async function submitInquiry(formData: InquiryFormValues) {
     const { data, error: emailError } = await resend.emails.send({
       from: 'admin@skdegreecollege.com',
       to: email,
-      reply_to: 'admin@skdegreecollege.com',
+      replyTo: 'admin@skdegreecollege.com',
       subject: 'Thank you for your inquiry - SK Degree & PG College',
       react: InquiryReplyEmail({
         studentName: validatedData.name,
