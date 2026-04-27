@@ -19,11 +19,13 @@ import { COLLEGE_LOGO_BASE64 } from "@/lib/logo-base64";
 interface InquiryReplyEmailProps {
   studentName: string;
   courseInterest: string;
+  referenceId?: string;
 }
 
 export const InquiryReplyEmail = ({
   studentName = "Student",
   courseInterest = "B.Com (Hons)",
+  referenceId = "SKD-INQ-" + new Date().getTime(),
 }: InquiryReplyEmailProps) => (
   <Html>
     <Head />
@@ -113,6 +115,9 @@ export const InquiryReplyEmail = ({
             <a href="https://skdegreecollege.com" style={footerLink}>
               www.skdegreecollege.com
             </a>
+          </Text>
+          <Text style={footerNote}>
+            Ref ID: {referenceId} • {new Date().getFullYear()} S.K. Degree & P.G. College
           </Text>
           <Text style={footerNote}>
             This is an automated message. Please do not reply directly to this email.

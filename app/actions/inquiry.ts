@@ -27,10 +27,14 @@ export async function submitContactMessage(formData: ContactFormValues) {
 
     if (insertError) throw insertError;
 
-    // 3. Render Email to HTML
+    // 3. Generate Reference ID
+    const referenceId = `SKD-${new Date().toISOString().split('T')[0].replace(/-/g, '')}-${Math.random().toString(36).substring(2, 5).toUpperCase()}`;
+
+    // 4. Render Email to HTML
     const emailHtml = await render(InquiryReplyEmail({
       studentName: validatedData.name,
       courseInterest: 'College Information',
+      referenceId,
     }));
 
     // 4. Send Professional Reply via Resend
@@ -97,10 +101,14 @@ export async function submitInquiry(formData: InquiryFormValues) {
 
     if (insertError) throw insertError;
 
-    // 4. Render Email to HTML
+    // 4. Generate Reference ID
+    const referenceId = `SKD-${new Date().toISOString().split('T')[0].replace(/-/g, '')}-${Math.random().toString(36).substring(2, 5).toUpperCase()}`;
+
+    // 5. Render Email to HTML
     const emailHtml = await render(InquiryReplyEmail({
       studentName: validatedData.name,
       courseInterest: validatedData.courseInterest,
+      referenceId,
     }));
 
     // 5. Send Professional Reply via Resend
