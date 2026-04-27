@@ -51,8 +51,9 @@ export default function NoticeManager() {
       if (uploadError) throw uploadError;
       const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(filePath);
       setEditingNotice(prev => prev ? { ...prev, [type === 'pdf' ? 'pdf_url' : 'image_url']: publicUrl } : null);
-    } catch (error: any) {
-      alert(`Error uploading ${type}: ` + error.message);
+    } catch (error: unknown) {
+      const err = error as Error;
+      alert(`Error uploading ${type}: ` + err.message);
     } finally {
       setIsUploading(null);
     }
@@ -72,7 +73,11 @@ export default function NoticeManager() {
   }, []);
 
   useEffect(() => {
-    fetchNotices();
+    let isMounted = true;
+    if (isMounted) {
+      fetchNotices();
+    }
+    return () => { isMounted = false; };
   }, [fetchNotices]);
  
   const handleOpenModal = (item?: Notice) => {
@@ -126,8 +131,9 @@ export default function NoticeManager() {
       
       await fetchNotices();
       handleCloseModal();
-    } catch (error: any) {
-      alert('Error saving notice: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as Error;
+      alert('Error saving notice: ' + err.message);
     } finally {
       setIsSaving(false);
     }

@@ -57,14 +57,27 @@ next-env.d.ts
 .cache/
 *.pem
 .eslintcache
-# ---- Project Management & Handoff ----
-CLIENT_HANDOFF.md
-FINAL_DEPLOYMENT_PLAN.md
-deploy.ps1
+
+# ---- Project Management & Internal Tools ----
 .planning/
+.agents/
 .code-review-graph/
 graphify-out/
-.agents/
 AGENTS.md
 CLAUDE.md
+FINAL_DEPLOYMENT_PLAN.md
+deploy.ps1
 naveenb.html
+
+# ---- Sensitive Documents & Handoff ----
+CLIENT_HANDOFF.md
+SK_College_Website_Handoff_2026.pdf
+*Handoff*
+project docs/
+scratch/
+*.pdf
+*.xlsx
+*.docx
+
+# ---- Source/Staging Assets (Not required for running) ----
+/images/

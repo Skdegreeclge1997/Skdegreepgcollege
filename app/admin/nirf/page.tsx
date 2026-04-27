@@ -51,7 +51,11 @@ export default function NirfManager() {
   }, []);
 
   useEffect(() => {
-    fetchDocuments();
+    let isMounted = true;
+    if (isMounted) {
+      fetchDocuments();
+    }
+    return () => { isMounted = false; };
   }, [fetchDocuments]);
  
   const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,8 +121,9 @@ export default function NirfManager() {
           if (dbError) throw dbError;
 
           updatePending(upload.id, { status: 'success' });
-        } catch (err: any) {
-          updatePending(upload.id, { status: 'error', error: err.message });
+        } catch (err: unknown) {
+          const error = err as Error;
+          updatePending(upload.id, { status: 'error', error: error.message });
         }
       }
 
@@ -144,8 +149,9 @@ export default function NirfManager() {
     try {
       await supabase.from('nirf_documents').delete().eq('id', id);
       await fetchDocuments();
-    } catch (error: any) {
-      alert('Error deleting: ' + error.message);
+    } catch (error: unknown) {
+      const err = error as Error;
+      alert('Error deleting: ' + err.message);
     }
   };
  

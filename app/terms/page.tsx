@@ -49,7 +49,7 @@ export default function TermsOfService() {
                 <li>Providing false information in admission inquiry forms.</li>
                 <li>Attempting to bypass security measures or access restricted administrative panels.</li>
                 <li>Using the website to distribute spam or malicious content.</li>
-                <li>Interfering with the website's performance or accessibility for other users.</li>
+                <li>Interfering with the website&apos;s performance or accessibility for other users.</li>
               </ul>
             </section>
 

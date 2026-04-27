@@ -68,9 +68,10 @@ export default function ContactPage() {
       console.log('Inquiry sent successfully:', data);
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Full catch error in contact form:', err);
-      setErrorMsg(err.message || 'Something went wrong. Please check your connection and try again.');
+      const error = err as Error;
+      setErrorMsg(error.message || 'Something went wrong. Please check your connection and try again.');
       setStatus('error');
     }
   };

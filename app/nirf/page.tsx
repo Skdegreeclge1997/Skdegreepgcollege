@@ -50,7 +50,7 @@ export default async function NirfPage() {
                 The National Institutional Ranking Framework (NIRF) was launched on 29th September 2015 by the Ministry of Education, Government of India. It ranks colleges and universities across the country based on five key parameters — Teaching & Learning Resources, Research & Professional Practice, Graduation Outcomes, Outreach & Inclusivity, and Perception.
               </p>
               <p>
-                Participation in NIRF reflects our institution's commitment to transparency, accountability, and continuous improvement in the quality of education we provide to our students.
+                Participation in NIRF reflects our institution&apos;s commitment to transparency, accountability, and continuous improvement in the quality of education we provide to our students.
               </p>
             </div>
           </div>
