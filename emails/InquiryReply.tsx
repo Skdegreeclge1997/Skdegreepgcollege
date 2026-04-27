@@ -37,7 +37,7 @@ export const InquiryReplyEmail = ({
           <Row style={headerRow}>
             <Column style={logoCol}>
               <Img
-                src={`data:image/png;base64,${COLLEGE_LOGO_BASE64}`}
+                src="https://skdegreecollege.com/images/logo.jpeg"
                 width="64"
                 height="64"
                 alt="S.K. College Logo"
