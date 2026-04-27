@@ -4,6 +4,7 @@ import { resend } from '@/lib/resend';
 import { supabase } from '@/lib/supabase';
 import { InquiryReplyEmail } from '@/emails/InquiryReply';
 import { inquirySchema, InquiryFormValues, contactSchema, ContactFormValues } from '@/lib/validations';
+import { render } from '@react-email/render';
 
 export async function submitContactMessage(formData: ContactFormValues) {
   try {
@@ -26,16 +27,19 @@ export async function submitContactMessage(formData: ContactFormValues) {
 
     if (insertError) throw insertError;
 
-    // 3. Send Professional Reply via Resend
+    // 3. Render Email to HTML
+    const emailHtml = await render(InquiryReplyEmail({
+      studentName: validatedData.name,
+      courseInterest: 'College Information',
+    }));
+
+    // 4. Send Professional Reply via Resend
     const { data, error: emailError } = await resend.emails.send({
       from: 'admin@skdegreecollege.com',
       to: email,
       replyTo: 'admin@skdegreecollege.com',
       subject: 'Thank you for contacting SK Degree & PG College',
-      react: InquiryReplyEmail({
-        studentName: validatedData.name,
-        courseInterest: 'College Information',
-      }),
+      html: emailHtml,
     });
 
     if (emailError) {
@@ -93,16 +97,19 @@ export async function submitInquiry(formData: InquiryFormValues) {
 
     if (insertError) throw insertError;
 
-    // 4. Send Professional Reply via Resend
+    // 4. Render Email to HTML
+    const emailHtml = await render(InquiryReplyEmail({
+      studentName: validatedData.name,
+      courseInterest: validatedData.courseInterest,
+    }));
+
+    // 5. Send Professional Reply via Resend
     const { data, error: emailError } = await resend.emails.send({
       from: 'admin@skdegreecollege.com',
       to: email,
       replyTo: 'admin@skdegreecollege.com',
       subject: 'Thank you for your inquiry - SK Degree & PG College',
-      react: InquiryReplyEmail({
-        studentName: validatedData.name,
-        courseInterest: validatedData.courseInterest,
-      }),
+      html: emailHtml,
     });
 
     if (emailError) {
