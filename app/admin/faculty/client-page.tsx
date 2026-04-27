@@ -4,11 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { 
   Users, 
-  Plus, 
   Trash2, 
   Edit2, 
-  Mail, 
-  GraduationCap, 
   UserPlus, 
   Loader2, 
   Camera,

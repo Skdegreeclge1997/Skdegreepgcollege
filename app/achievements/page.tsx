@@ -1,6 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
-import { Award, Briefcase, GraduationCap, Ship, ShieldCheck, Target } from 'lucide-react';
+import { Award, Briefcase, Ship, ShieldCheck, Target } from 'lucide-react';
 import placementsData from '@/lib/data/placements.json';
 
 export const metadata = {

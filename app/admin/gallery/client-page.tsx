@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { 
-  Image as ImageIcon, 
-  Plus, 
   Trash2, 
   Maximize2, 
   Loader2, 
@@ -56,7 +54,7 @@ export default function GalleryManager() {
   }, []);
 
   useEffect(() => {
-    Promise.resolve().then(() => fetchImages());
+    fetchImages();
   }, [fetchImages]);
  
   const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {

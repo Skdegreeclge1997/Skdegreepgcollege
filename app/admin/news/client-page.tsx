@@ -13,7 +13,6 @@ import {
   Edit2, 
   X, 
   Save,
-  Upload,
   ExternalLink
 } from 'lucide-react';
 import Image from 'next/image';

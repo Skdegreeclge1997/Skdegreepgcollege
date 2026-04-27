@@ -132,7 +132,7 @@ export default function AdminOverview() {
            </div>
            
            <div className="space-y-4">
-              {recentInquiries.length > 0 ? recentInquiries.map((inq, i) => {
+              {recentInquiries.length > 0 ? recentInquiries.map((inq) => {
                 const date = new Date(inq.created_at);
                 const isToday = date.toDateString() === new Date().toDateString();
                 const timeStr = isToday ? date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : date.toLocaleDateString();
