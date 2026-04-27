@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckCircle, Send, Loader2 } from 'lucide-react';
 import { inquirySchema, InquiryFormValues } from '@/lib/validations';
-import { supabase } from '@/lib/supabase';
+import { submitInquiry } from '@/app/actions/inquiry';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -51,43 +51,15 @@ export default function AdmissionsForm() {
   const onSubmit = async (data: InquiryFormValues) => {
     setIsSubmitting(true);
     try {
-      const email = data.email.trim().toLowerCase();
-      const phone = data.phone.trim();
+      const result = await submitInquiry(data);
 
-      // 1. Check for duplicates (same email or phone)
-      // We use quotes around the values to handle special characters in emails
-      const { data: existing, error: checkError } = await supabase
-        .from('inquiries')
-        .select('id')
-        .or(`email.eq."${email}",phone.eq."${phone}"`)
-        .maybeSingle();
-
-      if (checkError) {
-        console.error('Duplicate check error:', checkError);
-        // We don't throw here to allow submission if the check fails for some reason
-      }
-
-      if (existing) {
-        alert('An application with this email or phone number already exists. Our team will contact you shortly!');
-        setIsSubmitting(false);
-        return;
-      }
-
-      // 2. Insert new inquiry
-      const finalGroup = data.intermediateGroup === 'Other' ? (data.otherGroup || 'Other') : data.intermediateGroup;
-      
-      const { error } = await supabase.from('inquiries').insert([
-        { 
-          name: data.name.trim(), 
-          father_name: data.father_name.trim(),
-          email: email, 
-          phone: phone,
-          course: data.courseInterest,
-          message: `Group: ${finalGroup} | Address: ${data.address}`
+      if (!result.success) {
+        if (result.error === 'duplicate') {
+          alert('An application with this email or phone number already exists. Our team will contact you shortly!');
+          return;
         }
-      ]);
-
-      if (error) throw error;
+        throw new Error(result.message);
+      }
       
       setIsSuccess(true);
       reset();

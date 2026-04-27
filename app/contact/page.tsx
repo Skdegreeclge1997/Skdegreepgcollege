@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import MotionSection, { StaggerContainer, StaggerItem, TextReveal } from '@/components/motion/MotionSection';
 import ParticleCanvas from '@/components/ParticleCanvas';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle, MessageSquare, Loader2 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { submitContactMessage } from '@/app/actions/inquiry';
 
 const contactInfo = [
   {
@@ -48,30 +48,17 @@ export default function ContactPage() {
     setErrorMsg('');
 
     try {
-      console.log('Sending contact inquiry...', formData);
-      const { error, data } = await supabase.from('inquiries').insert([
-        { 
-          name: formData.name.trim(), 
-          email: formData.email.trim().toLowerCase(), 
-          phone: formData.phone.trim(),
-          message: formData.message.trim(),
-          course: 'Contact Inquiry',
-          status: 'New'
-        }
-      ]).select();
+      const result = await submitContactMessage(formData);
       
-      if (error) {
-        console.error('Supabase insert error details:', error);
-        throw error;
+      if (!result.success) {
+        throw new Error(result.message);
       }
       
-      console.log('Inquiry sent successfully:', data);
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
-    } catch (err: unknown) {
-      console.error('Full catch error in contact form:', err);
-      const error = err as Error;
-      setErrorMsg(error.message || 'Something went wrong. Please check your connection and try again.');
+    } catch (err: any) {
+      console.error('Contact form error:', err);
+      setErrorMsg(err.message || 'Something went wrong. Please check your connection and try again.');
       setStatus('error');
     }
   };
