@@ -81,3 +81,5 @@ scratch/
 
 # ---- Source/Staging Assets (Not required for running) ----
 /images/
+
+.vercel
