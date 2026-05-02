@@ -248,52 +248,83 @@ export default function LandingPage() {
                 Explore NCC Program <ArrowRight size={16} />
               </Link>
             </div>
-            <div className="relative h-[380px] grid grid-cols-2 grid-rows-2 gap-4">
+            <div className="relative h-[420px] grid grid-cols-3 grid-rows-2 gap-3">
+              {/* Large left — Parade Formation (spans 2 rows) */}
               <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
                 whileHover={{ scale: 1.02, zIndex: 10 }}
-                className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+                className="col-span-1 row-span-2 relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group"
+              >
+                 <Image 
+                    src="/images/ncc-air-wings.jpg" 
+                    alt="NCC Naval Wing Parade Formation on Republic Day" 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/70 via-academic-navy/10 to-transparent" />
+                 <span className="absolute bottom-4 left-4 text-white text-[10px] font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">Republic Day Parade</span>
+              </motion.div>
+
+              {/* Top right — Award Ceremony */}
+              <motion.div 
+                initial={{ opacity: 0, y: -15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+                whileHover={{ scale: 1.03, zIndex: 10 }}
+                className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden shadow-xl border border-white/10 group"
+              >
+                 <Image 
+                    src="/images/ncc-air-wings2.webp" 
+                    alt="NCC Cadets Receiving Award at Republic Day Ceremony" 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, 66vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/60 via-transparent to-transparent" />
+                 <span className="absolute bottom-4 left-4 text-white text-[10px] font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">Award Ceremony</span>
+              </motion.div>
+
+              {/* Bottom middle — Group Photo with Trophy */}
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                whileHover={{ scale: 1.03, zIndex: 10 }}
+                className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-xl border border-white/10 group"
+              >
+                 <Image 
+                    src="/images/ncc-wings.jpg" 
+                    alt="NCC Combined Wings Group Photo" 
+                    fill 
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/50 via-transparent to-transparent" />
+                 <span className="absolute bottom-3 left-3 text-white text-[9px] font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">Combined Wings</span>
+              </motion.div>
+
+              {/* Bottom right — Camp Group Photo + Stats Overlay */}
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.45 }}
+                whileHover={{ scale: 1.03, zIndex: 10 }}
+                className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-xl border border-white/10 group"
               >
                  <Image 
                     src="/images/ncc-cadets.jpeg" 
-                    alt="S.K. Degree College NCC Group Photo" 
+                    alt="NCC Cadets at Annual Training Camp" 
                     fill 
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover" 
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
                  />
-                 <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/60 to-transparent" />
-                 <span className="absolute bottom-4 left-4 text-white text-[10px] font-bold uppercase tracking-widest bg-academic-gold/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">Combined Wings</span>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ scale: 1.05, zIndex: 10 }}
-                className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-xl border border-white/10"
-              >
-                 <Image 
-                    src="/images/ncc.jpeg" 
-                    alt="NCC Training Drill" 
-                    fill 
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="object-cover" 
-                 />
-                 <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/40 to-transparent" />
-              </motion.div>
-
-              <motion.div 
-                whileHover={{ scale: 1.05, zIndex: 10 }}
-                className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden shadow-xl border border-white/10 bg-academic-gold/5 flex items-center justify-center group"
-              >
-                 <Image 
-                    src="https://images.unsplash.com/photo-1590216087343-6ad0fc24a29c?auto=format&fit=crop&q=80&w=800" 
-                    alt="Cadet Discipline" 
-                    fill 
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="object-cover opacity-60 group-hover:opacity-100 transition-opacity" 
-                 />
-                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-                    <div className="w-10 h-10 rounded-full bg-academic-gold/20 border border-academic-gold/40 flex items-center justify-center mb-2">
-                       <Users size={20} className="text-academic-gold" />
-                    </div>
-                    <span className="text-[10px] font-black uppercase text-white tracking-tighter">100+ Cadets Placed</span>
+                 <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/70 via-academic-navy/20 to-transparent" />
+                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                    <span className="text-white text-[9px] font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">Training Camp</span>
+                    <span className="text-academic-gold text-[9px] font-black uppercase tracking-wider bg-academic-gold/15 backdrop-blur-md px-2.5 py-1 rounded-full border border-academic-gold/30">100+ Placed</span>
                  </div>
               </motion.div>
             </div>
