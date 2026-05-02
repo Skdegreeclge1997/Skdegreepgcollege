@@ -98,7 +98,7 @@ const infrastructure = [
 ];
 
 const stats = [
-  { value: '2005', label: 'Est. Year' },
+  { value: '1997', label: 'Est. Year' },
   { value: '2000+', label: 'Alumni' },
   { value: '85+', label: 'Faculty' },
   { value: '12+', label: 'Programs' },
@@ -123,14 +123,14 @@ export default function AboutPage() {
         ════════════════════════════════════ */}
         <section className="text-center pt-4">
           <p className="text-xs uppercase tracking-[0.25em] text-[#c9a84c] font-semibold mb-3">
-            Vizianagaram · Andhra Pradesh · Est. 2005
+            Vizianagaram · Andhra Pradesh · Est. 1997
           </p>
           <h1 className="text-4xl md:text-5xl font-extrabold text-[#1a3a5c] leading-tight mb-6 font-serif">
             S.K. Degree &amp; P.G. College
           </h1>
           <div className="w-16 h-[3px] bg-[#c9a84c] mx-auto mb-8 rounded-full" />
           <p className="text-slate-600 leading-relaxed max-w-3xl mx-auto text-lg mb-10">
-            Established in 2005 in Vizianagaram, Andhra Pradesh, S.K. Degree & P.G. College stands as a distinguished centre of higher learning — committed to academic excellence, character building, and the holistic development of every student.
+            Established in 1997 in Vizianagaram, Andhra Pradesh, S.K. Degree & P.G. College stands as a distinguished centre of higher learning — committed to academic excellence, character building, and the holistic development of every student.
           </p>
 
           {/* Stat bar */}
@@ -151,14 +151,14 @@ export default function AboutPage() {
           <div>
             <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#c9a84c] font-semibold mb-3">Our Legacy</span>
             <h2 className="text-3xl font-bold text-[#1a3a5c] font-serif mb-5 leading-snug">
-              Two Decades of<br />Academic Excellence
+              Nearly Three Decades of<br />Academic Excellence
             </h2>
             <div className="w-10 h-[2px] bg-[#c9a84c] mb-6" />
             <p className="text-slate-600 leading-relaxed mb-4">
-              In 2005, a group of passionate educators dared to dream — and that dream became{' '}
+              In 1997, a group of passionate educators dared to dream — and that dream became{' '}
               <strong>S.K. Degree &amp; P.G. College</strong>. Founded under the{' '}
               <strong>Arunodaya Educational Society</strong>, what started as a vision for quality
-              education in Vizianagaram has quietly grown, over twenty years, into an institution
+              education in Vizianagaram has quietly grown, over twenty five years, into an institution
               that thousands of students and families have come to trust.
             </p>
             <p className="text-slate-600 leading-relaxed mb-4">
@@ -177,7 +177,7 @@ export default function AboutPage() {
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-full h-full rounded-2xl border-2 border-[#c9a84c]/30" />
             <div className="bg-[#1a3a5c] rounded-2xl p-8 text-white relative z-10">
-              <p className="text-4xl font-extrabold font-serif text-[#c9a84c] mb-2">20+</p>
+              <p className="text-4xl font-extrabold font-serif text-[#c9a84c] mb-2">25+</p>
               <p className="uppercase tracking-widest text-xs text-blue-200 mb-6">Years of Trust</p>
               <ul className="space-y-3 text-sm text-blue-100">
                 {[

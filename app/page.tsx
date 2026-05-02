@@ -90,7 +90,7 @@ export default function LandingPage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-academic-gold/20 border border-academic-gold/30 text-academic-gold text-xs font-bold uppercase tracking-widest mb-8"
           >
             <Award size={16} />
-            <span>Academic Excellence Since 2005</span>
+            <span>Academic Excellence Since 1997</span>
           </motion.div>
           
           <motion.h1 

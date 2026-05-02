@@ -220,7 +220,7 @@ export default function AdmissionsAdmin() {
       { name: "Arial", size: 12, bold: true, color: { argb: "FFFFFFFF" } },
       { horizontal: "center", vertical: "middle" }
     );
-    ws.getCell("A2").value = "Affiliated to Andhra University | Established in 2005";
+    ws.getCell("A2").value = "Affiliated to Andhra University | Established in 1997";
 
     // ── ROW 3: Contact (Address row removed) ──
     ws.getRow(3).height = 16;
