@@ -17,70 +17,66 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
  
-interface GalleryImage {
+interface GalleryVideo {
   id: string;
-  url: string;
-  caption: string;
-  category: string;
+  video_url: string;
+  title: string;
 }
  
 export default function GalleryManager() {
-  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [videos, setVideos] = useState<GalleryVideo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
-  const [newImage, setNewImage] = useState<Partial<GalleryImage>>({ caption: '', category: 'Video', url: '' });
+  const [newVideo, setNewVideo] = useState<Partial<GalleryVideo>>({ title: '', video_url: '' });
   const [isSaving, setIsSaving] = useState(false);
  
-  const fetchImages = React.useCallback(async () => {
+  const fetchVideos = React.useCallback(async () => {
     const { data, error } = await supabase
-      .from('gallery')
+      .from('gallery_videos')
       .select('*')
       .order('created_at', { ascending: false });
     
     if (!error && data) {
-      setImages(data.filter((img: GalleryImage) => img.url.includes('youtube.com') || img.url.includes('youtu.be')));
+      setVideos(data);
     }
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchImages();
-    }, 0);
-    return () => clearTimeout(timer);
-  }, [fetchImages]);
+    fetchVideos();
+  }, [fetchVideos]);
  
   const handleSave = async () => {
-    if (!newImage.url || !newImage.caption) {
-      alert('Video URL and Caption are required');
+    if (!newVideo.video_url || !newVideo.title) {
+      alert('Video URL and Title are required');
       return;
     }
  
     setIsSaving(true);
     try {
       const { error } = await supabase
-        .from('gallery')
-        .insert([{ ...newImage, category: 'Video' }]);
+        .from('gallery_videos')
+        .insert([newVideo]);
       
       if (error) throw error;
       
-      await fetchImages();
+      await fetchVideos();
       setIsAdding(false);
-      setNewImage({ caption: '', category: 'Video', url: '' });
+      setNewVideo({ title: '', video_url: '' });
     } catch (error: unknown) {
       const err = error as { message: string };
-      alert('Error saving to gallery: ' + err.message);
+      alert('Error saving video: ' + err.message);
     } finally {
       setIsSaving(false);
     }
   };
  
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to remove this video from the gallery?')) return;
+    if (!confirm('Are you sure you want to remove this video?')) return;
  
     try {
-      await supabase.from('gallery').delete().eq('id', id);
-      await fetchImages();
+      await supabase.from('gallery_videos').delete().eq('id', id);
+      await fetchVideos();
     } catch (error: unknown) {
       const err = error as { message: string };
       alert('Error deleting: ' + err.message);
@@ -192,62 +188,45 @@ export default function GalleryManager() {
  
       {/* Gallery Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {images.length === 0 ? (
+        {videos.length === 0 ? (
           <div className="col-span-full bg-white p-20 text-center rounded-[3rem] border border-slate-100 text-slate-400">
              <Grid size={48} className="mx-auto mb-4 opacity-10" />
-             <p className="font-bold text-lg">Your gallery is empty.</p>
-             <p className="text-sm">Start building your visual library by uploading photos.</p>
+             <p className="font-bold text-lg">Your video gallery is empty.</p>
+             <p className="text-sm">Start building your video library by adding YouTube links.</p>
           </div>
-        ) : images.map((img) => (
-          <div key={img.id} className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden group hover:shadow-2xl transition-all duration-500">
+        ) : videos.map((v) => (
+          <div key={v.id} className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden group hover:shadow-2xl transition-all duration-500">
             <div className="aspect-[4/3] relative overflow-hidden">
-               {img.url.includes('youtube.com') || img.url.includes('youtu.be') ? (
                  <Image 
                    src={`https://img.youtube.com/vi/${(() => {
-                     const match = img.url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+                     const match = v.video_url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
                      return match && match[2].length === 11 ? match[2] : '';
                    })()}/hqdefault.jpg`} 
-                   alt={img.caption}
+                   alt={v.title}
                    fill
                    unoptimized
                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                  />
-               ) : (
-                 <Image src={img.url} alt={img.caption} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-               )}
-               {(img.url.includes('youtube.com') || img.url.includes('youtu.be')) && (
                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                    <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50">
                      <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
                    </div>
                  </div>
-               )}
-               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                  <button 
-                    onClick={() => handleDelete(img.id)}
-                    className="p-4 bg-red-500 text-white rounded-2xl shadow-xl hover:scale-110 active:scale-90 transition-all"
-                    title="Delete Photo"
-                  >
-                     <Trash2 size={24} />
-                  </button>
-                  <button 
-                    className="p-4 bg-white text-academic-navy rounded-2xl shadow-xl hover:scale-110 active:scale-90 transition-all"
-                    title="View Fullscreen"
-                  >
-                     <Maximize2 size={24} />
-                  </button>
-               </div>
-               <div className="absolute top-6 left-6">
-                  <span className="px-4 py-1.5 bg-white/90 backdrop-blur-md text-academic-navy text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
-                     {img.category}
-                  </span>
-               </div>
+                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                   <button 
+                     onClick={() => handleDelete(v.id)}
+                     className="p-4 bg-red-500 text-white rounded-2xl shadow-xl hover:scale-110 active:scale-90 transition-all"
+                     title="Delete Video"
+                   >
+                      <Trash2 size={24} />
+                   </button>
+                </div>
             </div>
             <div className="p-8">
-               <h3 className="font-black text-academic-navy text-lg leading-tight mb-2 truncate">{img.caption}</h3>
+               <h3 className="font-black text-academic-navy text-lg leading-tight mb-2 truncate">{v.title}</h3>
                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                   <Calendar size={12} className="text-academic-gold" />
-                  Media Asset #{img.id.slice(-4)}
+                  Video ID #{v.id.slice(-4)}
                </div>
             </div>
           </div>

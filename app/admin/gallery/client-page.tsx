@@ -43,12 +43,12 @@ export default function GalleryManager() {
  
   const fetchImages = React.useCallback(async () => {
     const { data, error } = await supabase
-      .from('gallery')
+      .from('gallery_images')
       .select('*')
       .order('created_at', { ascending: false });
     
     if (!error && data) {
-      setImages(data.filter((img: GalleryImage) => !img.url.includes('youtube.com') && !img.url.includes('youtu.be')));
+      setImages(data);
     }
     setIsLoading(false);
   }, []);
@@ -116,7 +116,7 @@ export default function GalleryManager() {
 
           // 2. Save to Database
           const { error: dbError } = await supabase
-            .from('gallery')
+            .from('gallery_images')
             .insert([{
               url: publicUrl,
               caption: upload.caption,
@@ -152,7 +152,7 @@ export default function GalleryManager() {
     if (!confirm('Are you sure you want to remove this image from the gallery?')) return;
 
     try {
-      await supabase.from('gallery').delete().eq('id', id);
+      await supabase.from('gallery_images').delete().eq('id', id);
       await fetchImages();
     } catch (error: unknown) {
       const err = error as Error;
@@ -168,18 +168,47 @@ export default function GalleryManager() {
     );
   }
  
+  const MAX_IMAGES = 30;
+  const isAtLimit = images.length >= MAX_IMAGES;
+ 
   return (
     <div className="space-y-8 pb-20 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-black text-academic-navy tracking-tight">Photo Gallery Manager</h1>
-          <p className="text-slate-500 font-medium">Bulk upload and manage campus imagery.</p>
+          <p className="text-slate-500 font-medium">Bulk upload and manage campus imagery ({images.length}/{MAX_IMAGES}).</p>
         </div>
-        <label className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:opacity-80 active:translate-y-[1px] cursor-pointer">
-          <Camera size={20} />
-          Bulk Upload Photos
-          <input type="file" multiple accept="image/*" className="hidden" onChange={handleFilesSelected} />
-        </label>
+        
+        {isAtLimit ? (
+          <div className="flex flex-col items-end gap-1">
+            <div className="flex items-center gap-2 px-6 py-3 bg-red-50 text-red-600 font-black rounded-xl border-2 border-red-100 shadow-sm opacity-80">
+              <AlertCircle size={20} />
+              Gallery Limit Reached
+            </div>
+            <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mr-2">Delete some images to add new ones</p>
+          </div>
+        ) : (
+          <label className="flex items-center gap-2 px-6 py-3 bg-academic-navy text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl active:opacity-80 active:translate-y-[1px] cursor-pointer">
+            <Camera size={20} />
+            Bulk Upload Photos
+            <input 
+              type="file" 
+              multiple 
+              accept="image/*" 
+              className="hidden" 
+              onChange={(e) => {
+                const files = Array.from(e.target.files || []);
+                const remaining = MAX_IMAGES - images.length;
+                if (files.length > remaining) {
+                  alert(`You can only add ${remaining} more images. Please select fewer files.`);
+                  e.target.value = '';
+                  return;
+                }
+                handleFilesSelected(e);
+              }} 
+            />
+          </label>
+        )}
       </div>
  
       {isAdding && (

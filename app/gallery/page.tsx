@@ -5,24 +5,26 @@ import { motion } from 'framer-motion';
 import GalleryView from '@/components/GalleryView';
 import MotionSection, { TextReveal } from '@/components/motion/MotionSection';
 import ParticleCanvas from '@/components/ParticleCanvas';
-import { GalleryItem } from '@/lib/types';
+import { GalleryItem, GalleryVideo } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
-import { Loader2, Camera, ImageIcon } from 'lucide-react';
+import { Loader2, Camera, ImageIcon, PlayCircle } from 'lucide-react';
+import YouTubeFacade from '@/components/YouTubeFacade';
 
 export default function GalleryPage() {
-  const [items, setItems] = useState<GalleryItem[]>([]);
+  const [images, setImages] = useState<GalleryItem[]>([]);
+  const [videos, setVideos] = useState<GalleryVideo[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchGallery = async () => {
-      const { data, error } = await supabase
-        .from('gallery')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const [imagesRes, videosRes] = await Promise.all([
+        supabase.from('gallery_images').select('*').order('created_at', { ascending: false }),
+        supabase.from('gallery_videos').select('*').order('created_at', { ascending: false })
+      ]);
       
-      if (!error && data) {
-        setItems(data);
-      }
+      if (!imagesRes.error && imagesRes.data) setImages(imagesRes.data);
+      if (!videosRes.error && videosRes.data) setVideos(videosRes.data);
+      
       setLoading(false);
     };
 
@@ -64,7 +66,7 @@ export default function GalleryPage() {
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             >
               <ImageIcon size={16} className="text-academic-gold" />
-              <span className="text-sm font-bold text-white">{items.length || '...'} Photos</span>
+              <span className="text-sm font-bold text-white">{images.length} Photos & {videos.length} Videos</span>
             </motion.div>
           </MotionSection>
         </div>
@@ -73,22 +75,86 @@ export default function GalleryPage() {
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-10" />
       </section>
 
-      {/* Gallery Content */}
-      <section className="container mx-auto px-4 -mt-8 relative z-20 pb-24">
+      {/* Photo Gallery Section */}
+      <section className="container mx-auto px-4 -mt-8 relative z-20 pb-16">
+        <div className="flex items-center gap-4 mb-8">
+           <div className="w-12 h-12 bg-academic-navy text-academic-gold rounded-2xl flex items-center justify-center shadow-lg">
+              <ImageIcon size={24} />
+           </div>
+           <div>
+              <h2 className="text-3xl font-black text-academic-navy tracking-tight">Photo Gallery</h2>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Campus & Facilities</p>
+           </div>
+        </div>
+        
         <MotionSection>
           <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-100">
             {loading ? (
               <div className="flex flex-col items-center justify-center py-20 gap-4">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                >
-                  <Loader2 className="text-academic-navy" size={40} />
-                </motion.div>
-                <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">Fetching Campus Visuals...</p>
+                <Loader2 className="text-academic-navy animate-spin" size={40} />
+                <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">Fetching Photos...</p>
               </div>
             ) : (
-              <GalleryView items={items} />
+              <GalleryView items={images} />
+            )}
+          </div>
+        </MotionSection>
+      </section>
+
+      {/* Video Gallery Section */}
+      <section className="container mx-auto px-4 py-16 relative z-20">
+        <div className="flex items-center gap-4 mb-8">
+           <div className="w-12 h-12 bg-academic-navy text-academic-gold rounded-2xl flex items-center justify-center shadow-lg">
+              <PlayCircle size={24} />
+           </div>
+           <div>
+              <h2 className="text-3xl font-black text-academic-navy tracking-tight">Video Gallery</h2>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Events & Activities</p>
+           </div>
+        </div>
+
+        <MotionSection>
+          <div className="bg-slate-50 rounded-[3rem] p-8 md:p-12 border border-slate-200">
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 gap-4">
+                <Loader2 className="text-academic-navy animate-spin" size={40} />
+              </div>
+            ) : videos.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {videos.map((video) => {
+                  const getYoutubeId = (url: string) => {
+                    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                    const match = url.match(regExp);
+                    return (match && match[2].length === 11) ? match[2] : null;
+                  };
+                  const videoId = getYoutubeId(video.video_url);
+
+                  return (
+                    <motion.div 
+                      key={video.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      className="group"
+                    >
+                      <div className="relative aspect-video rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-black group-hover:shadow-2xl transition-all duration-500">
+                        {videoId ? (
+                          <YouTubeFacade videoId={videoId} title={video.title} />
+                        ) : (
+                          <div className="flex items-center justify-center h-full text-white text-xs">Invalid Video</div>
+                        )}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:scale-110 transition-transform">
+                          <PlayCircle className="text-white opacity-50 group-hover:opacity-100" size={48} />
+                        </div>
+                      </div>
+                      <h3 className="mt-4 font-black text-academic-navy text-lg leading-tight px-2">{video.title}</h3>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-20 text-slate-400">
+                <p className="font-bold">No videos available yet.</p>
+              </div>
             )}
           </div>
         </MotionSection>

@@ -43,6 +43,13 @@ export interface GalleryItem {
   caption: string;
   category: string;
 }
+
+export interface GalleryVideo {
+  id: string;
+  video_url: string;
+  title: string;
+  created_at?: string;
+}
  
 export interface News {
   id: string;
