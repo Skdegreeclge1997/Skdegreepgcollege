@@ -78,14 +78,136 @@ export default function LandingPage() {
 
   return (
     <main className="snap-container bg-academic-navy">
-      {/* ... previous sections ... */}
-      <section className="snap-section mesh-gradient items-center justify-center relative overflow-hidden">
-        {/* ... hero section content ... */}
+      {/* 1. Hero Section */}
+      <section className="snap-section mesh-gradient flex items-center justify-center relative overflow-hidden">
+        <ThreeBackground />
+        
+        <div className="container mx-auto px-4 relative z-20 pt-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="text-center max-w-5xl mx-auto"
+          >
+            <div className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-academic-gold text-xs font-black uppercase tracking-[0.4em] mb-8 shadow-2xl">
+              <Award size={14} className="animate-pulse" />
+              <span>Established 1997</span>
+            </div>
+            
+            <h1 className="text-white mb-8 drop-shadow-2xl leading-[1.1] tracking-tight">
+              Empowering Minds, <br />
+              <span className="text-academic-gold text-glow italic">Building Futures</span>
+            </h1>
+
+            <p className="text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto font-medium leading-relaxed opacity-90">
+              Welcome to S.K. Degree & P.G. College – where academic excellence meets 
+              holistic development in the heart of Vizianagaram.
+            </p>
+
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+              <Link 
+                href="/admissions" 
+                className="group relative px-10 py-5 bg-academic-gold text-academic-navy font-black rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.3)] hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Apply Online Now <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 opacity-20" />
+              </Link>
+              <Link 
+                href="/academics" 
+                className="px-10 py-5 bg-white/5 backdrop-blur-md border border-white/20 text-white font-black rounded-2xl hover:bg-white/10 hover:border-white/40 transition-all active:scale-95 shadow-xl"
+              >
+                Explore Courses
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Floating Scroll Indicator */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 text-white/30 flex flex-col items-center gap-2"
+        >
+          <span className="text-[10px] font-black uppercase tracking-widest">Scroll to Explore</span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent" />
+        </motion.div>
       </section>
 
-      {/* ... other sections ... */}
+      {/* 2. Stats & Trust Section */}
+      <section className="snap-section bg-white py-12 md:py-0 flex items-center">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { label: 'Successful Students', value: '15,000+', icon: <Users className="text-blue-500" /> },
+              { label: 'Academic Courses', value: '25+', icon: <BookOpen className="text-academic-gold" /> },
+              { label: 'Expert Faculty', value: '80+', icon: <Award className="text-purple-500" /> },
+              { label: 'Placement Partners', value: '120+', icon: <MapPin className="text-green-500" /> }
+            ].map((stat, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.1 }}
+                className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 flex flex-col items-center text-center group hover:bg-white hover:shadow-2xl transition-all duration-500"
+              >
+                <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                  {stat.icon}
+                </div>
+                <h3 className="text-4xl font-black text-academic-navy mb-2">{stat.value}</h3>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* 5. Gallery Section */}
+      {/* 3. Core Features Section */}
+      <section className="snap-section bg-slate-50 py-24 flex items-center">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+             <div>
+                <div className="text-academic-gold text-xs font-black uppercase tracking-[0.3em] mb-4">Why S.K. College?</div>
+                <h2 className="text-4xl md:text-5xl font-display font-bold text-academic-navy mb-8 leading-tight">
+                   Where Tradition Meets <br />
+                   <span className="text-blue-600">Modern Education</span>
+                </h2>
+                <div className="space-y-6">
+                   {[
+                      { title: 'Industry-Aligned Curriculum', desc: 'Our courses are updated annually to match corporate demands.' },
+                      { title: 'NCC & Defense Training', desc: 'Active Army and Naval wings building future leaders of the nation.' },
+                      { title: 'State-of-the-art Labs', desc: 'Modern scientific and computer laboratories for practical learning.' }
+                   ].map((feature, i) => (
+                      <div key={i} className="flex gap-4 group">
+                         <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                            <CheckCircle2 size={20} />
+                         </div>
+                         <div>
+                            <h4 className="font-bold text-academic-navy text-lg">{feature.title}</h4>
+                            <p className="text-slate-500 text-sm">{feature.desc}</p>
+                         </div>
+                      </div>
+                   ))}
+                </div>
+                <Link href="/about" className="inline-flex items-center gap-2 mt-10 text-academic-navy font-black border-b-2 border-academic-gold pb-1 hover:gap-4 transition-all group">
+                   Learn More About Us <ArrowRight size={18} />
+                </Link>
+             </div>
+             <div className="relative">
+                <div className="aspect-square bg-academic-gold/20 rounded-[3rem] absolute -top-10 -right-10 w-full h-full -z-10 animate-pulse" />
+                <div className="aspect-[4/5] relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
+                   <Image src="https://images.unsplash.com/photo-1523050853064-8038a3ef6409?auto=format&fit=crop&q=80" alt="Students on Campus" fill className="object-cover" />
+                </div>
+             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Brand Scroller */}
+      <section className="bg-white py-12 border-y border-slate-100 overflow-hidden">
+        <BrandScroller />
+      </section>
       <motion.section 
         initial="hidden"
         whileInView="visible"
