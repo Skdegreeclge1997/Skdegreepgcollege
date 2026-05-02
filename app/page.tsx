@@ -3,10 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import NoticeCard from '@/components/NoticeCard';
-import { Notice, GalleryItem, GalleryVideo } from '@/lib/types';
+import { Notice, GalleryItem } from '@/lib/types';
 import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
 import YouTubeFacade from '@/components/YouTubeFacade';
@@ -43,12 +43,8 @@ export default function LandingPage() {
         setPhotoGallery(imagesRes.data);
       }
       if (!videosRes.error && videosRes.data) {
-        // Map gallery_videos structure to GalleryItem expected by the video grid
         const mappedVideos = videosRes.data.map((v: any) => ({
-          id: v.id,
-          url: v.video_url,
-          caption: v.title,
-          category: 'Video'
+          id: v.id, url: v.video_url, caption: v.title, category: 'Video'
         }));
         setVideoGallery(mappedVideos);
       }
@@ -71,20 +67,31 @@ export default function LandingPage() {
     fetchNotices();
   }, []);
 
-  // Split gallery for non-overlapping marquee rows
-  const midPoint = Math.ceil(photoGallery.length / 2);
-  const row1Images = photoGallery.slice(0, midPoint);
-  const row2Images = photoGallery.slice(midPoint);
-
   return (
     <main className="snap-container bg-academic-navy">
       {/* 1. Hero Section */}
-      <section className="snap-section mesh-gradient flex items-center justify-center relative overflow-hidden">
+      <section 
+        className="snap-section mesh-gradient items-center justify-center relative overflow-hidden"
+      >
         <ThreeBackground />
-        
-        <div className="container mx-auto px-4 relative z-10 text-center pt-24">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1200"
+            alt="S.K. Degree and P.G. College Vizianagaram Campus View"
+            fill
+            className="object-cover opacity-20 mix-blend-overlay"
+            sizes="(max-width: 768px) 100vw, 1200px"
+            priority
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-academic-navy/20 to-academic-navy/95" />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10 text-center text-white">
           <motion.div 
-            variants={fadeIn}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-academic-gold/20 border border-academic-gold/30 text-academic-gold text-xs font-bold uppercase tracking-widest mb-8"
           >
             <Award size={16} />
@@ -96,84 +103,143 @@ export default function LandingPage() {
             variants={fadeIn}
           >
             <span className="text-white">S.K. DEGREE</span> <span className="text-academic-gold">&</span> <br />
-            <span className="text-white">P.G. COLLEGE</span>
+            <span className="text-academic-gold">P.G. COLLEGE</span>
           </motion.h1>
-
-          <motion.p 
-            className="text-white/60 text-lg md:text-2xl mb-12 max-w-3xl mx-auto font-medium"
+          
+          <motion.div 
+            className="flex items-center justify-center gap-2 text-lg md:text-2xl text-slate-300 mb-10 md:mb-12 font-medium"
             variants={fadeIn}
           >
-            Empowering students with knowledge, discipline, and the skills 
-            needed to excel in a global landscape.
-          </motion.p>
+            <MapPin size={20} className="text-academic-gold" />
+            <span>Vizianagaram&apos;s Premier Institution</span>
+          </motion.div>
 
           <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full max-w-md mx-auto sm:max-w-none"
             variants={fadeIn}
           >
             <Link 
               href="/admissions" 
-              className="px-10 py-5 bg-academic-gold text-academic-navy font-black rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-academic-gold/20"
+              aria-label="Apply Now Online for Admissions 2026-27"
+              className="w-full sm:w-auto px-10 py-4 bg-academic-gold text-academic-navy font-bold rounded-full hover:bg-white transition-all duration-300 text-lg shadow-xl"
             >
-              Apply Online Now
-            </Link>
-            <Link 
-              href="/academics" 
-              className="px-10 py-5 bg-white/5 backdrop-blur-md border border-white/20 text-white font-black rounded-2xl hover:bg-white/10 transition-all active:scale-95"
-            >
-              Explore Courses
+              Apply Online 2026-27
             </Link>
           </motion.div>
         </div>
-
-        {/* Floating stats in hero */}
-        <div className="absolute bottom-10 left-0 right-0 z-20 pointer-events-none">
-          <div className="container mx-auto px-4 flex justify-center md:justify-end gap-12 text-white/40">
-             <div className="text-center">
-                <span className="block text-2xl font-black text-white">15k+</span>
-                <span className="text-[10px] uppercase font-bold tracking-widest">Alumni</span>
-             </div>
-             <div className="text-center">
-                <span className="block text-2xl font-black text-white">80+</span>
-                <span className="text-[10px] uppercase font-bold tracking-widest">Experts</span>
-             </div>
-             <div className="text-center">
-                <span className="block text-2xl font-black text-white">25+</span>
-                <span className="text-[10px] uppercase font-bold tracking-widest">Years</span>
-             </div>
-          </div>
-        </div>
       </section>
 
-      {/* 2. Stats Section */}
-      <section className="bg-white py-12 border-b border-slate-100 relative z-30">
-        <div className="container mx-auto px-4">
-          <BrandScroller />
-        </div>
-      </section>
-
-      {/* 3. NCC Focus Section */}
+      {/* 2. Institutional Success */}
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
+        viewport={{ once: false, amount: 0.3 }}
         variants={fadeIn}
-        className="bg-academic-navy py-16 text-white relative overflow-hidden"
+        className="snap-section bg-white justify-center"
+      >
+        <div className="container mx-auto px-4 py-4">
+          <div className="text-center mb-6">
+            <p className="text-slate-600 font-bold uppercase tracking-[0.2em] text-xs mb-1">Part of</p>
+            <h2 className="text-2xl font-black text-academic-navy">Arunodaya Educational Society</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {[
+              { label: 'Placements', value: '123+', icon: <Users size={24} />, color: 'bg-blue-50 text-blue-600' },
+              { label: 'Faculty', value: '85+', icon: <Award size={24} />, color: 'bg-academic-gold/10 text-academic-gold' },
+              { label: 'Programs', value: '12', icon: <BookOpen size={24} />, color: 'bg-green-50 text-green-600' }
+            ].map((stat, i) => (
+              <motion.div 
+                key={i} 
+                whileHover={{ y: -5 }}
+                className="p-6 rounded-2xl border border-slate-100 text-center bg-white shadow-sm hover:shadow-md transition-all"
+              >
+                <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center mb-4 mx-auto`}>
+                  {stat.icon}
+                </div>
+                <p className="text-2xl font-black text-academic-navy">{stat.value}</p>
+                <p className="text-slate-600 font-bold uppercase tracking-wider text-xs">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center">
+             <h3 className="text-xl font-bold text-academic-navy mb-4">Our Students Placed At</h3>
+             <BrandScroller />
+          </div>
+
+          {/* Quick Navigation Links for SEO & UX */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Link 
+              href="/about" 
+              className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl hover:bg-academic-gold/10 transition-all group"
+            >
+              <div>
+                <h4 className="text-academic-navy font-black text-lg">About Our Institution</h4>
+                <p className="text-slate-500 text-sm">Discover our history, mission, and values.</p>
+              </div>
+              <ArrowRight className="text-academic-gold group-hover:translate-x-2 transition-transform" />
+            </Link>
+            <Link 
+              href="/faculty" 
+              className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl hover:bg-academic-gold/10 transition-all group"
+            >
+              <div>
+                <h4 className="text-academic-navy font-black text-lg">Meet Our Faculty</h4>
+                <p className="text-slate-500 text-sm">Qualified educators dedicated to student success.</p>
+              </div>
+              <ArrowRight className="text-academic-gold group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* 3. NCC Section */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        variants={fadeIn}
+        className="snap-section bg-academic-navy text-white"
       >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-academic-gold/20 text-academic-gold rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-6 border border-academic-gold/30">
-                <ShieldCheck size={16} />
-                <span>Nation First - NCC Focus</span>
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-academic-gold/20 text-academic-gold rounded-full text-xs font-black uppercase tracking-widest mb-6 border border-academic-gold/30">
+                <Award size={14} />
+                <span>Premier Training Hub</span>
               </div>
-              <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
-                Discipline, <span className="text-academic-gold">Duty</span> <br /> & Development
+              <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
+                Excellence in <br />
+                <span className="text-academic-gold">NCC Training</span>
               </h2>
-              <p className="text-slate-400 text-lg mb-10 max-w-xl leading-relaxed">
-                With one of the most active NCC wings in the region, we produce disciplined 
-                leaders for the Indian Armed Forces. Join our Army or Naval wings.
-              </p>
+              
+              <div className="space-y-6 mb-8">
+                <p className="text-base text-slate-200 leading-relaxed max-w-xl">
+                  S.K. Degree College is a premier hub for National Cadet Corps (NCC) training, 
+                  fostering discipline, leadership, and a spirit of selfless service.
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { title: 'Army Wing (Boys)', desc: 'Rigorous ground training and tactical skills.' },
+                    { title: 'Naval Wing (Girls)', desc: 'Specialized naval operations and watermanship.' },
+                    { title: 'Defense Placements', desc: 'Direct pathway to the Indian Armed Forces.' },
+                    { title: 'Leadership Training', desc: 'Developing character and national spirit.' }
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-3">
+                      <div className="mt-1">
+                        <CheckCircle2 size={16} className="text-academic-gold" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-bold text-sm">{item.title}</h3>
+                        <p className="text-slate-300 text-xs">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <Link 
                 href="/academics#ncc" 
                 aria-label="Explore NCC Program - View Achievements and Training Details"
@@ -259,6 +325,8 @@ export default function LandingPage() {
           <NewsSection />
         </div>
       </motion.section>
+
+      {/* 5. Gallery Section */}
       <motion.section 
         initial="hidden"
         whileInView="visible"
@@ -283,10 +351,10 @@ export default function LandingPage() {
         </div>
 
         <div className="space-y-6">
-          {/* Row 1: Sliding Left (Top Half of Gallery) */}
+          {/* Row 1: Sliding Left */}
           <div className="relative flex overflow-hidden py-2">
             <div className="flex gap-6 animate-marquee [--duration:60s] [--gap:1.5rem] hover:[animation-play-state:paused]">
-              {[...row1Images, ...row1Images, ...row1Images, ...row1Images].map((item, i) => (
+              {[...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2))].map((item, i) => (
                 <div key={`row1-${item.id}-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 relative rounded-[2rem] overflow-hidden shadow-lg group">
                    <Image 
                      src={item.url} 
@@ -306,10 +374,10 @@ export default function LandingPage() {
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10" />
           </div>
 
-          {/* Row 2: Sliding Right (Bottom Half of Gallery) */}
+          {/* Row 2: Sliding Right (Reverse) */}
           <div className="relative flex overflow-hidden py-2">
             <div className="flex gap-6 animate-marquee-reverse [--duration:50s] [--gap:1.5rem] hover:[animation-play-state:paused]">
-              {[...row2Images, ...row2Images, ...row2Images, ...row2Images].map((item, i) => (
+              {[...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2))].map((item, i) => (
                 <div key={`row2-${item.id}-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 relative rounded-[2rem] overflow-hidden shadow-lg group">
                    <Image 
                      src={item.url} 
