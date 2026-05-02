@@ -77,6 +77,7 @@ export default function LandingPage() {
   const row2Images = photoGallery.slice(midPoint);
 
   return (
+    <main className="snap-container bg-academic-navy">
       {/* 1. Hero Section */}
       <section className="snap-section mesh-gradient flex items-center justify-center relative overflow-hidden">
         <ThreeBackground />
