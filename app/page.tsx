@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import NoticeCard from '@/components/NoticeCard';
-import { Notice, GalleryItem } from '@/lib/types';
+import { Notice, GalleryItem, GalleryVideo } from '@/lib/types';
 import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
 import YouTubeFacade from '@/components/YouTubeFacade';

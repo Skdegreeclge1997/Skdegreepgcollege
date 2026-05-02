@@ -122,11 +122,11 @@ export default function GalleryManager() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                {/* Media Area */}
                <div className="relative aspect-video bg-slate-50 rounded-[2rem] border-4 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 overflow-hidden group/upload">
-                    {newImage.url && (newImage.url.includes('youtube.com') || newImage.url.includes('youtu.be')) ? (
+                    {newVideo.video_url && (newVideo.video_url.includes('youtube.com') || newVideo.video_url.includes('youtu.be')) ? (
                       <>
                         <Image 
                           src={`https://img.youtube.com/vi/${(() => {
-                            const match = newImage.url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+                            const match = newVideo.video_url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
                             return match && match[2].length === 11 ? match[2] : '';
                           })()}/hqdefault.jpg`} 
                           alt="Video Preview"
@@ -155,8 +155,8 @@ export default function GalleryManager() {
                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">YouTube Video URL</label>
                        <input 
                           type="url" 
-                          value={newImage.url || ''}
-                          onChange={(e) => setNewImage({...newImage, url: e.target.value})}
+                          value={newVideo.video_url || ''}
+                          onChange={(e) => setNewVideo({...newVideo, video_url: e.target.value})}
                           className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-blue-500 outline-none font-bold text-academic-navy transition-all" 
                           placeholder="https://www.youtube.com/watch?v=..." 
                        />
@@ -165,8 +165,8 @@ export default function GalleryManager() {
                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Video Title</label>
                      <input 
                         type="text" 
-                        value={newImage.caption}
-                        onChange={(e) => setNewImage({...newImage, caption: e.target.value})}
+                        value={newVideo.title}
+                        onChange={(e) => setNewVideo({...newVideo, title: e.target.value})}
                         className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-blue-500 outline-none font-bold text-academic-navy transition-all" 
                         placeholder="e.g. Annual Day Celebrations" 
                      />
@@ -174,7 +174,7 @@ export default function GalleryManager() {
                   <div className="pt-4 flex gap-4">
                      <button 
                         onClick={handleSave}
-                        disabled={isSaving || !newImage.url || !newImage.caption}
+                        disabled={isSaving || !newVideo.video_url || !newVideo.title}
                         className="flex-1 py-4 bg-academic-navy text-white font-black rounded-2xl hover:bg-slate-800 transition-all active:opacity-80 active:translate-y-[1px] flex items-center justify-center gap-2 shadow-xl shadow-academic-navy/20 disabled:opacity-50"
                      >
                         {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
