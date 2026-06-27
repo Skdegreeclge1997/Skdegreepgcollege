@@ -80,7 +80,7 @@ export default function ContactPage() {
             </MotionSection>
 
             <TextReveal delay={0.2}>
-              <h1 className="text-white">
+              <h1 className="text-4xl md:text-6xl font-display font-black text-white tracking-tight mb-6">
                 Contact <span className="text-academic-gold text-glow">Us</span>
               </h1>
             </TextReveal>
