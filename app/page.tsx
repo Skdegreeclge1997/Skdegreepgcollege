@@ -117,7 +117,7 @@ export default function LandingPage() {
     <main className="min-h-screen bg-academic-navy overflow-x-hidden">
       {/* 1. Hero Section */}
       <section 
-        className="min-h-[85vh] py-20 flex items-center justify-center relative overflow-hidden bg-academic-navy"
+        className="min-h-screen flex items-center justify-center relative overflow-hidden bg-academic-navy"
       >
         <ThreeBackground />
         <div className="absolute inset-0 z-0">
