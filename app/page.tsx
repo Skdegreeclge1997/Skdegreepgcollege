@@ -120,7 +120,18 @@ export default function LandingPage() {
         className="min-h-[85vh] py-20 flex items-center justify-center relative overflow-hidden bg-academic-navy"
       >
         <ThreeBackground />
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-academic-navy/40 to-academic-navy/95" />
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1200"
+            alt="S.K. Degree and P.G. College Vizianagaram Campus View"
+            fill
+            className="object-cover opacity-20 mix-blend-overlay"
+            sizes="(max-width: 768px) 100vw, 1200px"
+            priority
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-academic-navy/20 to-academic-navy/95" />
+        </div>
 
 
         <div className="container mx-auto px-4 relative z-10 text-center text-white">
