@@ -61,3 +61,15 @@ export interface News {
   category: string;
   pdf_url?: string;
 }
+
+export interface Inquiry {
+  id: string;
+  name: string;
+  father_name?: string;
+  email: string;
+  phone: string;
+  course: string;
+  status: string;
+  message: string;
+  created_at: string;
+}

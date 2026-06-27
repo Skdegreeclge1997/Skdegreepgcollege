@@ -3,10 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { 
-  Image as ImageIcon, 
-  Plus, 
   Trash2, 
-  Maximize2, 
   Loader2, 
   UploadCloud, 
   X, 
@@ -43,7 +40,9 @@ export default function GalleryManager() {
   }, []);
 
   useEffect(() => {
-    fetchVideos();
+    Promise.resolve().then(() => {
+      fetchVideos();
+    });
   }, [fetchVideos]);
  
   const handleSave = async () => {

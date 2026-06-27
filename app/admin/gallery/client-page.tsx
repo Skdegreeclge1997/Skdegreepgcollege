@@ -54,7 +54,9 @@ export default function GalleryManager() {
   }, []);
 
   useEffect(() => {
-    fetchImages();
+    Promise.resolve().then(() => {
+      fetchImages();
+    });
   }, [fetchImages]);
  
   const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {

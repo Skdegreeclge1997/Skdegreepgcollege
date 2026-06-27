@@ -1,11 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '@/components/AuthProvider';
-import { Loader2, Lock, Mail } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();

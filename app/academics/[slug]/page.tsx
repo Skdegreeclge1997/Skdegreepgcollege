@@ -8,13 +8,14 @@ import { Course } from '@/lib/types';
 const courses = coursesData as Course[];
 
 interface CoursePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: CoursePageProps) {
-  const course = courses.find((c) => c.slug === params.slug);
+  const { slug } = await params;
+  const course = courses.find((c) => c.slug === slug);
   if (!course) return { title: 'Course Not Found' };
 
   return {
@@ -23,8 +24,9 @@ export async function generateMetadata({ params }: CoursePageProps) {
   };
 }
 
-export default function CourseDetailPage({ params }: CoursePageProps) {
-  const course = courses.find((c) => c.slug === params.slug);
+export default async function CourseDetailPage({ params }: CoursePageProps) {
+  const { slug } = await params;
+  const course = courses.find((c) => c.slug === slug);
 
   if (!course) {
     notFound();

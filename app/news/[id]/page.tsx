@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { News } from '@/lib/types';
 import { 
-  ArrowLeft, 
   Calendar, 
   Share2, 
   Download, 

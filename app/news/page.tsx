@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { News } from '@/lib/types';
 import NewsCard from '@/components/NewsCard';
-import { Newspaper, Loader2, Search, Calendar, Filter } from 'lucide-react';
+import { Newspaper, Loader2, Search, Filter } from 'lucide-react';
 
 export default function NewsArchive() {
   const [news, setNews] = useState<News[]>([]);

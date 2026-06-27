@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckCircle, Send, Loader2 } from 'lucide-react';
 import { inquirySchema, InquiryFormValues } from '@/lib/validations';
@@ -34,7 +34,7 @@ export default function AdmissionsForm() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
     formState: { errors },
     reset
@@ -46,7 +46,11 @@ export default function AdmissionsForm() {
     }
   });
 
-  const selectedGroup = watch('intermediateGroup');
+  const selectedGroup = useWatch({
+    control,
+    name: 'intermediateGroup',
+    defaultValue: ''
+  });
 
   const onSubmit = async (data: InquiryFormValues) => {
     setIsSubmitting(true);
@@ -63,9 +67,10 @@ export default function AdmissionsForm() {
       
       setIsSuccess(true);
       reset();
-    } catch (err: any) {
+    } catch (err) {
       console.error('Inquiry submission error:', err);
-      alert(`Error: ${err.message || 'Something went wrong. Please try again.'}`);
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      alert(`Error: ${errorMessage}`);
     } finally {
       setIsSubmitting(false);
     }

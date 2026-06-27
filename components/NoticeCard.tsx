@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Pin, Bell, ArrowRight, FileText } from 'lucide-react';
+import { Pin, ArrowRight, FileText } from 'lucide-react';
 import { Notice, NoticeCategory } from '@/lib/types';
 
 interface NoticeCardProps {

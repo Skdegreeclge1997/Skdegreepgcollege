@@ -3,17 +3,28 @@
 import React, { useState, useEffect } from 'react';
 import { Download, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed';
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
 
 export default function PWAInstallPrompt() {
-  const [installPrompt, setInstallPrompt] = useState<any>(null);
+  const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (e: any) => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      const promptEvent = e as BeforeInstallPromptEvent;
       // Prevent the mini-infobar from appearing on mobile
-      e.preventDefault();
+      promptEvent.preventDefault();
       // Stash the event so it can be triggered later.
-      setInstallPrompt(e);
+      setInstallPrompt(promptEvent);
       
       // Check if user previously dismissed it
       const hasDismissed = localStorage.getItem('pwa_prompt_dismissed') === 'true';
@@ -25,11 +36,6 @@ export default function PWAInstallPrompt() {
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    // Check if app is already installed natively
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsVisible(false);
-    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -70,7 +76,7 @@ export default function PWAInstallPrompt() {
             
             <div className="flex items-center gap-4 relative z-10">
               <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shrink-0 border border-academic-gold/50 shadow-lg">
-                <img src="/images/logo.jpeg" alt="SK Logo" className="w-10 h-10 object-contain" />
+                <Image src="/images/logo.jpeg" alt="SK Logo" width={40} height={40} className="object-contain" />
               </div>
               
               <div className="flex-1">

@@ -53,9 +53,10 @@ export async function submitContactMessage(formData: ContactFormValues) {
 
     console.log('Contact email sent successfully, ID:', data?.id);
     return { success: true };
-  } catch (error: any) {
+  } catch (error) {
     console.error('Contact submission error:', error);
-    return { success: false, message: error.message || 'Failed to send message' };
+    const errorMessage = error instanceof Error ? error.message : 'Failed to send message';
+    return { success: false, message: errorMessage };
   }
 }
 
@@ -127,8 +128,9 @@ export async function submitInquiry(formData: InquiryFormValues) {
 
     console.log('Inquiry email sent successfully, ID:', data?.id);
     return { success: true };
-  } catch (error: any) {
+  } catch (error) {
     console.error('Inquiry submission error:', error);
-    return { success: false, error: 'internal', message: error.message || 'Failed to submit inquiry' };
+    const errorMessage = error instanceof Error ? error.message : 'Failed to submit inquiry';
+    return { success: false, error: 'internal', message: errorMessage };
   }
 }

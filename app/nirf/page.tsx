@@ -1,6 +1,5 @@
 import { supabase } from '@/lib/supabase';
 import { FileText, ExternalLink, ArrowRight, Eye } from 'lucide-react';
-import Link from 'next/link';
 
 export const revalidate = 60;
 

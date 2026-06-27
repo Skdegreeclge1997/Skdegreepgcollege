@@ -8,7 +8,7 @@ import ParticleCanvas from '@/components/ParticleCanvas';
 import initialFacultyData from '@/lib/data/faculty.json';
 import { Faculty } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
-import { Users, Filter, Sparkles, Loader2 } from 'lucide-react';
+import { Users, Filter, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
 export default function FacultyPage() {

@@ -14,7 +14,6 @@ import {
   Img,
 } from "@react-email/components";
 import * as React from "react";
-import { COLLEGE_LOGO_BASE64 } from "@/lib/logo-base64";
 
 interface InquiryReplyEmailProps {
   studentName: string;

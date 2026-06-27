@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import { News } from '@/lib/types';
 import { Loader2, Calendar, Tag } from 'lucide-react';
@@ -96,7 +97,7 @@ export default function NewsSection() {
   if (newsItems.length === 1) {
     return (
       <div className="max-w-4xl mx-auto">
-        <SpotlightCard event={newsItems[0]} activeIndex={0} total={1} isPaused={true} />
+        <SpotlightCard event={newsItems[0]} activeIndex={0} isPaused={true} />
       </div>
     );
   }
@@ -109,7 +110,12 @@ export default function NewsSection() {
   }
 
   return (
-    <div ref={sectionRef} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+    <div 
+      ref={sectionRef} 
+      className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {/* 1. Spotlight Card (Left) */}
       <div className="lg:col-span-5 flex flex-col h-full min-h-[520px]">
         <AnimatePresence mode="wait">
@@ -124,7 +130,6 @@ export default function NewsSection() {
             <SpotlightCard 
               event={newsItems[activeIndex]} 
               activeIndex={activeIndex} 
-              total={newsItems.length}
               isPaused={isPaused || !isVisible || newsItems.length <= 1}
             />
           </motion.div>
@@ -208,16 +213,19 @@ export default function NewsSection() {
   );
 }
 
-function SpotlightCard({ event, activeIndex, total, isPaused }: { event: News; activeIndex: number; total: number; isPaused: boolean }) {
+function SpotlightCard({ event, activeIndex, isPaused }: { event: News; activeIndex: number; isPaused: boolean }) {
   return (
     <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100 h-full flex flex-col group relative">
       {/* Hero Image */}
       <div className="relative h-72 bg-academic-navy overflow-hidden">
         {event.image_url ? (
-          <img 
+          <Image 
             src={event.image_url} 
             alt={event.title}
-            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+            fill
+            sizes="(max-width: 1024px) 100vw, 40vw"
+            className="object-cover transition-transform duration-1000 group-hover:scale-105"
+            unoptimized={true}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-8xl opacity-10">🎓</div>

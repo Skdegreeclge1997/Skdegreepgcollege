@@ -32,7 +32,7 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white pb-24">
+    <main className="min-h-screen bg-white pb-36">
       {/* Hero with Particles */}
       <section className="relative bg-academic-navy pt-32 pb-24 text-center overflow-hidden">
         <ParticleCanvas className="opacity-50" />

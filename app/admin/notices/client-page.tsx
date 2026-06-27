@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { 
   Bell, 
-  Plus, 
   Trash2, 
   Calendar, 
   FileText, 
@@ -14,9 +13,7 @@ import {
   Save, 
   Pin,
   Megaphone,
-  Upload,
-  Image as ImageIcon,
-  ExternalLink
+  Image as ImageIcon
 } from 'lucide-react';
  
 interface Notice {

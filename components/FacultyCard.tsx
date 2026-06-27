@@ -13,7 +13,7 @@ interface FacultyCardProps {
 export default function FacultyCard({ member }: FacultyCardProps) {
   return (
     <motion.div
-      className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col h-full relative"
+      className="group bg-white rounded-2xl overflow-hidden border border-slate-100 group-hover:border-academic-gold/50 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col h-full relative"
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >

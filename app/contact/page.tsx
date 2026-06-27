@@ -56,9 +56,10 @@ export default function ContactPage() {
       
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
-    } catch (err: any) {
+    } catch (err) {
       console.error('Contact form error:', err);
-      setErrorMsg(err.message || 'Something went wrong. Please check your connection and try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please check your connection and try again.';
+      setErrorMsg(errorMessage);
       setStatus('error');
     }
   };

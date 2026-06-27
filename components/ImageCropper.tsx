@@ -11,20 +11,28 @@ interface ImageCropperProps {
   aspect?: number;
 }
 
+interface Area {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export default function ImageCropper({ image, onCropComplete, onCancel, aspect = 1 }: ImageCropperProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
-  const onCropChange = (crop: any) => setCrop(crop);
-  const onZoomChange = (zoom: number) => setZoom(zoom);
+  const onCropChange = (newCrop: { x: number; y: number }) => setCrop(newCrop);
+  const onZoomChange = (newZoom: number) => setZoom(newZoom);
 
-  const onCropCompleteInternal = useCallback((_croppedArea: any, croppedAreaPixels: any) => {
-    setCroppedAreaPixels(croppedAreaPixels);
+  const onCropCompleteInternal = useCallback((_croppedArea: Area, currentCroppedAreaPixels: Area) => {
+    setCroppedAreaPixels(currentCroppedAreaPixels);
   }, []);
 
   const createCroppedImage = async () => {
+    if (!croppedAreaPixels) return;
     try {
       const canvas = document.createElement('canvas');
       const img = new Image();

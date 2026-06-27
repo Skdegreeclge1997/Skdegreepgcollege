@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import MotionSection, { StaggerContainer, StaggerItem, TextReveal } from '@/components/motion/MotionSection';
+import MotionSection, { TextReveal } from '@/components/motion/MotionSection';
 import ParticleCanvas from '@/components/ParticleCanvas';
 import coursesData from '@/lib/data/courses.json';
 import { Course } from '@/lib/types';
-import { BookOpen, Award, FlaskConical, Users, Briefcase, Lightbulb, Shield, Heart, GraduationCap, ArrowRight, Clock } from 'lucide-react';
+import { BookOpen, Award, Users, Briefcase, Shield, Heart, GraduationCap, ArrowRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -139,7 +139,7 @@ export default function AcademicsContent() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                     {groupedCourses[dept].map((course, courseIdx) => (
+                     {groupedCourses[dept].map((course) => (
                         <motion.div
                            key={course.id}
                            whileHover={{ y: -8 }}

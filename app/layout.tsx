@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { EB_Garamond, Open_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { AuthProvider } from "@/components/AuthProvider";
 
 const ebGaramond = EB_Garamond({ weight: ['400', '500', '600', '700', '800'], subsets: ["latin"], display: 'swap', variable: '--font-display' });
@@ -60,6 +58,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+};
+
+export const viewport = {
   themeColor: '#001F3F',
 };
 

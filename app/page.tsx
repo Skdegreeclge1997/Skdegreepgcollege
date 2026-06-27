@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Award, MapPin, Users, BookOpen, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import NoticeCard from '@/components/NoticeCard';
-import { Notice, GalleryItem } from '@/lib/types';
+import { Notice, GalleryItem, GalleryVideo, NoticeCategory } from '@/lib/types';
 import { BrandScroller } from '@/components/ui/brand-scroller';
 import NewsSection from '@/components/NewsSection';
 import YouTubeFacade from '@/components/YouTubeFacade';
@@ -20,6 +20,8 @@ const ThreeBackground = dynamic(() => import('@/components/Visuals').then(mod =>
 });
 
 import { supabase } from '@/lib/supabase';
+import initialNotices from '@/lib/data/notices.json';
+import initialGallery from '@/lib/data/gallery.json';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -30,42 +32,86 @@ export default function LandingPage() {
   const [photoGallery, setPhotoGallery] = React.useState<GalleryItem[]>([]);
   const [videoGallery, setVideoGallery] = React.useState<GalleryItem[]>([]);
   const [recentNotices, setRecentNotices] = React.useState<Notice[]>([]);
-  const [activeTab, setActiveTab] = React.useState<'text' | 'video'>('text');
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const fetchGallery = async () => {
-      const [imagesRes, videosRes] = await Promise.all([
-        supabase.from('gallery_images').select('*').order('created_at', { ascending: false }).limit(30),
-        supabase.from('gallery_videos').select('*').order('created_at', { ascending: false }).limit(3)
-      ]);
-      
-      if (!imagesRes.error && imagesRes.data) {
-        setPhotoGallery(imagesRes.data);
-      }
-      if (!videosRes.error && videosRes.data) {
-        const mappedVideos = videosRes.data.map((v: any) => ({
-          id: v.id, url: v.video_url, caption: v.title, category: 'Video'
-        }));
-        setVideoGallery(mappedVideos);
+    interface MockNotice {
+      id: string;
+      title: string;
+      date: string;
+      category: string;
+      content: string;
+      isPinned: boolean;
+    }
+
+    const loadData = async () => {
+      try {
+        const [imagesRes, videosRes, noticesRes] = await Promise.all([
+          supabase.from('gallery_images').select('*').order('created_at', { ascending: false }).limit(30),
+          supabase.from('gallery_videos').select('*').order('created_at', { ascending: false }).limit(3),
+          supabase.from('notices').select('*').order('is_pinned', { ascending: false }).order('date', { ascending: false }).limit(3)
+        ]);
+        
+        if (!imagesRes.error && imagesRes.data && imagesRes.data.length > 0) {
+          setPhotoGallery(imagesRes.data);
+        } else {
+          const mockImages = initialGallery.filter(item => item.category !== 'Video').map(item => ({
+            id: item.id, url: item.url, caption: item.caption, category: item.category
+          }));
+          setPhotoGallery(mockImages);
+        }
+
+        if (!videosRes.error && videosRes.data && videosRes.data.length > 0) {
+          const mappedVideos = (videosRes.data as GalleryVideo[]).map((v: GalleryVideo) => ({
+            id: v.id, url: v.video_url, caption: v.title, category: 'Video'
+          }));
+          setVideoGallery(mappedVideos);
+        } else {
+          const mockVideos = initialGallery.filter(item => item.category === 'Video').map(item => ({
+            id: item.id, url: item.url, caption: item.caption, category: 'Video'
+          }));
+          setVideoGallery(mockVideos);
+        }
+
+        if (!noticesRes.error && noticesRes.data && noticesRes.data.length > 0) {
+          setRecentNotices(noticesRes.data as Notice[]);
+        } else {
+          const mappedNotices = (initialNotices as unknown as MockNotice[]).map(n => ({
+            id: n.id, title: n.title, date: n.date, category: n.category as NoticeCategory, content: n.content, is_pinned: n.isPinned
+          }));
+          setRecentNotices(mappedNotices as Notice[]);
+        }
+      } catch (err) {
+        console.error('Failed to load landing page data:', err);
+        setPhotoGallery(initialGallery.filter(item => item.category !== 'Video'));
+        setVideoGallery(initialGallery.filter(item => item.category === 'Video').map(item => ({
+          id: item.id, url: item.url, caption: item.caption, category: 'Video'
+        })));
+        setRecentNotices((initialNotices as unknown as MockNotice[]).map(n => ({
+          id: n.id, title: n.title, date: n.date, category: n.category as NoticeCategory, content: n.content, is_pinned: n.isPinned
+        })) as Notice[]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    const fetchNotices = async () => {
-      const { data, error } = await supabase
-        .from('notices')
-        .select('*')
-        .order('is_pinned', { ascending: false })
-        .order('date', { ascending: false })
-        .limit(3);
-      
-      if (!error && data) {
-        setRecentNotices(data as Notice[]);
-      }
-    };
-
-    fetchGallery();
-    fetchNotices();
+    loadData();
   }, []);
+
+  // Memoized Marquee Row Items
+  const row1MarqueeItems = React.useMemo(() => {
+    if (photoGallery.length === 0) return [];
+    const half = Math.ceil(photoGallery.length / 2);
+    const slice = photoGallery.slice(0, half);
+    return [...slice, ...slice, ...slice, ...slice];
+  }, [photoGallery]);
+
+  const row2MarqueeItems = React.useMemo(() => {
+    if (photoGallery.length === 0) return [];
+    const half = Math.ceil(photoGallery.length / 2);
+    const slice = photoGallery.slice(half);
+    return [...slice, ...slice, ...slice, ...slice];
+  }, [photoGallery]);
 
   return (
     <main className="snap-container bg-academic-navy">
@@ -385,51 +431,63 @@ export default function LandingPage() {
         </div>
 
         <div className="space-y-6">
-          {/* Row 1: Sliding Left */}
-          <div className="relative flex overflow-hidden py-2">
-            <div className="flex gap-6 animate-marquee [--duration:60s] [--gap:1.5rem] hover:[animation-play-state:paused]">
-              {[...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(0, Math.ceil(photoGallery.length / 2))].map((item, i) => (
-                <div key={`row1-${item.id}-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 relative rounded-[2rem] overflow-hidden shadow-lg group">
-                   <Image 
-                     src={item.url} 
-                     alt={item.caption} 
-                     fill 
-                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                   />
-                   <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
-                      <p className="text-white font-bold text-sm">{item.caption}</p>
-                      <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest">{item.category}</span>
-                   </div>
-                </div>
+          {isLoading ? (
+            <div className="relative flex overflow-hidden py-2 gap-6 px-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={`skeleton-pic-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 bg-slate-200 animate-pulse rounded-[2rem]" />
               ))}
             </div>
-            {/* Gradient Overlays for smooth edges */}
-            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10" />
-            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10" />
-          </div>
+          ) : (
+            <>
+              {/* Row 1: Sliding Left */}
+              <div className="relative flex overflow-hidden py-2">
+                <div className="flex gap-6 animate-marquee [--duration:60s] [--gap:1.5rem] hover:[animation-play-state:paused]">
+                  {row1MarqueeItems.map((item, i) => (
+                    <div key={`row1-${item.id}-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 relative rounded-[2rem] overflow-hidden shadow-lg group">
+                       <Image 
+                         src={item.url} 
+                         alt={item.caption} 
+                         fill 
+                         sizes="(max-width: 768px) 100vw, 400px"
+                         className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                       />
+                       <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+                          <p className="text-white font-bold text-sm">{item.caption}</p>
+                          <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest">{item.category}</span>
+                       </div>
+                    </div>
+                  ))}
+                </div>
+                {/* Gradient Overlays for smooth edges */}
+                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10" />
+                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10" />
+              </div>
 
-          {/* Row 2: Sliding Right (Reverse) */}
-          <div className="relative flex overflow-hidden py-2">
-            <div className="flex gap-6 animate-marquee-reverse [--duration:50s] [--gap:1.5rem] hover:[animation-play-state:paused]">
-              {[...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2)), ...photoGallery.slice(Math.ceil(photoGallery.length / 2))].map((item, i) => (
-                <div key={`row2-${item.id}-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 relative rounded-[2rem] overflow-hidden shadow-lg group">
-                   <Image 
-                     src={item.url} 
-                     alt={item.caption} 
-                     fill 
-                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                   />
-                   <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
-                      <p className="text-white font-bold text-sm">{item.caption}</p>
-                      <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest">{item.category}</span>
-                   </div>
+              {/* Row 2: Sliding Right (Reverse) */}
+              <div className="relative flex overflow-hidden py-2">
+                <div className="flex gap-6 animate-marquee-reverse [--duration:50s] [--gap:1.5rem] hover:[animation-play-state:paused]">
+                  {row2MarqueeItems.map((item, i) => (
+                    <div key={`row2-${item.id}-${i}`} className="w-[300px] md:w-[400px] aspect-[4/3] shrink-0 relative rounded-[2rem] overflow-hidden shadow-lg group">
+                       <Image 
+                         src={item.url} 
+                         alt={item.caption} 
+                         fill 
+                         sizes="(max-width: 768px) 100vw, 400px"
+                         className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                       />
+                       <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+                          <p className="text-white font-bold text-sm">{item.caption}</p>
+                          <span className="text-academic-gold text-[10px] font-black uppercase tracking-widest">{item.category}</span>
+                       </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {/* Gradient Overlays for smooth edges */}
-            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10" />
-            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10" />
-          </div>
+                {/* Gradient Overlays for smooth edges */}
+                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10" />
+                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10" />
+              </div>
+            </>
+          )}
         </div>
       </motion.section>
 
@@ -456,7 +514,11 @@ export default function LandingPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {videoGallery.length > 0 ? videoGallery.slice(0, 3).map((item, i) => {
+            {isLoading ? (
+              [1, 2, 3].map((i) => (
+                <div key={`video-skeleton-${i}`} className="w-full aspect-video rounded-[2.5rem] bg-slate-200 animate-pulse border-4 border-white shadow-2xl" />
+              ))
+            ) : videoGallery.length > 0 ? videoGallery.slice(0, 3).map((item, i) => {
               const getYoutubeId = (url: string) => {
                 const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
                 const match = url.match(regExp);
