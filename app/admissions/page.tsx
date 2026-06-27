@@ -35,7 +35,7 @@ export default function AdmissionsPage() {
           
           {/* Admissions Process (Left) */}
           <div className="lg:col-span-1 space-y-12">
-            <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+            <div className="bg-white rounded-xl p-8 shadow-xl border border-slate-100">
               <h2 className="text-2xl font-bold text-academic-navy mb-8 flex items-center gap-2">
                 <BookOpen className="text-academic-gold" />
                 The Process
@@ -55,7 +55,7 @@ export default function AdmissionsPage() {
               </div>
             </div>
 
-            <div className="bg-academic-navy p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
+            <div className="bg-academic-navy p-8 rounded-xl text-white shadow-xl relative overflow-hidden">
               <h2 className="text-2xl font-bold mb-4">Need Help?</h2>
               <p className="text-slate-400 mb-6 leading-relaxed">
                 Contact our admissions helpdesk for any queries regarding eligibility or documentation.
@@ -80,7 +80,7 @@ export default function AdmissionsPage() {
 
           {/* Inquiry Form (Right) */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100">
+            <div className="bg-white rounded-xl p-8 md:p-12 shadow-xl border border-slate-100">
               <div className="mb-10">
                 <h2 className="text-3xl font-black text-academic-navy mb-2">Inquiry Form</h2>
                 <p className="text-slate-500">Please fill out the details below and we will get back to you.</p>

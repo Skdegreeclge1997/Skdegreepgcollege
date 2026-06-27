@@ -2,9 +2,22 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-
-// Metadata needs to be in a separate file or handled differently for Client Components in Next.js 
-// but for this project we'll just keep the structure and focus on the UI fix.
+import { 
+  Leaf, 
+  FlaskConical, 
+  Laptop, 
+  BookOpen, 
+  Award, 
+  GraduationCap, 
+  Target, 
+  Shield, 
+  Activity, 
+  Utensils, 
+  Bus, 
+  Users,
+  Building,
+  Briefcase
+} from 'lucide-react';
 
 const leadershipTeam = [
   {
@@ -37,7 +50,7 @@ function LeadershipAvatar({ person }: { person: typeof leadershipTeam[0] }) {
 
   return (
     <div
-      className="w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-5xl font-extrabold text-white flex-shrink-0 relative overflow-hidden shadow-xl border-4 border-white"
+      className="w-40 h-40 rounded-2xl flex items-center justify-center text-5xl font-extrabold text-white flex-shrink-0 relative overflow-hidden shadow-xl border-4 border-white"
       style={{ background: person.color }}
     >
       {!imgError ? (
@@ -56,18 +69,18 @@ function LeadershipAvatar({ person }: { person: typeof leadershipTeam[0] }) {
 }
 
 const highlights = [
-  { icon: '🌿', label: 'Eco-friendly Green Campus' },
-  { icon: '🔬', label: 'State-of-the-art Science Laboratories' },
-  { icon: '💻', label: 'Modern Computing Facilities' },
-  { icon: '📚', label: 'Well-stocked Central Library' },
-  { icon: '🏆', label: 'Record Placement Track Record' },
-  { icon: '👨‍🏫', label: 'Experienced & Trained Faculty' },
-  { icon: '🎯', label: 'Campus Placement Training' },
-  { icon: '🎗️', label: 'Active NCC & NSS Units' },
-  { icon: '🛠️', label: 'Project & Activity Clubs' },
-  { icon: '🍽️', label: 'Hygienic Canteen Facilities' },
-  { icon: '🚌', label: 'Transportation Facility Available' },
-  { icon: '🗣️', label: 'Regular Career Guidance Seminars' },
+  { icon: Leaf, label: 'Eco-friendly Green Campus' },
+  { icon: FlaskConical, label: 'State-of-the-art Science Laboratories' },
+  { icon: Laptop, label: 'Modern Computing Facilities' },
+  { icon: BookOpen, label: 'Well-stocked Central Library' },
+  { icon: Award, label: 'Record Placement Track Record' },
+  { icon: GraduationCap, label: 'Experienced & Trained Faculty' },
+  { icon: Target, label: 'Campus Placement Training' },
+  { icon: Shield, label: 'Active NCC & NSS Units' },
+  { icon: Activity, label: 'Project & Activity Clubs' },
+  { icon: Utensils, label: 'Hygienic Canteen Facilities' },
+  { icon: Bus, label: 'Transportation Facility Available' },
+  { icon: Users, label: 'Regular Career Guidance Seminars' },
 ];
 
 const infrastructure = [
@@ -75,25 +88,25 @@ const infrastructure = [
     no: '01',
     name: 'Main Academic Block',
     dept: 'Administrative Office, Admission Cell, Principal\'s Office',
-    icon: '🏛️',
+    icon: Building,
   },
   {
     no: '02',
     name: 'Science Block',
     dept: 'Physics, Chemistry, Botany, and Zoology Labs',
-    icon: '🔭',
+    icon: FlaskConical,
   },
   {
     no: '03',
     name: 'Commerce & Arts Wing',
     dept: 'Commerce, Arts, and Management Classrooms',
-    icon: '📊',
+    icon: Briefcase,
   },
   {
     no: '04',
     name: 'Computer Lab Block',
     dept: 'IT & Computer Science Laboratories, Digital Library',
-    icon: '🖥️',
+    icon: Laptop,
   },
 ];
 
@@ -259,7 +272,7 @@ export default function AboutPage() {
                 key={block.no}
                 className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm flex gap-5 items-start hover:shadow-md transition-shadow"
               >
-                <div className="text-3xl leading-none flex-shrink-0">{block.icon}</div>
+                <block.icon className="text-[#A68010] shrink-0 mt-1" size={28} />
                 <div>
                   <div className="flex items-center gap-3 mb-1">
                     <span className="text-[10px] text-[#A68010] font-bold tracking-widest">{block.no}</span>
@@ -287,7 +300,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {highlights.map((h) => (
                 <div key={h.label} className="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3">
-                  <span className="text-lg">{h.icon}</span>
+                  <h.icon className="text-[#A68010] shrink-0" size={20} />
                   <span className="text-sm text-blue-100">{h.label}</span>
                 </div>
               ))}

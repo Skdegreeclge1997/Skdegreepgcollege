@@ -63,7 +63,7 @@ export default function NoticeViewer({ notices, title, subtitle, icon }: NoticeV
           </div>
         ))}
         {notices.length === 0 && (
-          <div className="p-10 text-center bg-white rounded-3xl border border-dashed border-slate-200 text-slate-400 font-bold italic">
+          <div className="p-10 text-center bg-white rounded-xl border border-dashed border-slate-200 text-slate-400 font-bold italic">
             No recent notices in this category.
           </div>
         )}
@@ -85,7 +85,7 @@ export default function NoticeViewer({ notices, title, subtitle, icon }: NoticeV
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-4xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+              className="relative w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
             >
               {/* Modal Header */}
               <div className="bg-academic-navy p-6 md:p-8 text-white shrink-0">
@@ -188,7 +188,7 @@ export default function NoticeViewer({ notices, title, subtitle, icon }: NoticeV
                   {/* Right: Image Preview (if exists) */}
                   {selectedNotice.image_url && (
                     <div className="lg:col-span-5">
-                      <div className="relative aspect-[3/4] w-full rounded-3xl overflow-hidden border-8 border-slate-100 shadow-2xl group">
+                      <div className="relative aspect-[3/4] w-full rounded-xl overflow-hidden border-8 border-slate-100 shadow-2xl group">
                         <Image 
                           src={selectedNotice.image_url} 
                           alt={selectedNotice.title} 

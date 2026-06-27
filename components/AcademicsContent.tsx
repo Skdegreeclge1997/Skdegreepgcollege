@@ -87,7 +87,7 @@ export default function AcademicsContent() {
             {/* Why SK College - Premium Card */}
             <div className="lg:col-span-5">
               <MotionSection delay={0.6} direction="right">
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl relative overflow-hidden group">
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-xl relative overflow-hidden group">
                    <div className="relative z-10">
                       <h2 className="text-xl font-bold text-academic-gold mb-4">Why Choose S.K. College?</h2>
                       <ul className="space-y-4">
@@ -143,7 +143,7 @@ export default function AcademicsContent() {
                         <motion.div
                            key={course.id}
                            whileHover={{ y: -8 }}
-                           className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group"
+                           className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group"
                         >
                            <Link href={`/academics/${course.slug}`}>
                               <div className="text-academic-gold-dark font-black text-[10px] uppercase tracking-tighter mb-2">{course.degree}</div>
@@ -194,7 +194,7 @@ export default function AcademicsContent() {
                         { title: 'NSS Units', icon: Heart, desc: 'Engaging with the community through social service projects.' },
                         { title: 'Physical Education', icon: GraduationCap, desc: 'Competitive sports and athletic excellence for all.' }
                      ].map((item, i) => (
-                         <div key={i} className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                         <div key={i} className="p-4 rounded-xl bg-slate-50 border border-slate-100">
                             <h3 className="font-bold text-academic-navy mb-1 flex items-center gap-2">
                                <item.icon size={16} className="text-academic-gold-dark" />
                                {item.title}
@@ -207,7 +207,7 @@ export default function AcademicsContent() {
 
                <MotionSection direction="right" delay={0.2}>
                   <div className="relative">
-                     <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative">
+                     <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl relative">
                         <Image 
                            src="/images/ncc-nss.jpg" 
                            alt="S.K. Degree College NCC and NSS Units Training" 

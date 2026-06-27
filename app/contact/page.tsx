@@ -102,7 +102,7 @@ export default function ContactPage() {
           {/* Contact Details */}
           <div className="lg:col-span-1">
             <MotionSection delay={0.1} direction="left">
-              <StaggerContainer className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl space-y-8">
+              <StaggerContainer className="bg-white p-8 rounded-xl border border-slate-100 shadow-xl space-y-8">
                 {contactInfo.map((info, i) => (
                   <StaggerItem key={i}>
                     <motion.div
@@ -139,7 +139,7 @@ export default function ContactPage() {
           <div className="lg:col-span-2 space-y-8">
             <MotionSection delay={0.2}>
               <motion.div
-                className="w-full h-[250px] rounded-3xl overflow-hidden border-2 border-slate-100 shadow-xl relative group"
+                className="w-full h-[250px] rounded-xl overflow-hidden border-2 border-slate-100 shadow-xl relative group"
                 whileHover={{ scale: 1.01 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
@@ -170,7 +170,7 @@ export default function ContactPage() {
             </MotionSection>
 
             <MotionSection delay={0.3}>
-              <div className="bg-academic-navy p-10 rounded-3xl text-white shadow-2xl relative overflow-hidden">
+              <div className="bg-academic-navy p-10 rounded-xl text-white shadow-2xl relative overflow-hidden">
                 {/* Subtle particle effect in form */}
                 <div className="absolute inset-0 opacity-20">
                   <ParticleCanvas particleCount={20} />

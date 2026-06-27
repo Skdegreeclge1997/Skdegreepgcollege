@@ -13,13 +13,13 @@ interface FacultyCardProps {
 export default function FacultyCard({ member }: FacultyCardProps) {
   return (
     <motion.div
-      className="group bg-white rounded-2xl overflow-hidden border border-slate-100 group-hover:border-academic-gold/50 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col h-full relative"
+      className="group bg-white rounded-2xl overflow-hidden border border-slate-100 group-hover:border-academic-gold/50 shadow-sm hover:shadow-xl transition-all duration-200 flex flex-col h-full relative"
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       {/* Image Container - Square Aspect Ratio Edge-to-Edge */}
       <div className="relative aspect-square w-full overflow-hidden bg-slate-200">
-        <div className="w-full h-full relative transition-all duration-700 group-hover:scale-105">
+        <div className="w-full h-full relative transition-all duration-200 group-hover:scale-105">
           <div className="absolute inset-0 bg-academic-navy/5 group-hover:bg-transparent transition-colors duration-500 z-10" />
           <Image
             src={member.image || member.image_url || '/images/avatar-placeholder.png'}

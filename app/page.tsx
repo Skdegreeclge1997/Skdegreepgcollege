@@ -114,24 +114,14 @@ export default function LandingPage() {
   }, [photoGallery]);
 
   return (
-    <main className="snap-container bg-academic-navy">
+    <main className="min-h-screen bg-academic-navy overflow-x-hidden">
       {/* 1. Hero Section */}
       <section 
-        className="snap-section mesh-gradient items-center justify-center relative overflow-hidden"
+        className="min-h-[85vh] py-20 flex items-center justify-center relative overflow-hidden bg-academic-navy"
       >
         <ThreeBackground />
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1200"
-            alt="S.K. Degree and P.G. College Vizianagaram Campus View"
-            fill
-            className="object-cover opacity-20 mix-blend-overlay"
-            sizes="(max-width: 768px) 100vw, 1200px"
-            priority
-            fetchPriority="high"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-academic-navy/20 to-academic-navy/95" />
-        </div>
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-academic-navy/40 to-academic-navy/95" />
+
 
         <div className="container mx-auto px-4 relative z-10 text-center text-white">
           <motion.div 
@@ -181,7 +171,7 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-white justify-center"
+        className="py-20 bg-white flex justify-center"
       >
         <div className="container mx-auto px-4 py-4">
           <div className="text-center mb-6">
@@ -246,7 +236,7 @@ export default function LandingPage() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
-        className="snap-section bg-academic-navy text-white"
+        className="py-20 bg-academic-navy text-white"
       >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

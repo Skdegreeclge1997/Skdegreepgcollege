@@ -82,9 +82,9 @@ export default async function NoticeBoardPage() {
         </div>
 
         {/* Support Section */}
-        <div className="mt-20 p-1 bg-gradient-to-r from-academic-navy to-blue-900 rounded-[2.5rem] shadow-2xl overflow-hidden relative group">
+        <div className="mt-20 p-1 bg-gradient-to-r from-academic-navy to-blue-900 rounded-xl shadow-2xl overflow-hidden relative group">
            <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10" />
-           <div className="bg-academic-navy/95 backdrop-blur-xl rounded-[2.3rem] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+           <div className="bg-academic-navy/95 backdrop-blur-xl rounded-xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
               <div className="text-center md:text-left space-y-2">
                 <div className="flex items-center gap-2 text-academic-gold text-xs font-black uppercase tracking-widest mb-2 justify-center md:justify-start">
                    <Info size={14} />
