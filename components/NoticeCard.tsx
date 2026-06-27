@@ -31,7 +31,7 @@ export default function NoticeCard({ notice, onClick }: NoticeCardProps) {
     <div 
       id={notice.id} 
       onClick={() => onClick?.(notice)}
-      className="group flex items-start gap-5 p-5 bg-white border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md active:scale-[0.98]"
+      className="group flex items-start gap-5 p-6 bg-white border border-slate-100 rounded-3xl hover:bg-slate-50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md active:scale-[0.98]"
     >
       <div className="notice-date-box">
         <span className="notice-date-day">{day}</span>

@@ -40,7 +40,7 @@ export const BrandScroller = () => {
         .fill(0)
         .map((_, i) => (
           <div
-            className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row"
+            className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row will-change-transform"
             key={i}
           >
             {brands.map((brand) => (
@@ -62,7 +62,7 @@ export const BrandScrollerReverse = () => {
         .fill(0)
         .map((_, i) => (
           <div
-            className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee-reverse flex-row"
+            className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee-reverse flex-row will-change-transform"
             key={i}
           >
             {brands.slice().reverse().map((brand) => (

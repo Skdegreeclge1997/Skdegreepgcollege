@@ -20,7 +20,7 @@ export default async function NirfPage() {
           
           {/* Header Section */}
           <div className="text-center space-y-6">
-            <h1 className="text-5xl md:text-6xl font-display font-black text-academic-navy tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-display font-black text-academic-navy tracking-tight">
               NIRF <span className="text-academic-gold">Rankings</span>
             </h1>
             <h2 className="text-xl md:text-2xl font-bold text-slate-700">
