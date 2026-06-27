@@ -9,6 +9,7 @@ import { GalleryItem, GalleryVideo } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { Loader2, Camera, ImageIcon, PlayCircle } from 'lucide-react';
 import YouTubeFacade from '@/components/YouTubeFacade';
+import initialGallery from '@/lib/data/gallery.json';
 
 export default function GalleryPage() {
   const [images, setImages] = useState<GalleryItem[]>([]);
@@ -17,15 +18,38 @@ export default function GalleryPage() {
 
   useEffect(() => {
     const fetchGallery = async () => {
-      const [imagesRes, videosRes] = await Promise.all([
-        supabase.from('gallery_images').select('*').order('created_at', { ascending: false }),
-        supabase.from('gallery_videos').select('*').order('created_at', { ascending: false })
-      ]);
-      
-      if (!imagesRes.error && imagesRes.data) setImages(imagesRes.data);
-      if (!videosRes.error && videosRes.data) setVideos(videosRes.data);
-      
-      setLoading(false);
+      try {
+        const [imagesRes, videosRes] = await Promise.all([
+          supabase.from('gallery_images').select('*').order('created_at', { ascending: false }),
+          supabase.from('gallery_videos').select('*').order('created_at', { ascending: false })
+        ]);
+        
+        if (!imagesRes.error && imagesRes.data && imagesRes.data.length > 0) {
+          setImages(imagesRes.data);
+        } else {
+          const mockImages = initialGallery.filter(item => item.category !== 'Video').map(item => ({
+            id: item.id, url: item.url, caption: item.caption, category: item.category
+          }));
+          setImages(mockImages);
+        }
+
+        if (!videosRes.error && videosRes.data && videosRes.data.length > 0) {
+          setVideos(videosRes.data as GalleryVideo[]);
+        } else {
+          const mockVideos = initialGallery.filter(item => item.category === 'Video').map(item => ({
+            id: item.id, video_url: item.url, title: item.caption, category: 'Video', created_at: new Date().toISOString()
+          }));
+          setVideos(mockVideos as GalleryVideo[]);
+        }
+      } catch (err) {
+        console.error('Failed to fetch gallery items:', err);
+        setImages(initialGallery.filter(item => item.category !== 'Video'));
+        setVideos(initialGallery.filter(item => item.category === 'Video').map(item => ({
+          id: item.id, video_url: item.url, title: item.caption, category: 'Video', created_at: new Date().toISOString()
+        })) as GalleryVideo[]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchGallery();

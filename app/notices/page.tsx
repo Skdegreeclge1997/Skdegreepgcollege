@@ -1,8 +1,9 @@
 import React from 'react';
 import NoticeViewer from '@/components/NoticeViewer';
-import { Notice } from '@/lib/types';
+import { Notice, NoticeCategory } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { Bell, GraduationCap, Calendar, Info } from 'lucide-react';
+import initialNotices from '@/lib/data/notices.json';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -20,8 +21,27 @@ export default async function NoticeBoardPage() {
     .order('is_pinned', { ascending: false })
     .order('date', { ascending: false });
 
-  // Only use live DB data
-  const allNotices = (dbNotices || []) as Notice[];
+  // Use database notices, or fallback to mock data if empty
+  let allNotices = (dbNotices || []) as Notice[];
+  if (allNotices.length === 0) {
+    interface MockNotice {
+      id: string;
+      title: string;
+      date: string;
+      category: string;
+      content: string;
+      isPinned: boolean;
+    }
+    allNotices = (initialNotices as unknown as MockNotice[]).map(n => ({
+      id: n.id,
+      title: n.title,
+      date: n.date,
+      category: n.category as NoticeCategory,
+      content: n.content,
+      is_pinned: n.isPinned,
+      created_at: new Date().toISOString()
+    })) as Notice[];
+  }
 
   // Split notices into categories matching home page
   const academicNotices = allNotices.filter(n => ['Exam', 'General'].includes(n.category) || n.is_pinned);

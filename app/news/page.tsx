@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { News } from '@/lib/types';
 import NewsCard from '@/components/NewsCard';
 import { Newspaper, Loader2, Search, Filter } from 'lucide-react';
+import initialNews from '@/lib/data/news.json';
 
 export default function NewsArchive() {
   const [news, setNews] = useState<News[]>([]);
@@ -17,8 +18,10 @@ export default function NewsArchive() {
       .select('*')
       .order('date', { ascending: false });
     
-    if (!error && data) {
+    if (!error && data && data.length > 0) {
       setNews(data);
+    } else {
+      setNews(initialNews as News[]);
     }
     setLoading(false);
   }, []);
