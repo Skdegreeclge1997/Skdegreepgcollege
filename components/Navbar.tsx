@@ -48,14 +48,14 @@ export default function Navbar({ isOpen, setIsOpen }: NavbarProps) {
         `}
       >
         <div className="flex flex-col h-full p-6 pt-24 pb-6 overflow-y-auto">
-          <nav className="flex flex-col space-y-4">
+          <nav className="flex flex-col space-y-3 sm:space-y-4">
             {navLinks.map((link, i) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  text-xl md:text-3xl font-display font-bold text-white hover:text-academic-gold transition-all
+                  text-lg sm:text-xl md:text-3xl font-display font-bold text-white hover:text-academic-gold transition-all
                   ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
                 `}
                 style={{ transitionDelay: `${i * 50}ms` }}

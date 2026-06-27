@@ -114,7 +114,7 @@ export default function AboutPage() {
       </div>
 
       {/* ── Decorative top rule ── */}
-      <div className="h-1 w-full bg-gradient-to-r from-[#1a3a5c] via-[#c9a84c] to-[#1a3a5c] fixed top-0 z-50" />
+      <div className="h-1 w-full bg-gradient-to-r from-[#1a3a5c] via-[#A68010] to-[#1a3a5c] fixed top-0 z-50" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10 space-y-32">
 
@@ -122,13 +122,13 @@ export default function AboutPage() {
             HERO / OVERVIEW
         ════════════════════════════════════ */}
         <section className="text-center pt-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#c9a84c] font-semibold mb-3">
+          <p className="text-xs uppercase tracking-[0.25em] text-[#A68010] font-semibold mb-3">
             Vizianagaram · Andhra Pradesh · Est. 1997
           </p>
           <h1 className="text-4xl md:text-5xl font-extrabold text-[#1a3a5c] leading-tight mb-6 font-serif">
             S.K. Degree &amp; P.G. College
           </h1>
-          <div className="w-16 h-[3px] bg-[#c9a84c] mx-auto mb-8 rounded-full" />
+          <div className="w-16 h-[3px] bg-[#A68010] mx-auto mb-8 rounded-full" />
           <p className="text-slate-600 leading-relaxed max-w-3xl mx-auto text-lg mb-10">
             Established in 1997 in Vizianagaram, Andhra Pradesh, S.K. Degree & P.G. College stands as a distinguished centre of higher learning — committed to academic excellence, character building, and the holistic development of every student.
           </p>
@@ -149,11 +149,11 @@ export default function AboutPage() {
         ════════════════════════════════════ */}
         <section className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#c9a84c] font-semibold mb-3">Our Legacy</span>
+            <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#A68010] font-semibold mb-3">Our Legacy</span>
             <h2 className="text-3xl font-bold text-[#1a3a5c] font-serif mb-5 leading-snug">
               Nearly Three Decades of<br />Academic Excellence
             </h2>
-            <div className="w-10 h-[2px] bg-[#c9a84c] mb-6" />
+            <div className="w-10 h-[2px] bg-[#A68010] mb-6" />
             <p className="text-slate-600 leading-relaxed mb-4">
               In 1997, a group of passionate educators dared to dream — and that dream became{' '}
               <strong>S.K. Degree &amp; P.G. College</strong>. Founded under the{' '}
@@ -175,9 +175,9 @@ export default function AboutPage() {
           </div>
           {/* Decorative card */}
           <div className="relative">
-            <div className="absolute -top-4 -left-4 w-full h-full rounded-2xl border-2 border-[#c9a84c]/30" />
+            <div className="absolute -top-4 -left-4 w-full h-full rounded-2xl border-2 border-[#A68010]/30" />
             <div className="bg-[#1a3a5c] rounded-2xl p-8 text-white relative z-10">
-              <p className="text-4xl font-extrabold font-serif text-[#c9a84c] mb-2">25+</p>
+              <p className="text-4xl font-extrabold font-serif text-[#A68010] mb-2">25+</p>
               <p className="uppercase tracking-widest text-xs text-blue-200 mb-6">Years of Trust</p>
               <ul className="space-y-3 text-sm text-blue-100">
                 {[
@@ -189,7 +189,7 @@ export default function AboutPage() {
                   'Skill-Based Vocational Training Programs'
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#A68010] flex-shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -203,11 +203,11 @@ export default function AboutPage() {
         ════════════════════════════════════ */}
         <section>
           <div className="text-center mb-12">
-            <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#c9a84c] font-semibold mb-3">Leadership</span>
+            <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#A68010] font-semibold mb-3">Leadership</span>
             <h2 className="text-3xl font-bold text-[#1a3a5c] font-serif mb-4">
               The Faces Behind Our Vision
             </h2>
-            <div className="w-12 h-[2px] bg-[#c9a84c] mx-auto" />
+            <div className="w-12 h-[2px] bg-[#A68010] mx-auto" />
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -217,7 +217,7 @@ export default function AboutPage() {
                 className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 flex flex-col"
               >
                 {/* Top accent strip */}
-                <div className="h-2 w-full" style={{ background: `linear-gradient(90deg, ${person.color}, #c9a84c)` }} />
+                <div className="h-2 w-full" style={{ background: `linear-gradient(90deg, ${person.color}, #A68010)` }} />
 
                 <div className="p-8 flex flex-col flex-1">
                   {/* Avatar + name */}
@@ -225,14 +225,14 @@ export default function AboutPage() {
                     <LeadershipAvatar person={person} />
                     <div className="text-center sm:text-left pt-2">
                       <p className="text-[#1a3a5c] font-bold text-2xl font-serif leading-tight">{person.name}</p>
-                      <p className="text-[#c9a84c] text-lg font-semibold uppercase tracking-wide mt-1.5">{person.designation}</p>
+                      <p className="text-[#A68010] text-lg font-semibold uppercase tracking-wide mt-1.5">{person.designation}</p>
                       <p className="text-slate-500 text-base mt-1">{person.organization}</p>
                       <p className="text-slate-400 text-sm mt-1">{person.qualification}</p>
                     </div>
                   </div>
 
                   <div className="relative">
-                    <span className="absolute -top-4 -left-2 text-6xl text-[#c9a84c]/20 font-serif leading-none">&quot;</span>
+                    <span className="absolute -top-4 -left-2 text-6xl text-[#A68010]/20 font-serif leading-none">&quot;</span>
                     <p className="text-slate-600 italic leading-relaxed text-lg pl-6 relative z-10">
                       {person.message}
                     </p>
@@ -248,9 +248,9 @@ export default function AboutPage() {
         ════════════════════════════════════ */}
         <section>
           <div className="text-center mb-10">
-            <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#c9a84c] font-semibold mb-3">Facilities</span>
+            <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#A68010] font-semibold mb-3">Facilities</span>
             <h2 className="text-3xl font-bold text-[#1a3a5c] font-serif mb-4">Campus Infrastructure</h2>
-            <div className="w-12 h-[2px] bg-[#c9a84c] mx-auto" />
+            <div className="w-12 h-[2px] bg-[#A68010] mx-auto" />
           </div>
 
           <div className="grid md:grid-cols-2 gap-5">
@@ -262,7 +262,7 @@ export default function AboutPage() {
                 <div className="text-3xl leading-none flex-shrink-0">{block.icon}</div>
                 <div>
                   <div className="flex items-center gap-3 mb-1">
-                    <span className="text-[10px] text-[#c9a84c] font-bold tracking-widest">{block.no}</span>
+                    <span className="text-[10px] text-[#A68010] font-bold tracking-widest">{block.no}</span>
                     <p className="text-[#1a3a5c] font-bold text-base font-serif">{block.name}</p>
                   </div>
                   <p className="text-slate-500 text-sm leading-relaxed">{block.dept}</p>
@@ -277,11 +277,11 @@ export default function AboutPage() {
         ════════════════════════════════════ */}
         <section className="bg-[#1a3a5c] rounded-3xl p-10 md:p-14 text-white relative overflow-hidden">
           {/* Decorative circle */}
-          <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full border-2 border-[#c9a84c]/20" />
-          <div className="absolute -bottom-20 -left-10 w-48 h-48 rounded-full border-2 border-[#c9a84c]/10" />
+          <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full border-2 border-[#A68010]/20" />
+          <div className="absolute -bottom-20 -left-10 w-48 h-48 rounded-full border-2 border-[#A68010]/10" />
 
           <div className="relative z-10">
-            <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#c9a84c] font-semibold mb-3">Why S.K. College</span>
+            <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#A68010] font-semibold mb-3">Why S.K. College</span>
             <h2 className="text-3xl font-bold font-serif mb-8 text-white">What Makes Us Special</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -299,9 +299,9 @@ export default function AboutPage() {
             APPROVALS
         ════════════════════════════════════ */}
         <section className="text-center">
-          <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#c9a84c] font-semibold mb-3">Accreditations</span>
+          <span className="inline-block text-xs uppercase tracking-[0.2em] text-[#A68010] font-semibold mb-3">Accreditations</span>
           <h2 className="text-3xl font-bold text-[#1a3a5c] font-serif mb-4">Approvals &amp; Recognitions</h2>
-          <div className="w-12 h-[2px] bg-[#c9a84c] mx-auto mb-8" />
+          <div className="w-12 h-[2px] bg-[#A68010] mx-auto mb-8" />
           <p className="text-slate-600 leading-relaxed max-w-2xl mx-auto text-base">
             The college is approved by the <strong>Government of Andhra Pradesh</strong> and permanently affiliated
             to <strong>Andhra University</strong>. We maintain rigorous academic standards and are widely recognised for our
