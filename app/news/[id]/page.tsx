@@ -78,7 +78,7 @@ export default function NewsDetail() {
         <div className="w-24 h-24 bg-red-50 rounded-3xl flex items-center justify-center mb-8">
           <FileText size={40} className="text-red-200" />
         </div>
-        <h1 className="text-3xl font-black text-academic-navy mb-4">Story Not Found</h1>
+        <h2 className="text-3xl font-black text-academic-navy mb-4">Story Not Found</h2>
         <p className="text-slate-500 mb-8 max-w-md">The news story you are looking for may have been moved or removed.</p>
         <button 
           onClick={() => router.push('/news')}

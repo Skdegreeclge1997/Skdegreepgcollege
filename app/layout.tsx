@@ -93,38 +93,35 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={`${openSans.variable} ${ebGaramond.variable} font-body min-h-screen flex flex-col`}>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "CollegeOrUniversity",
-              "name": "S.K. Degree & P.G. College",
-              "alternateName": "S.K. Degree College",
-              "url": "https://skdegreecollege.com",
-              "logo": "https://skdegreecollege.com/images/logo.jpeg",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Ayyannapeta Junction",
-                "addressLocality": "Vizianagaram",
-                "addressRegion": "Andhra Pradesh",
-                "postalCode": "535003",
-                "addressCountry": "IN"
-              },
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+91-9441253163",
-                "contactType": "admissions",
-                "areaServed": "IN",
-                "availableLanguage": ["English", "Telugu"]
-              },
-              "sameAs": [
-                "https://www.facebook.com/skdegreecollege",
-                "https://www.instagram.com/skdegreecollege"
-              ]
-            })
-          }}
-        />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollegeOrUniversity",
+            "name": "S.K. Degree & P.G. College",
+            "alternateName": "S.K. Degree College",
+            "url": "https://skdegreecollege.com",
+            "logo": "https://skdegreecollege.com/images/logo.jpeg",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Ayyannapeta Junction",
+              "addressLocality": "Vizianagaram",
+              "addressRegion": "Andhra Pradesh",
+              "postalCode": "535003",
+              "addressCountry": "IN"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-9441253163",
+              "contactType": "admissions",
+              "areaServed": "IN",
+              "availableLanguage": ["English", "Telugu"]
+            },
+            "sameAs": [
+              "https://www.facebook.com/skdegreecollege",
+              "https://www.instagram.com/skdegreecollege"
+            ]
+          })}
+        </script>
         <AuthProvider>
           <LayoutWrapper>
             {children}
