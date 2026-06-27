@@ -301,13 +301,13 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 whileHover={{ scale: 1.01 }}
-                className="relative aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group"
+                className="relative aspect-video sm:aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group"
               >
                  <Image 
                     src="/images/ncc-air-wings.jpg" 
                     alt="NCC Naval Wing Parade Formation on Republic Day" 
                     fill 
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105" 
                  />
                  <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/70 via-transparent to-transparent" />
@@ -315,7 +315,7 @@ export default function LandingPage() {
               </motion.div>
 
               {/* Bottom Row — 3 equal images */}
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {/* Award Ceremony */}
                 <motion.div 
                   initial={{ opacity: 0, y: 15 }}
@@ -328,7 +328,7 @@ export default function LandingPage() {
                       src="/images/ncc-air-wings2.webp" 
                       alt="NCC Cadets Receiving Award at Republic Day Ceremony" 
                       fill 
-                      sizes="(max-width: 768px) 33vw, 17vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 33vw, 17vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-110" 
                    />
                    <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/60 via-transparent to-transparent" />
@@ -347,7 +347,7 @@ export default function LandingPage() {
                       src="/images/ncc-wings.jpg" 
                       alt="NCC Combined Wings Group Photo" 
                       fill 
-                      sizes="(max-width: 768px) 33vw, 17vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 33vw, 17vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-110" 
                    />
                    <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/50 via-transparent to-transparent" />
@@ -366,7 +366,7 @@ export default function LandingPage() {
                       src="/images/ncc-cadets.jpeg" 
                       alt="NCC Cadets at Annual Training Camp" 
                       fill 
-                      sizes="(max-width: 768px) 33vw, 17vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 33vw, 17vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-110" 
                    />
                    <div className="absolute inset-0 bg-gradient-to-t from-academic-navy/60 via-transparent to-transparent" />
